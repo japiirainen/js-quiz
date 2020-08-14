@@ -17,6 +17,8 @@ export const Editor = ({ value, defVal, setValue }) => {
          editorProps={{ $blockScrolling: true }}
          value={value}
          defaultValue={defVal}
+         width="1000px"
+         height="500px"
       />
    )
 }
