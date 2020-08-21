@@ -27,7 +27,7 @@ interface ChallengeProps {
 export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, correctAnswer }) => {
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
-   const theme = { light: 'kuroir', dark: 'monokai' }
+   const theme = { light: 'kuroir', dark: 'pastel_on_dark' }
 
    const [value, setValue] = useState(defaultValue)
    const [loading, setLoading] = useState(false)

@@ -1,4 +1,4 @@
-import { Icon, Text } from '@chakra-ui/core'
+import { Icon, Text, Divider } from '@chakra-ui/core'
 import { Challenge } from '../components/Challenge'
 import { Container } from '../components/Container'
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
@@ -16,13 +16,14 @@ const Index = () => {
          <Container height={'100vh'}>
             <Hero title="Js-quiz" fontSize={'8vh'} height={'15vh'} />
             <Main marginTop={'0'}>
-               <Text fontSize={25}>
-                  Website for learning javascript through fun little challenges{' '}
+               <Text fontSize={30}>
+                  Website for learning or test you're skills in javascript through fun little challenges{' '}
                   <Icon name="check-circle" color="green.500" mx="2px" />
                </Text>
+               <Divider m={10} />
                <ChallengeDesc
-                  primary={'In this challenge you will have to make the function add the two inputs together!'}
-                  secondary={'You should only need to touch the function body! 😇'}
+                  primary={'In this challenge you will have to make the function add the two inputs together.'}
+                  secondary={'You should only need to touch the function body! 🤓'}
                />
                <Challenge defaultValue={defVal} testCases={testCases} correctAnswer={correctAnswer} />
             </Main>

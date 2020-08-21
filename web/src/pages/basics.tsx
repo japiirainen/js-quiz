@@ -1,4 +1,4 @@
-import { Box, Divider, Text } from '@chakra-ui/core'
+import { Box, Divider, Text, Icon } from '@chakra-ui/core'
 import { Challenge } from '../components/Challenge'
 import { ChallengeDesc } from '../components/ChallengeDesc'
 import { Container } from '../components/Container'
@@ -19,17 +19,22 @@ const Basics = () => {
          <Container height={'100%'}>
             <Hero title="basics" fontSize={'8vh'} height={'15vh'} />
             <Main marginTop={'0'}>
+               <Text fontSize={30}>
+                  In this section you will be challenged with some basic concepts of JavaScript{' '}
+                  <Icon name="unlock" color="blue.500" mx="2px" size={'5'} />
+               </Text>
+               <Divider m={10} />
                <Box p={4}>
                   <ChallengeDesc
-                     primary={'In this challenge you will have to make the function add the two inputs together!'}
-                     secondary={'You should only need to touch the function body! 😇'}
+                     primary={'In this challenge you will have to make the function add the two inputs together.'}
+                     secondary={'You should only need to touch the function body! 🧐'}
                   />
                   <Challenge defaultValue={defVal1} testCases={testCases1} correctAnswer={correctAnswer1} />
                </Box>
                <Divider m={10} />
                <Box p={4}>
                   <ChallengeDesc
-                     primary={'Now I want you to concatinate two strings and return a full sentence!'}
+                     primary={'Now I want you to concatinate two strings and return a full sentence.'}
                      secondary={'tip: here could be a dropdown'}
                   />
                   <Challenge defaultValue={defVal2} testCases={testCases2} correctAnswer={correctAnswer2} />
