@@ -6,14 +6,17 @@ import { Main } from '../components/Main'
 
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { SideDrawer } from '../components/SideDrawer'
-import Challenge from '../components/Challenge'
+import { Challenge } from '../components/Challenge'
+import { indexPageChallenge } from '../questions/indexPage'
+import { Footer } from '../components/Footer'
 
 const Index = () => {
+   const { testCases, defVal, correctAnswer } = indexPageChallenge
    return (
       <>
          <Container height={'100vh'}>
-            <Hero title="Js-quiz" />
-            <Main>
+            <Hero title="Js-quiz" fontSize={'8vh'} height={'50vh'} />
+            <Main marginTop={'-45vh'}>
                <Text fontSize={25}>
                   Website for learning javascript through fun little challenges{' '}
                   <Icon name="check-circle" color="green.500" mx="2px" />
@@ -33,10 +36,13 @@ const Index = () => {
                      </Text>
                   </ListItem>
                </List>
-               <Challenge />
+               <Challenge defaultValue={defVal} testCases={testCases} correctAnswer={correctAnswer} />
             </Main>
             <SideDrawer />
             <DarkModeSwitch />
+            <Footer>
+               <Text>© js-quiz</Text>
+            </Footer>
          </Container>
       </>
    )

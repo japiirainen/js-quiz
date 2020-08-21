@@ -4,10 +4,12 @@ import React from 'react'
 
 interface HeroProps {
    title: string
+   fontSize: string
+   height: string
 }
 
-export const Hero: React.FC<HeroProps> = ({ title }) => (
-   <Flex justifyContent="center" alignContent="center" height="50vh">
-      <Heading fontSize={'8vh'}>{title}</Heading>
+export const Hero: React.FC<HeroProps> = ({ title, fontSize, height }) => (
+   <Flex justifyContent="center" alignContent="center" height={height}>
+      <Heading fontSize={fontSize}>{title}</Heading>
    </Flex>
 )

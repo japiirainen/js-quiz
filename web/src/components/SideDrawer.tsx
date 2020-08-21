@@ -1,4 +1,5 @@
 import React from 'react'
+import NextLink from 'next/link'
 import {
    Drawer,
    DrawerBody,
@@ -7,6 +8,7 @@ import {
    DrawerOverlay,
    DrawerContent,
    useDisclosure,
+   Link,
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
 import { FaAlignJustify } from 'react-icons/fa'
@@ -33,9 +35,15 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
          <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />
             <DrawerContent>
-               <DrawerHeader borderBottomWidth="1px">Lorem Ipsum</DrawerHeader>
+               <DrawerHeader borderBottomWidth="1px">
+                  <NextLink href="/">
+                     <Link>Back Home</Link>
+                  </NextLink>
+               </DrawerHeader>
                <DrawerBody>
-                  <p>Some contents...</p>
+                  <NextLink href="/basics">
+                     <Link>Basic questions</Link>
+                  </NextLink>
                   <p>Some contents...</p>
                   <p>Some contents...</p>
                </DrawerBody>

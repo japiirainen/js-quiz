@@ -12,6 +12,7 @@
       "@chakra-ui/core": "^0.5.2",
       "@emotion/core": "^10.0.27",
       "@emotion/styled": "^10.0.27",
+      "@types/jest": "^26.0.10",
       "ace-builds": "^1.4.12",
       "emotion-theming": "^10.0.27",
       "next": "^9.1.7",

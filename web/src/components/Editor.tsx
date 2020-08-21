@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import AceEditor from 'react-ace'
 
@@ -10,19 +10,20 @@ import 'ace-builds/src-noconflict/theme-kuroir'
 import 'ace-builds/src-noconflict/theme-merbivore'
 import 'ace-builds/src-noconflict/theme-pastel_on_dark'
 import 'ace-builds/src-noconflict/theme-mono_industrial'
-
+import 'ace-builds/src-min-noconflict/ext-searchbox'
+import 'ace-builds/src-min-noconflict/ext-language_tools'
 interface EditorProps {
    height: string
    defaultValue: string
    theme: string
+   value: string
+   setValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const Editor: React.FC<EditorProps> = ({ height, defaultValue, theme }) => {
-   const [value, setValue] = useState('')
+export const Editor: React.FC<EditorProps> = ({ height, defaultValue, theme, value, setValue }) => {
    function onChange(newValue: string) {
       setValue(newValue)
    }
-   console.log(value)
 
    return (
       <AceEditor
@@ -35,6 +36,17 @@ export const Editor: React.FC<EditorProps> = ({ height, defaultValue, theme }) =
          value={value}
          width="100%"
          height={height}
+         fontSize={16}
+         showPrintMargin={true}
+         showGutter={true}
+         setOptions={{
+            useWorker: false,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true,
+            showLineNumbers: true,
+            tabSize: 2,
+         }}
       />
    )
 }
