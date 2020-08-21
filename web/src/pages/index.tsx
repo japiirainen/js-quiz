@@ -1,41 +1,29 @@
-import { Text, Icon, List, ListIcon, ListItem } from '@chakra-ui/core'
-
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { SideDrawer } from '../components/SideDrawer'
+import { Icon, Text } from '@chakra-ui/core'
 import { Challenge } from '../components/Challenge'
-import { indexPageChallenge } from '../questions/indexPage'
+import { Container } from '../components/Container'
+import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { Footer } from '../components/Footer'
+import { Hero } from '../components/Hero'
+import { Main } from '../components/Main'
+import { SideDrawer } from '../components/SideDrawer'
+import { indexPageChallenge } from '../questions/indexPage'
+import { ChallengeDesc } from '../components/ChallengeDesc'
 
 const Index = () => {
    const { testCases, defVal, correctAnswer } = indexPageChallenge
    return (
       <>
          <Container height={'100vh'}>
-            <Hero title="Js-quiz" fontSize={'8vh'} height={'50vh'} />
-            <Main marginTop={'-45vh'}>
+            <Hero title="Js-quiz" fontSize={'8vh'} height={'15vh'} />
+            <Main marginTop={'0'}>
                <Text fontSize={25}>
                   Website for learning javascript through fun little challenges{' '}
                   <Icon name="check-circle" color="green.500" mx="2px" />
                </Text>
-               <List spacing={3} my={0}>
-                  <ListItem>
-                     <Text fontSize={20}>
-                        <ListIcon icon="arrow-right" size="10px" />
-                        Here is your first challenge!
-                     </Text>
-                  </ListItem>
-                  <ListItem>
-                     <Text fontSize={20}>
-                        <ListIcon icon="arrow-right" size="10px" />
-                        So youre challenge is to make the following function return the message that it is already
-                        taking as input
-                     </Text>
-                  </ListItem>
-               </List>
+               <ChallengeDesc
+                  primary={'In this challenge you will have to make the function add the two inputs together!'}
+                  secondary={'You should only need to touch the function body! 😇'}
+               />
                <Challenge defaultValue={defVal} testCases={testCases} correctAnswer={correctAnswer} />
             </Main>
             <SideDrawer />

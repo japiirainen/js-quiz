@@ -14,7 +14,6 @@ import {
    ModalBody,
    useDisclosure,
    ModalFooter,
-   CloseButton,
 } from '@chakra-ui/core'
 import { Editor } from './Editor'
 import { Container } from './Container'
@@ -89,14 +88,13 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, c
             <ModalOverlay />
             <ModalContent>
                <ModalHeader>Modal Title</ModalHeader>
-               <ModalCloseButton />
+               <ModalCloseButton color={'red.500'} />
                <ModalBody>
                   <Code fontSize={20}>
                      Thats correct! 😎 Please login if you would like to have your progress saved.
                   </Code>
                </ModalBody>
                <ModalFooter>
-                  <CloseButton mr={20} size={'lg'} color={'red.500'} onClick={onToggle} />
                   <Button onClick={onToggle}>login</Button>
                </ModalFooter>
             </ModalContent>
