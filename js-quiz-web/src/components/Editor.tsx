@@ -6,8 +6,8 @@ import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/theme-tomorrow'
 
 export const Editor = ({ value, defVal, setValue }) => {
-   const onChange = newValue => setValue(value)
-
+   const onChange = () => setValue(value)
+   console.log(value)
    return (
       <AceEditor
          mode="javascript"
@@ -17,7 +17,7 @@ export const Editor = ({ value, defVal, setValue }) => {
          editorProps={{ $blockScrolling: true }}
          value={value}
          defaultValue={defVal}
-         width="1000px"
+         width="100%"
          height="500px"
       />
    )
