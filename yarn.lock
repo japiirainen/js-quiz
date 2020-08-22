@@ -2287,6 +2287,13 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
+"@types/jest-cli@^24.3.0":
+  version "24.3.0"
+  resolved "https://registry.yarnpkg.com/@types/jest-cli/-/jest-cli-24.3.0.tgz#f8201a0d81e52747850e2217e1af636228b4ab36"
+  integrity sha512-1Rt38hBjSUhedce8G+0h1uNS7t/EtcsAHJzvp7w/mm0aSlt9B52WaQ5EM3dUb4BmDhobaIqJzuoGxG3FeHav4Q==
+  dependencies:
+    jest-cli "*"
+
 "@types/jest@26.x", "@types/jest@^26.0.10", "@types/jest@^26.0.8":
   version "26.0.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.10.tgz#8faf7e9756c033c39014ae76a7329efea00ea607"
@@ -6299,7 +6306,7 @@ jest-changed-files@^26.3.0:
     execa "^4.0.0"
     throat "^5.0.0"
 
-jest-cli@^26.4.1:
+jest-cli@*, jest-cli@^26.4.1:
   version "26.4.1"
   resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-26.4.1.tgz#877fff1c17661c7bbd8e7df56711ee489091236f"
   integrity sha512-c6px+IOO0OsZ7X/uSr65wcjZnd7NYNUDWFT5OETyCnJRkkwoTER7gneRDrwgr3Ex5+gCGO7D/IMWxUHB/L624A==

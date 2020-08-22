@@ -6,7 +6,6 @@
    ],
    "scripts": {
       "client": "yarn workspace client dev",
-      "server": "yarn workspace server start",
-      "start": "yarn server && yarn web"
+      "server": "yarn workspace server start"
    }
 }
