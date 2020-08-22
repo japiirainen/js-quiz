@@ -1,7 +1,7 @@
-import { DB_URL, __prod__ } from '../utils/constants'
+import { DB_URL } from '../utils/constants'
 import mongoose from 'mongoose'
 
-const url = __prod__ && DB_URL
+const url = DB_URL
 
 export const connect = () => {
    return new Promise((_, __) => {
