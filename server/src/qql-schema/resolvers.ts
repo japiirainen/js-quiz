@@ -1,8 +1,8 @@
-import { register, login } from './user/user.services'
+import { register, login, me } from './user/user.services'
 
 export const resolvers = {
    Query: {
-      me: () => 0,
+      me: me,
    },
    Mutation: {
       register: register,

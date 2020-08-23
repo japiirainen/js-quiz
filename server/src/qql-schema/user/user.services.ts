@@ -1,12 +1,8 @@
 import argon2 from 'argon2'
-import * as yup from 'yup'
+import { validateUser } from '../../utils/validations'
 import { User, UserModel } from './user.model'
 import { AuthenticationError } from 'apollo-server-express'
-
-const schema = yup.object().shape({
-   username: yup.string().trim().min(2).required(),
-   password: yup.string().min(2).max(250).required(),
-})
+import { MyContext } from 'src/utils/types'
 
 export const register = async (_: any, { input }: { input: User }) => {
    const user = await UserModel.findOne({ username: input.username })
@@ -18,12 +14,7 @@ export const register = async (_: any, { input }: { input: User }) => {
    }
    if (userInput) {
       try {
-         await schema.validate(
-            { username: input.username, password: input.password },
-            {
-               abortEarly: false,
-            }
-         )
+         await validateUser(input.username, input.password)
          const newUser = await UserModel.create(userInput)
          return newUser
       } catch (e) {
@@ -34,7 +25,7 @@ export const register = async (_: any, { input }: { input: User }) => {
    }
 }
 
-export const login = async (_: any, { input }: { input: User }) => {
+export const login = async (_: any, { input }: { input: User }, { req }: MyContext) => {
    const user = await UserModel.findOne({ username: input.username })
    if (!user) {
       throw new AuthenticationError('no user found with username or password')
@@ -43,7 +34,15 @@ export const login = async (_: any, { input }: { input: User }) => {
       if (!valid) {
          throw new AuthenticationError('username or password incorrect')
       } else {
+         req.session!.userId = user.id
          return user
       }
    }
+}
+
+export const me = async (_: any, __: any, { req }: MyContext) => {
+   if (!req.session!.userId) {
+      return null
+   }
+   return await UserModel.findById(req.session!.userId)
 }
