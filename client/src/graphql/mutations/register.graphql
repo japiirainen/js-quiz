@@ -1,6 +1,5 @@
 mutation Register($input: userInput) {
    register(input: $input) {
-      id
-      username
+      ...RegUser
    }
 }
