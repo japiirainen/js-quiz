@@ -9,14 +9,45 @@ import {
    DrawerContent,
    useDisclosure,
    Link,
+   Button,
+   Box,
+   Flex,
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
 import { FaAlignJustify } from 'react-icons/fa'
+import { useMeQuery } from '../generated/graphql'
 
 interface SideDrawer {}
 
 export const SideDrawer: React.FC<SideDrawer> = ({}) => {
    const { isOpen, onClose, onOpen } = useDisclosure()
+   const [{ data, fetching }] = useMeQuery()
+
+   let body = null
+   if (fetching) {
+      body = null
+   } else if (!data?.me) {
+      body = (
+         <>
+            <NextLink href="/register">
+               <Link>register</Link>
+            </NextLink>
+            <br />
+            <NextLink href="/login">
+               <Link>login</Link>
+            </NextLink>
+         </>
+      )
+   } else {
+      body = (
+         <Flex>
+            <Box mr={3}>{data.me.username}</Box>
+            <Button variant="link" variantColor="black">
+               logout
+            </Button>
+         </Flex>
+      )
+   }
    const btnRef = React.useRef()
    return (
       <>
@@ -39,6 +70,8 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
                   <NextLink href="/">
                      <Link>Back Home</Link>
                   </NextLink>
+                  <br />
+                  {body}
                </DrawerHeader>
                <DrawerBody>
                   <NextLink href="/basics">

@@ -12,7 +12,7 @@ import { ChallengeDesc } from '../components/ChallengeDesc'
 const Index = () => {
    const { testCases, defVal, correctAnswer } = indexPageChallenge
    return (
-      <Container height={'100%'}>
+      <Container height={'100vh'}>
          <Hero title="Js-quiz" fontSize={'8vh'} height={'15vh'} />
          <Main marginTop={'0'}>
             <Text fontSize={30}>
