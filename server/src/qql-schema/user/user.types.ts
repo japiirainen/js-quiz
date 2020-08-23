@@ -21,5 +21,6 @@ export default gql`
    type Mutation {
       register(input: userInput): User!
       login(input: userInput): User!
+      logout: Boolean
    }
 `

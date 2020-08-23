@@ -15,16 +15,16 @@ import {
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
 import { FaAlignJustify } from 'react-icons/fa'
-import { useMeQuery } from '../generated/graphql'
+import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 
 interface SideDrawer {}
 
 export const SideDrawer: React.FC<SideDrawer> = ({}) => {
-   const { isOpen, onClose, onOpen } = useDisclosure()
-   const [{ data, fetching }] = useMeQuery()
-
+   const { isOpen, onClose, onOpen, onToggle } = useDisclosure()
+   const [{ data, fetching: loginFetching }] = useMeQuery()
+   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
    let body = null
-   if (fetching) {
+   if (loginFetching) {
       body = null
    } else if (!data?.me) {
       body = (
@@ -42,7 +42,15 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
       body = (
          <Flex>
             <Box mr={3}>{data.me.username}</Box>
-            <Button variant="link" variantColor="black">
+            <Button
+               isLoading={logoutFetching}
+               variant="link"
+               variantColor="black"
+               onClick={() => {
+                  logout()
+                  onToggle()
+               }}
+            >
                logout
             </Button>
          </Flex>
