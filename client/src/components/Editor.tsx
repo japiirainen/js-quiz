@@ -1,17 +1,16 @@
 import React from 'react'
-
 import AceEditor from 'react-ace'
 
+import 'ace-builds/src-min-noconflict/ext-language_tools'
+import 'ace-builds/src-min-noconflict/ext-searchbox'
 import 'ace-builds/src-noconflict/mode-javascript'
-import 'ace-builds/src-noconflict/theme-tomorrow'
-import 'ace-builds/src-noconflict/theme-monokai'
 import 'ace-builds/src-noconflict/theme-github'
 import 'ace-builds/src-noconflict/theme-kuroir'
 import 'ace-builds/src-noconflict/theme-merbivore'
-import 'ace-builds/src-noconflict/theme-pastel_on_dark'
+import 'ace-builds/src-noconflict/theme-monokai'
 import 'ace-builds/src-noconflict/theme-mono_industrial'
-import 'ace-builds/src-min-noconflict/ext-searchbox'
-import 'ace-builds/src-min-noconflict/ext-language_tools'
+import 'ace-builds/src-noconflict/theme-pastel_on_dark'
+import 'ace-builds/src-noconflict/theme-tomorrow'
 interface EditorProps {
    height: string
    defaultValue: string
