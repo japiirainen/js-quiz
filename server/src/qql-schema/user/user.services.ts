@@ -4,7 +4,7 @@ import { User, UserModel } from './user.model'
 import { AuthenticationError } from 'apollo-server-express'
 import { MyContext } from 'src/utils/types'
 
-export const register = async (_: any, { input }: { input: User }) => {
+export const register = async (_: any, { input }: { input: User }, { req }: MyContext) => {
    const user = await UserModel.findOne({ username: input.username })
    if (user) throw new AuthenticationError(`user with username: ${input.username} already exists`)
    const hashedPassword = await argon2.hash(input.password)
@@ -16,6 +16,7 @@ export const register = async (_: any, { input }: { input: User }) => {
       try {
          await validateUser(input.username, input.password)
          const newUser = await UserModel.create(userInput)
+         req.session!.userId = newUser.id
          return newUser
       } catch (e) {
          throw new AuthenticationError(e)
