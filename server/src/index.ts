@@ -1,12 +1,13 @@
 import { ApolloServer } from 'apollo-server-express'
 import connectRedis from 'connect-redis'
+import cors from 'cors'
 import express from 'express'
 import session from 'express-session'
 import { applyMiddleware } from 'graphql-middleware'
 import redis from 'redis'
 import { connect } from './db/connect'
 import { schema } from './qql-schema/schema'
-import { PORT, sessionSecret, __prod__, cookieName } from './utils/constants'
+import { cookieName, PORT, sessionSecret, __prod__ } from './utils/constants'
 import { MyContext } from './utils/types'
 
 const main = async () => {
@@ -26,11 +27,17 @@ const main = async () => {
             httpOnly: true,
             sameSite: 'lax',
             secure: __prod__,
-            domain: __prod__ ? '.codeponder.com' : undefined,
+            domain: __prod__ ? '.some.com' : undefined,
          },
          secret: sessionSecret,
          saveUninitialized: false,
          resave: false,
+      })
+   )
+   app.use(
+      cors({
+         origin: 'http://localhost:3000',
+         credentials: true,
       })
    )
 
