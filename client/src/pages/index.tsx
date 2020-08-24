@@ -1,5 +1,6 @@
-import { Icon, Text, Divider } from '@chakra-ui/core'
+import { Divider, Icon, Text } from '@chakra-ui/core'
 import { Challenge } from '../components/Challenge'
+import { ChallengeDesc } from '../components/ChallengeDesc'
 import { Container } from '../components/Container'
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { Footer } from '../components/Footer'
@@ -7,7 +8,7 @@ import { Hero } from '../components/Hero'
 import { Main } from '../components/Main'
 import { SideDrawer } from '../components/SideDrawer'
 import { indexPageChallenge } from '../questions/indexPage'
-import { ChallengeDesc } from '../components/ChallengeDesc'
+import { withApollo } from '../utils/withApollo'
 
 const Index = () => {
    const { testCases, defVal, correctAnswer } = indexPageChallenge
@@ -35,4 +36,4 @@ const Index = () => {
    )
 }
 
-export default Index
+export default withApollo({ ssr: true })(Index)
