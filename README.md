@@ -1,2 +1,1 @@
-<<<<<<< HEAD
-my readme
+js-quiz
