@@ -8,7 +8,8 @@ import { Hero } from '../components/Hero'
 import { Main } from '../components/Main'
 import { SideDrawer } from '../components/SideDrawer'
 import { indexPageChallenge } from '../questions/indexPage'
-import { withApollo } from '../utils/withApollo'
+import { createUrqlClient } from '../utils/createUrqlClient'
+import { withUrqlClient } from 'next-urql'
 
 const Index = () => {
    const { testCases, defVal, correctAnswer } = indexPageChallenge
@@ -36,4 +37,4 @@ const Index = () => {
    )
 }
 
-export default withApollo({ ssr: true })(Index)
+export default withUrqlClient(createUrqlClient)(Index)

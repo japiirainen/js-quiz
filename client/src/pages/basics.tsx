@@ -8,6 +8,8 @@ import { Hero } from '../components/Hero'
 import { Main } from '../components/Main'
 import { SideDrawer } from '../components/SideDrawer'
 import { basicsPageChallenges } from '../questions/basicsPage'
+import { createUrqlClient } from '../utils/createUrqlClient'
+import { withUrqlClient } from 'next-urql'
 
 const Basics = () => {
    const {
@@ -50,4 +52,4 @@ const Basics = () => {
    )
 }
 
-export default Basics
+export default withUrqlClient(createUrqlClient)(Basics)

@@ -45,7 +45,6 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
             <Button
                isLoading={logoutFetching}
                variant="link"
-               variantColor="black"
                onClick={() => {
                   logout()
                   onToggle()
@@ -64,7 +63,6 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
             top="1rem"
             left="1rem"
             variant="ghost"
-            variantColor="gray"
             aria-label="Call Sage"
             fontSize="20px"
             icon={FaAlignJustify}
