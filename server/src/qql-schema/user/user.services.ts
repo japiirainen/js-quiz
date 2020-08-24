@@ -20,7 +20,7 @@ export const register = async (_: any, { input }: { input: User }, { req }: MyCo
       try {
          await validateUser(input.username, input.password, input.email)
          const newUser = await UserModel.create(userInput)
-         req.session!.userId = newUser.id
+         req.session!.userId = newUser._id
          return newUser
       } catch (e) {
          throw new AuthenticationError(e)
@@ -39,7 +39,7 @@ export const login = async (_: any, { input }: { input: User }, { req }: MyConte
       if (!valid) {
          throw new AuthenticationError('username or password incorrect')
       } else {
-         req.session!.userId = user.id
+         req.session!.userId = user._id
          return user
       }
    }
@@ -73,7 +73,7 @@ export const forgotPassword = async (_: any, { input }: { input: User }, { redis
    }
    const token = v4()
 
-   redis.set(FORGOT_PASSWORD_PREFIX + token, user.id, 'ex', 1000 * 60 * 60 * 24)
+   redis.set(FORGOT_PASSWORD_PREFIX + token, user._id, 'ex', 1000 * 60 * 60 * 24)
 
    await sendEmail(user.email, PASSWORD_RESET_TEXT(token))
    return true

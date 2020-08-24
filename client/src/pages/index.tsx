@@ -14,7 +14,7 @@ import { withUrqlClient } from 'next-urql'
 const Index = () => {
    const { testCases, defVal, correctAnswer } = indexPageChallenge
    return (
-      <Container height={'100vh'}>
+      <Container height={'100%'}>
          <Hero title="Js-quiz" fontSize={'8vh'} height={'15vh'} />
          <Main marginTop={'0'}>
             <Text fontSize={30}>

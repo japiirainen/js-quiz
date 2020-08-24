@@ -1,4 +1,4 @@
 fragment RegUser on User {
-   id
+   _id
    username
 }

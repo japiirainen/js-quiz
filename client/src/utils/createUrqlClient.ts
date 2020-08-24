@@ -23,7 +23,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
                      } else {
                         return {
                            me: {
-                              id: result.login.id,
+                              _id: result.login._id,
                               username: result.login.username,
                            },
                         }
@@ -37,7 +37,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
                      } else {
                         return {
                            me: {
-                              id: result.register.id,
+                              _id: result.register._id,
                               username: result.register.username,
                            },
                         }
