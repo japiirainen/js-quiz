@@ -20,6 +20,14 @@ export default gql`
       password: String!
    }
 
+   input forgotPasswordInput {
+      email: String!
+   }
+   input changePasswordInput {
+      token: String!
+      newPassword: String!
+   }
+
    type Query {
       me: User
    }
@@ -27,6 +35,8 @@ export default gql`
    type Mutation {
       register(input: registerInput): User!
       login(input: loginInput): User!
+      forgotPassword(input: forgotPasswordInput): Boolean
+      changePassword(input: changePasswordInput): User!
       logout: Boolean
    }
 `

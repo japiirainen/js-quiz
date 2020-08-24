@@ -4,7 +4,7 @@ import cors from 'cors'
 import express from 'express'
 import session from 'express-session'
 import { applyMiddleware } from 'graphql-middleware'
-import redis from 'redis'
+import Redis from 'ioredis'
 import { connect } from './db/connect'
 import { schema } from './qql-schema/schema'
 import { cookieName, PORT, sessionSecret, __prod__ } from './utils/constants'
@@ -16,12 +16,12 @@ const main = async () => {
    const app = express()
 
    const RedisStore = connectRedis(session)
-   const redisClient = redis.createClient()
+   const redis = new Redis()
 
    app.use(
       session({
          name: cookieName,
-         store: new RedisStore({ client: redisClient, disableTouch: true }),
+         store: new RedisStore({ client: redis, disableTouch: true }),
          cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
             httpOnly: true,
@@ -43,7 +43,7 @@ const main = async () => {
 
    const server = new ApolloServer({
       schema: applyMiddleware(schema),
-      context: ({ req, res }): MyContext => ({ req, res }),
+      context: ({ req, res }): MyContext => ({ req, res, redis }),
    })
 
    server.applyMiddleware({ app, cors: false })

@@ -1,9 +1,11 @@
 import argon2 from 'argon2'
-import { validateUser } from '../../utils/validations'
+import { validateUser, validatePassword } from '../../utils/validations'
 import { User, UserModel } from './user.model'
 import { AuthenticationError } from 'apollo-server-express'
 import { MyContext } from 'src/utils/types'
-import { cookieName } from '../../utils/constants'
+import { cookieName, PASSWORD_RESET_TEXT, FORGOT_PASSWORD_PREFIX } from '../../utils/constants'
+import { sendEmail } from '../../utils/sendEmail'
+import { v4 } from 'uuid'
 
 export const register = async (_: any, { input }: { input: User }, { req }: MyContext) => {
    const user = await UserModel.findOne({ username: input.username })
@@ -62,4 +64,41 @@ export const logout = async (_: any, __: any, { req, res }: MyContext) => {
          resolve(true)
       })
    )
+}
+
+export const forgotPassword = async (_: any, { input }: { input: User }, { redis }: MyContext) => {
+   const user = await UserModel.findOne({ email: input.email })
+   if (!user) {
+      return false
+   }
+   const token = v4()
+
+   redis.set(FORGOT_PASSWORD_PREFIX + token, user.id, 'ex', 1000 * 60 * 60 * 24)
+
+   await sendEmail(user.email, PASSWORD_RESET_TEXT(token))
+   return true
+}
+
+export const changePassword = async (
+   _: any,
+   { input }: { input: { token: string; newPassword: string } },
+   { redis }: MyContext
+) => {
+   const validPassword = await validatePassword(input.newPassword)
+
+   const key = FORGOT_PASSWORD_PREFIX + input.token
+   const userId = await redis.get(key)
+
+   if (!userId) throw new AuthenticationError('No auth')
+   if (!validPassword) throw new AuthenticationError('Password must be at least 2 characters long')
+   await UserModel.updateOne(
+      { _id: userId },
+      {
+         $set: {
+            password: await argon2.hash(validPassword.password),
+         },
+      }
+   )
+   await redis.del(key)
+   return await UserModel.findById(userId)
 }
