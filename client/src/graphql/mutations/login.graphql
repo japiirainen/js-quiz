@@ -1,4 +1,4 @@
-mutation Login($input: userInput) {
+mutation Login($input: loginInput) {
    login(input: $input) {
       ...RegUser
    }

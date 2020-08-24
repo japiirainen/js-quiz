@@ -6,6 +6,9 @@ import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 })
 export class User extends TimeStamps {
    @prop({ required: true, unique: true })
+   public email!: string
+
+   @prop({ required: true, unique: true })
    public username!: string
 
    @prop({ required: true, trim: true })

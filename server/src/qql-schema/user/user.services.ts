@@ -12,10 +12,11 @@ export const register = async (_: any, { input }: { input: User }, { req }: MyCo
    const userInput = {
       username: input.username,
       password: hashedPassword,
+      email: input.email,
    }
    if (userInput) {
       try {
-         await validateUser(input.username, input.password)
+         await validateUser(input.username, input.password, input.email)
          const newUser = await UserModel.create(userInput)
          req.session!.userId = newUser.id
          return newUser
