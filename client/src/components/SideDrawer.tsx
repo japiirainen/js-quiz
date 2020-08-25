@@ -25,9 +25,9 @@ import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { useRouter } from 'next/router'
 
-interface SideDrawer {}
+interface SideDrawerProps {}
 
-export const SideDrawer: React.FC<SideDrawer> = ({}) => {
+export const SideDrawer: React.FC<SideDrawerProps> = ({}) => {
    const router = useRouter()
    const toast = useToast()
    const { isOpen, onClose, onOpen, onToggle } = useDisclosure()
@@ -50,7 +50,7 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
       )
    } else {
       userStatus = (
-         <Flex>
+         <Flex align="center">
             <Box>
                <Text> Logged in as:</Text>
                <Text as="ins" fontSize={30}>
