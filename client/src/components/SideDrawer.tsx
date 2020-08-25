@@ -12,43 +12,66 @@ import {
    Button,
    Box,
    Flex,
+   useToast,
+   Divider,
+   Text,
+   ListItem,
+   ListIcon,
+   List,
+   Icon,
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
-import { FaAlignJustify } from 'react-icons/fa'
+import { FaAlignJustify, FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
+import { useRouter } from 'next/router'
 
 interface SideDrawer {}
 
 export const SideDrawer: React.FC<SideDrawer> = ({}) => {
+   const router = useRouter()
+   const toast = useToast()
    const { isOpen, onClose, onOpen, onToggle } = useDisclosure()
    const [{ data, fetching: loginFetching }] = useMeQuery({ pause: isServer() })
    const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
-   let body = null
+   let userStatus = null
    if (loginFetching) {
-      body = null
+      userStatus = null
    } else if (!data?.me) {
-      body = (
-         <>
-            <NextLink href="/register">
-               <Link>register</Link>
-            </NextLink>
-            <br />
-            <NextLink href="/login">
-               <Link>login</Link>
-            </NextLink>
-         </>
+      userStatus = (
+         <Flex>
+            <Button fontSize={20} mr={2} variant="link" variantColor="gray" onClick={() => router.push('/login')}>
+               Login
+            </Button>
+
+            <Button fontSize={20} ml={2} variant="link" variantColor="gray" onClick={() => router.push('/register')}>
+               Register
+            </Button>
+         </Flex>
       )
    } else {
-      body = (
+      userStatus = (
          <Flex>
-            <Box mr={3}>{data.me.username}</Box>
+            <Box>
+               <Text> Logged in as:</Text>
+               <Text as="ins" fontSize={30}>
+                  {data.me.username}
+               </Text>
+            </Box>
             <Button
+               ml={'auto'}
                isLoading={logoutFetching}
-               variant="link"
+               variant="outline"
+               variantColor="blue"
                onClick={() => {
                   logout()
                   onToggle()
+                  toast({
+                     title: 'logged out',
+                     status: 'info',
+                     duration: 4000,
+                     isClosable: true,
+                  })
                }}
             >
                logout
@@ -74,20 +97,39 @@ export const SideDrawer: React.FC<SideDrawer> = ({}) => {
             <DrawerOverlay />
             <DrawerContent>
                <DrawerHeader borderBottomWidth="1px">
-                  <NextLink href="/">
-                     <Link>Back Home</Link>
-                  </NextLink>
+                  {userStatus}
+                  {router.pathname !== '/' && (
+                     <>
+                        <Divider mt={6} />
+                        <List spacing={3} my={0}>
+                           <ListItem>
+                              <ListIcon icon={FaArrowLeft} size="15px" ml={3} />
+                              <NextLink href="/">
+                                 <Link>Back Home</Link>
+                              </NextLink>
+                           </ListItem>
+                        </List>
+                     </>
+                  )}
                   <br />
-                  {body}
                </DrawerHeader>
                <DrawerBody>
-                  <NextLink href="/basics">
-                     <Link>Basic questions</Link>
-                  </NextLink>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
+                  <List spacing={3} my={0}>
+                     <NextLink href="/basics">
+                        <Link fontSize={20}>
+                           <ListItem>
+                              <Text fontSize={20}>
+                                 JavaScript basics
+                                 <ListIcon icon={FaArrowRight} size="15px" ml={3} />
+                              </Text>
+                           </ListItem>
+                        </Link>
+                     </NextLink>
+                  </List>
                </DrawerBody>
-               <DrawerFooter />
+               <DrawerFooter>
+                  <Text>© js-quiz</Text>
+               </DrawerFooter>
             </DrawerContent>
          </Drawer>
       </>
