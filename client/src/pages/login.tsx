@@ -26,7 +26,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                      password: res.error.message,
                   })
                } else if (res.data) {
-                  router.push('/')
+                  router.back()
                }
             }}
          >

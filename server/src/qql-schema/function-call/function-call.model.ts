@@ -14,7 +14,7 @@ export class FunctionCall extends TimeStamps {
    @prop({ required: true, ref: Problem })
    public problemId!: mongoose.Types.ObjectId
 
-   @prop({ required: true, ref: Problem })
+   @prop({ required: true })
    public userCode!: string
 
    @prop({ required: true })

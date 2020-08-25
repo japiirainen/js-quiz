@@ -14,9 +14,11 @@ import {
    ModalBody,
    useDisclosure,
    ModalFooter,
+   Flex,
 } from '@chakra-ui/core'
 import { Editor } from './Editor'
 import { Container } from './Container'
+import { useRouter } from 'next/router'
 
 interface ChallengeProps {
    defaultValue: string
@@ -25,6 +27,7 @@ interface ChallengeProps {
 }
 
 export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, correctAnswer }) => {
+   const router = useRouter()
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const theme = { light: 'kuroir', dark: 'pastel_on_dark' }
@@ -57,8 +60,10 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, c
 
    if (loading)
       return (
-         <Container>
-            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="red.500" size="xl" />
+         <Container minHeight="100vh">
+            <Flex justifyContent="center" alignItems="center">
+               <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="red.500" size="xl" />
+            </Flex>
          </Container>
       )
 
@@ -95,7 +100,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, c
                   </Code>
                </ModalBody>
                <ModalFooter>
-                  <Button onClick={onToggle}>login</Button>
+                  <Button onClick={() => router.push('/login')}>login</Button>
                </ModalFooter>
             </ModalContent>
          </Modal>

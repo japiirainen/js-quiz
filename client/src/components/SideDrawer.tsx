@@ -18,7 +18,6 @@ import {
    ListItem,
    ListIcon,
    List,
-   Icon,
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
 import { FaAlignJustify, FaArrowLeft, FaArrowRight } from 'react-icons/fa'

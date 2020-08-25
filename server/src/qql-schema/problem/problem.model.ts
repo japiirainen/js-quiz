@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { prop, getModelForClass, modelOptions, Ref } from '@typegoose/typegoose'
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import { ProblemGroup } from '../problem-group/problem-gourp.model'
+import { ProblemGroup } from '../problem-group/problem-group.model'
 import { FunctionCall } from '../function-call/function-call.model'
 
 export enum DIFFICULTY {
@@ -32,7 +32,7 @@ export class Problem extends TimeStamps {
    @prop({ required: true })
    public code!: string
 
-   @prop({ required: true, ref: FunctionCall })
+   @prop({ required: true })
    public testcases!: Array<Ref<FunctionCall>>
 
    @prop({ required: true })

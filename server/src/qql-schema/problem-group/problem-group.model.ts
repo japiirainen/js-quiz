@@ -9,8 +9,8 @@ export class ProblemGroup extends TimeStamps {
    @prop({ required: true, unique: true })
    public name!: string
 
-   @prop({ ref: Problem })
-   public problems?: Array<Ref<Problem>>
+   @prop({ required: true })
+   public problems!: Array<Ref<Problem>>
 }
 
 export const ProblemGroupModel = getModelForClass(ProblemGroup)

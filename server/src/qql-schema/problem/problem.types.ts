@@ -13,7 +13,7 @@ export default gql`
       description: String!
       difficulty: DIFFICULTY!
       category: String!
-      problemGroup: ProblemGroup!
+      problemGroup: ID!
       code: String!
       problemCalls: [String!]!
       results: [String!]!

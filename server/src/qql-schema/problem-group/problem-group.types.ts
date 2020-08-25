@@ -4,7 +4,7 @@ export default gql`
    type ProblemGroup {
       _id: ID!
       name: String!
-      problems: [Problem]!
+      problems: [ID!]!
    }
 
    input problemGroupInput {
