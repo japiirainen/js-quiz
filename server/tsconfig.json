@@ -24,5 +24,5 @@
         "baseUrl": "."
     },
     "exclude": ["node_modules"],
-    "include": ["./src/**/*.tsx", "./src/**/*.ts", "src/test/user.test.ts"]
+    "include": ["./src/**/*.tsx", "./src/**/*.ts", "src/test/user.test.ts", "src/qql-schema/problem/problem.typests"]
 }

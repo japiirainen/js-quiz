@@ -15,7 +15,8 @@ export default gql`
       category: String!
       problemGroup: ProblemGroup!
       code: String!
-      testcases: Testcase!
+      problemCalls: [String!]!
+      results: [String!]!
       solution: String!
    }
 
