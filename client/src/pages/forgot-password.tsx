@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Wrapper } from '../components/Wrapper'
 import { Formik, Form } from 'formik'
 import { InputField } from '../components/InputField'
-import { Button, Heading } from '@chakra-ui/core'
+import { Button, Text, Icon } from '@chakra-ui/core'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
 import { useForgotPasswordMutation } from '../generated/graphql'
+import { Layout } from '../components/Layout'
 
 const ForgotPassword = () => {
    const [complete, setComplete] = useState(false)
@@ -13,13 +13,16 @@ const ForgotPassword = () => {
 
    if (complete)
       return (
-         <Wrapper variant="small">
-            <Heading>Password reset link has been sent to provided email address!</Heading>
-         </Wrapper>
+         <Layout fontSize={'4vh'} height={'8vh'} variant={'small'} minH={'100vh'}>
+            <Text fontSize={30}>
+               Password reset link has been sent to provided email address!
+               <Icon name="check-circle" color="green.500" mx="2px" />
+            </Text>
+         </Layout>
       )
 
    return (
-      <Wrapper variant="small">
+      <Layout fontSize={'3vh'} height={'8vh'} title={'Forgot password?'} variant={'small'} minH={'100vh'}>
          <Formik
             initialValues={{ email: '' }}
             onSubmit={async values => {
@@ -36,7 +39,7 @@ const ForgotPassword = () => {
                </Form>
             )}
          </Formik>
-      </Wrapper>
+      </Layout>
    )
 }
 
