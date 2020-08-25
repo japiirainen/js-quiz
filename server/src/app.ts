@@ -7,7 +7,7 @@ import { PORT } from './utils/constants'
 import { mySession, redis, myCors } from './utils/middleware'
 import { MyContext } from './utils/types'
 
-export const app = async () => {
+export const start = async () => {
    connect()
 
    const app = express()
