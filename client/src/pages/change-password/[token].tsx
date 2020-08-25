@@ -9,8 +9,9 @@ import { useRouter } from 'next/router'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
 
-const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
+const ChangePassword: NextPage = () => {
    const router = useRouter()
+   const token = typeof router.query.token === 'string' ? router.query.token : ''
    const [, changePassword] = useChangePasswordMutation()
    return (
       <Wrapper variant="small">
@@ -41,9 +42,4 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
    )
 }
 
-ChangePassword.getInitialProps = ({ query }) => {
-   return {
-      token: query.token as string,
-   }
-}
 export default withUrqlClient(createUrqlClient)(ChangePassword)
