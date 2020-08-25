@@ -20,8 +20,8 @@ const Basics = () => {
          <Divider m={10} />
          <Box p={4}>
             <ChallengeDesc
-               primary={'In this challenge you will have to make the function add the two inputs together.'}
-               secondary={'You should only need to touch the function body! 🧐'}
+               primary={'In this this challenge you will have to make the function add the two inputs together.'}
+               secondary={'You should only need to touch the function body! 🤨'}
             />
             <Challenge defaultValue={defVal1} testCases={testCases1} correctAnswer={correctAnswer1} />
          </Box>
