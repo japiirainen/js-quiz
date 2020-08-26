@@ -1,7 +1,7 @@
 import { makeExecutableSchema } from 'apollo-server-express'
 import { resolvers } from './resolvers'
 import user from './user/user.types'
-import functionCall from './function-call/function-call.types'
+import functionCall from './problem-results/problem-result.types'
 import problem from './problem/problem.types'
 import problemGroup from './problem-group/problem-group.types'
 

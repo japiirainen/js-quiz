@@ -3,7 +3,7 @@ const problemCalls = [`add(2, 2)`, `add(4, 100)`, `add(0, 5)`].map(call => {
    return eval(`${userCode}${call}`)
 })
 
-const results = ['4', '104', '5'].map(x => Number(x))
+const results = [4, 104, 5]
 
 const makePairs = (calls, results) => {
    let pairs = []

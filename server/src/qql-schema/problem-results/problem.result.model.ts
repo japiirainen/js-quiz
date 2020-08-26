@@ -5,9 +5,23 @@ import { Problem } from '../problem/problem.model'
 import { User } from '../user/user.model'
 
 @modelOptions({
+   options: { customName: 'result' },
+})
+export class Result extends TimeStamps {
+   @prop({ required: true })
+   public solution!: string
+
+   @prop({ required: true })
+   public success?: Boolean
+
+   @prop({ required: true })
+   public errors: Array<string>
+}
+
+@modelOptions({
    options: { customName: 'function-call' },
 })
-export class FunctionCall extends TimeStamps {
+export class ProblemResult extends TimeStamps {
    @prop({ required: true, ref: User })
    public userId!: mongoose.Types.ObjectId
 
@@ -15,16 +29,8 @@ export class FunctionCall extends TimeStamps {
    public problemId!: mongoose.Types.ObjectId
 
    @prop({ required: true })
-   public userCode!: string
-
-   @prop({ required: true })
-   public problemFn!: string
-
-   @prop({ required: true })
-   public problemCalls!: Array<string>
-
-   @prop({ required: true })
-   public results!: Array<string>
+   public result!: string
 }
 
-export const FunctionCallModel = getModelForClass(FunctionCall)
+export const ResultModel = getModelForClass(Result)
+export const ProblemResultModel = getModelForClass(ProblemResult)

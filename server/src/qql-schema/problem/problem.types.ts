@@ -14,9 +14,7 @@ export default gql`
       difficulty: DIFFICULTY!
       category: String!
       problemGroup: ID!
-      code: String!
-      problemCalls: [String!]!
-      results: [String!]!
+      testCases: [String!]!
       solution: String!
    }
 
@@ -26,8 +24,7 @@ export default gql`
       difficulty: DIFFICULTY!
       category: String!
       problemGroup: ID!
-      code: String!
-      testcases: ID!
+      testCases: [String!]!
       solution: String!
    }
 
