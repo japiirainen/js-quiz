@@ -12,6 +12,7 @@ export const start = async () => {
 
    const app = express()
 
+   // app.set('trust proxy', 1) uncomment this when prod to make cookies work
    app.use(mySession)
    app.use(myCors)
 
