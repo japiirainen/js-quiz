@@ -12,7 +12,7 @@ interface ProblemResultInput {
 interface Result {
    solution: string
    success: Boolean
-   errors: any[]
+   errors: string[]
 }
 
 export const submitResult = async (_: any, { input }: { input: ProblemResultInput }) => {

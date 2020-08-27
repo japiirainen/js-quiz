@@ -7,6 +7,10 @@ export default gql`
       HARD
    }
 
+   type TestCase {
+      case: [String]
+   }
+
    type Problem {
       _id: ID!
       name: String!
@@ -14,7 +18,7 @@ export default gql`
       difficulty: DIFFICULTY!
       index: Int!
       problemGroup: ID
-      testCases: [String!]
+      testCases: TestCase
       correctSolution: String!
       placeHolder: String!
    }

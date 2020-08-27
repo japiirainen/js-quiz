@@ -18,3 +18,11 @@ export const addTestCase = async (_: any, { input }: { input: { _id: string; tes
    )
    return await ProblemModel.findById(input._id)
 }
+
+export const formatTestcases = async (parent: Problem) => {
+   const problem = await ProblemModel.findOne({ name: parent.name })
+   const testCase = problem?.testCases?.map((x: any) => x.flat())
+   return {
+      case: testCase,
+   }
+}

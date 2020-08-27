@@ -33,9 +33,9 @@ const getGroupById = async (groupId: any) => {
 }
 
 //resolver to return all problems in a group
-export const findProblemsInGroup = async (_: any, { _id }: { _id: string }, { req }: MyContext) => {
+export const findProblemsInGroup = async (_: any, { groupName }: { groupName: string }, { req }: MyContext) => {
    if (!req.session!.cookie) throw new AuthenticationError('no auth')
-   const group = await ProblemGroupModel.findById(_id)
+   const group = await ProblemGroupModel.findOne({ name: groupName })
    if (!group) throw new ApolloError('something went wrong')
    const problems = await Promise.all(group.problems.map(getGroupById))
    if (!problems) throw new ApolloError('no problems found')

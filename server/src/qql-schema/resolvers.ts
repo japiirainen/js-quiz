@@ -1,9 +1,12 @@
 import { register, login, me, logout, forgotPassword, changePassword } from './user/user.services'
-import { newProblem, addTestCase } from './problem/problem.services'
+import { newProblem, addTestCase, formatTestcases } from './problem/problem.services'
 import { submitResult } from './problem-results/problem-result.services'
 import { newProblemGroup, findProblemsInGroup, addProblemToGroup } from './problem-group/problem-group.services'
 
 export const resolvers = {
+   Problem: {
+      testCases: formatTestcases,
+   },
    Query: {
       me: me,
    },
