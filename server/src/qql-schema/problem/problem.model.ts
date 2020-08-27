@@ -23,7 +23,7 @@ export class Problem extends TimeStamps {
    public difficulty!: string
 
    @prop({ required: true, unique: true })
-   public category!: string
+   public index!: number
 
    @prop({ ref: ProblemGroup })
    public problemGroup?: mongoose.Types.ObjectId

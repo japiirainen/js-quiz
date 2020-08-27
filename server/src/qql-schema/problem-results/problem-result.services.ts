@@ -1,6 +1,7 @@
 import { testRunner, testsToFnCalls, formatError } from '../../utils/testRunner'
 import { ProblemModel } from '../problem/problem.model'
 import { ApolloError } from 'apollo-server-express'
+import { UserModel } from '../user/user.model'
 
 interface ProblemResultInput {
    userId: string
@@ -25,14 +26,11 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
       solution: input.solution,
    }
    if (!testResults.includes('pass')) {
-      result.success = false
-      result.errors = formatError(testResults)
-      result.solution = input.solution
+      result = { success: false, errors: formatError(testResults), solution: input.solution }
       return result
    } else {
-      result.success = true
-      result.errors = []
-      result.solution = input.solution
+      await UserModel.updateOne({ _id: input.userId }, { $push: { completedProblems: problem._id } })
+      result = { success: true, errors: [], solution: input.solution }
       return result
    }
 }

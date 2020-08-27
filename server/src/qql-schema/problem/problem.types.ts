@@ -12,7 +12,7 @@ export default gql`
       name: String!
       description: String!
       difficulty: DIFFICULTY!
-      category: String!
+      index: Int!
       problemGroup: ID
       testCases: [String!]
       correctSolution: String!
@@ -23,7 +23,7 @@ export default gql`
       name: String!
       description: String!
       difficulty: DIFFICULTY!
-      category: String!
+      index: Int!
       problemGroup: ID
       testCases: [String]
       correctSolution: String!
