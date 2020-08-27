@@ -25,14 +25,17 @@ export class Problem extends TimeStamps {
    @prop({ required: true, unique: true })
    public category!: string
 
-   @prop({ required: true, ref: ProblemGroup })
-   public problemGroup!: mongoose.Types.ObjectId
+   @prop({ ref: ProblemGroup })
+   public problemGroup?: mongoose.Types.ObjectId
+
+   @prop({})
+   testCases?: Array<string>
 
    @prop({ required: true })
-   testCases!: Array<string>
+   public correctSolution!: string
 
    @prop({ required: true })
-   public solution!: string
+   public placeHolder!: string
 }
 
 export const ProblemModel = getModelForClass(Problem)

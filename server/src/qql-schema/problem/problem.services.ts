@@ -2,7 +2,19 @@ import { Problem, ProblemModel } from './problem.model'
 import { ApolloError } from 'apollo-server-express'
 
 export const newProblem = async (_: any, { input }: { input: Problem }) => {
-   const problem = await ProblemModel.create(input)
-   if (!problem) throw new ApolloError('something went wrong!')
-   return problem
+   const doc = await ProblemModel.create(input)
+   if (!doc) throw new ApolloError('something went wrong!')
+   return doc
+}
+
+export const addTestCase = async (_: any, { input }: { input: { _id: string; testCase: string } }) => {
+   await ProblemModel.updateOne(
+      { _id: input._id },
+      {
+         $push: {
+            testCases: input.testCase,
+         },
+      }
+   )
+   return await ProblemModel.findById(input._id)
 }

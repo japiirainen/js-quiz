@@ -7,10 +7,16 @@ export default gql`
       result: Result
    }
 
+   type Error {
+      message: String
+      actual: String
+      expected: String
+   }
+
    type Result {
       solution: String!
       success: Boolean
-      errors: [String]
+      errors: [Error]
    }
 
    input ProblemResultInput {

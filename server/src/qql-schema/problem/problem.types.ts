@@ -13,9 +13,10 @@ export default gql`
       description: String!
       difficulty: DIFFICULTY!
       category: String!
-      problemGroup: ID!
-      testCases: [String!]!
-      solution: String!
+      problemGroup: ID
+      testCases: [String!]
+      correctSolution: String!
+      placeHolder: String!
    }
 
    input problemInput {
@@ -23,9 +24,15 @@ export default gql`
       description: String!
       difficulty: DIFFICULTY!
       category: String!
-      problemGroup: ID!
-      testCases: [String!]!
-      solution: String!
+      problemGroup: ID
+      testCases: [String]
+      correctSolution: String!
+      placeHolder: String!
+   }
+
+   input testCaseInput {
+      _id: ID!
+      testCase: String!
    }
 
    extend type Query {
@@ -35,5 +42,6 @@ export default gql`
 
    extend type Mutation {
       newProblem(input: problemInput): Problem!
+      addTestCase(input: testCaseInput): Problem
    }
 `

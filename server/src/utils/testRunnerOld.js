@@ -21,4 +21,9 @@ function testRunner(maybeSolution, tests) {
    })
    return results
 }
-module.exports = { testRunner }
+
+function testsToFnCalls(testCases) {
+   return testCases.map(f => new Function('solution', 'expect', f))
+}
+
+module.exports = { testRunner, testsToFnCalls }
