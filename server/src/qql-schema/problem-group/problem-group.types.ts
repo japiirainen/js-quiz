@@ -22,6 +22,7 @@ export default gql`
 
    extend type Mutation {
       newProblemGroup(input: problemGroupInput): ProblemGroup!
-      addProblemToProblemGroup(input: addProblem): ProblemGroup
+      addProblemToGroup(input: addProblem): ProblemGroup
+      findProblemsInGroup(_id: String!): [Problem]
    }
 `
