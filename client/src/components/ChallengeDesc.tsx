@@ -4,7 +4,7 @@ import { FaAngleRight } from 'react-icons/fa'
 import { Container } from './Container'
 
 interface ChallengeDescProps {
-   primary?: string
+   primary: string
    difficulty?: string
    secondary?: string
 }
@@ -20,12 +20,14 @@ export const ChallengeDesc: React.FC<ChallengeDescProps> = ({ primary, secondary
                      {primary}
                   </Text>
                </ListItem>
-               <ListItem>
-                  <Text fontSize={20}>
-                     <ListIcon icon={FaAngleRight} size="15px" />
-                     {secondary}
-                  </Text>
-               </ListItem>
+               {secondary && (
+                  <ListItem>
+                     <Text fontSize={20}>
+                        <ListIcon icon={FaAngleRight} size="15px" />
+                        {secondary}
+                     </Text>
+                  </ListItem>
+               )}
             </Box>
          </List>
       </Container>
