@@ -21,6 +21,7 @@ export default gql`
       testCases: TestCase
       correctSolution: String!
       placeHolder: String!
+      placeHolderExpectation: String!
    }
 
    input problemInput {
@@ -32,6 +33,7 @@ export default gql`
       testCases: [String]
       correctSolution: String!
       placeHolder: String!
+      placeHolderExpectation: String!
    }
 
    input testCaseInput {
@@ -40,7 +42,7 @@ export default gql`
    }
 
    extend type Query {
-      problem: Problem!
+      getProblemById(_id: ID!): Problem!
       allProblems: [Problem]!
    }
 

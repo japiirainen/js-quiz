@@ -18,11 +18,11 @@ export default gql`
 
    extend type Query {
       problemGroup(_id: ID!): ProblemGroup!
+      findProblemsInGroup(groupName: String!): [Problem]
    }
 
    extend type Mutation {
       newProblemGroup(input: problemGroupInput): ProblemGroup!
       addProblemToGroup(input: addProblem): ProblemGroup
-      findProblemsInGroup(groupName: String!): [Problem]
    }
 `
