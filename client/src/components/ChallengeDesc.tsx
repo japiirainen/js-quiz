@@ -4,7 +4,8 @@ import { FaAngleRight } from 'react-icons/fa'
 import { Container } from './Container'
 
 interface ChallengeDescProps {
-   primary: string
+   primary?: string
+   difficulty?: string
    secondary?: string
 }
 

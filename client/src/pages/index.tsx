@@ -1,13 +1,29 @@
-import { Divider, Icon, Text } from '@chakra-ui/core'
+import { Divider, Icon, Text, Alert, AlertIcon } from '@chakra-ui/core'
 import { Challenge } from '../components/Challenge'
 import { ChallengeDesc } from '../components/ChallengeDesc'
-import { indexPageChallenge } from '../questions/indexPage'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
 import { Layout } from '../components/Layout'
+import { useGetProblemByIdQuery } from '../generated/graphql'
+import { isServer } from '../utils/isServer'
+import { LoadingSpinner } from '../components/LoadingSpinner'
 
 const Index = () => {
-   const { testCases, defVal, correctAnswer } = indexPageChallenge
+   const [{ data, fetching, error }] = useGetProblemByIdQuery({
+      variables: { _id: '5f478058f712257781ecf239' },
+      pause: isServer(),
+   })
+   console.log(data)
+
+   if (!data && !fetching) {
+      return (
+         <Alert status="error">
+            <AlertIcon />
+            {error?.message}
+         </Alert>
+      )
+   }
+
    return (
       <Layout fontSize={'8vh'} height={'15vh'} title={'Js-quiz'}>
          <Text fontSize={30}>
@@ -15,11 +31,18 @@ const Index = () => {
             <Icon name="check-circle" color="green.500" mx="2px" />
          </Text>
          <Divider m={10} />
-         <ChallengeDesc
-            primary={'In this challenge you will have to make the function add the two inputs together.'}
-            secondary={'You should only need to touch the function body! 🤓'}
-         />
-         <Challenge defaultValue={defVal} testCases={testCases} correctAnswer={correctAnswer} />
+         {fetching && !data ? (
+            <LoadingSpinner />
+         ) : (
+            <>
+               <ChallengeDesc primary={data?.getProblemById.description} difficulty={data?.getProblemById.difficulty} />
+               <Challenge
+                  problemId={data!.getProblemById._id}
+                  defaultValue={data!.getProblemById.placeHolder}
+                  testCasesToDisplay={data!.getProblemById.placeHolderExpectation}
+               />
+            </>
+         )}
       </Layout>
    )
 }

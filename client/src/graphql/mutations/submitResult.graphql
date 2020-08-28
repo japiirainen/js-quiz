@@ -1,0 +1,11 @@
+mutation SubmitResult($input: ProblemResultInput!) {
+   submitResult(input: $input) {
+      solution
+      success
+      errors {
+         message
+         actual
+         expected
+      }
+   }
+}

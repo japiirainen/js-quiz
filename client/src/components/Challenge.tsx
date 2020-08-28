@@ -1,10 +1,9 @@
-import React, { useState, MouseEvent } from 'react'
+import React, { useState } from 'react'
 import {
    Box,
    Code,
    useColorMode,
    Button,
-   Spinner,
    Text,
    Modal,
    ModalOverlay,
@@ -14,19 +13,26 @@ import {
    ModalBody,
    useDisclosure,
    ModalFooter,
-   Flex,
+   Alert,
+   AlertIcon,
 } from '@chakra-ui/core'
 import { Editor } from './Editor'
-import { Container } from './Container'
 import { useRouter } from 'next/router'
+import { LoadingSpinner } from './LoadingSpinner'
+import { useSubmitResultMutation, useMeQuery } from '../generated/graphql'
+import { isServer } from '../utils/isServer'
 
 interface ChallengeProps {
    defaultValue: string
-   testCases: string
-   correctAnswer: string | number
+   testCasesToDisplay: string
+   problemId: string
 }
 
-export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, correctAnswer }) => {
+export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCasesToDisplay, problemId }) => {
+   const [{ data: meData }] = useMeQuery({ pause: isServer() })
+   const [{ data, error }, submitResult] = useSubmitResultMutation()
+
+   console.log(data)
    const router = useRouter()
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
@@ -34,38 +40,19 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, c
 
    const [value, setValue] = useState(defaultValue)
    const [loading, setLoading] = useState(false)
-   const [error, setError] = useState(false)
 
-   const captureFunction = (value: string) => {
-      setLoading(true)
-      return eval(value)
-   }
    const handleLoading = () => {
-      setTimeout(() => setLoading(() => false), 1000)
-   }
-
-   const handleRun = (event: MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault()
-      const res = captureFunction(value)
-      if (res === correctAnswer) {
-         handleLoading()
+      setTimeout(() => {
+         setLoading(() => false)
          onToggle()
-         console.log('success')
-      } else {
-         handleLoading()
-         setError(true)
-         console.log('incorrect answer')
-      }
+      }, 1000)
    }
-
-   if (loading)
-      return (
-         <Container minHeight="100vh">
-            <Flex justifyContent="center" alignItems="center">
-               <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="red.500" size="xl" />
-            </Flex>
-         </Container>
-      )
+   const handleSubmit = () => {
+      setLoading(true)
+      handleLoading()
+      submitResult({ input: { problemId, solution: value, userId: meData!.me!._id } })
+   }
+   if (loading) return <LoadingSpinner />
 
    return (
       <>
@@ -77,15 +64,36 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCases, c
                value={value}
                setValue={setValue}
             />
-            <Button leftIcon="check" mt={2} bg="green.300" onClick={handleRun}>
+            <Button leftIcon="check" mt={2} bg="green.300" onClick={handleSubmit}>
                run
             </Button>
-            <Code width="100%" mt={2} height={20}>
-               {testCases}
-               {error && (
-                  <Text color="red.500" fontSize={15}>
-                     Wrong answer, please try again
-                  </Text>
+            <Code width="100%" mt={2} height={'auto'} p={10}>
+               {data?.submitResult?.success && (
+                  <>
+                     <Alert status="success">
+                        <AlertIcon />
+                        {data.submitResult.solution}
+                     </Alert>
+                  </>
+               )}
+               {data?.submitResult?.errors ? (
+                  data.submitResult.errors.map(err =>
+                     !err ? null : (
+                        <>
+                           <Text color="red.500" fontSize={15}>
+                              message: {err.message}
+                           </Text>
+                           <Text color="red.500" fontSize={15}>
+                              actual: {err.actual}
+                           </Text>
+                           <Text color="red.500" fontSize={15}>
+                              expected: {err.expected}
+                           </Text>
+                        </>
+                     )
+                  )
+               ) : (
+                  <>{testCasesToDisplay}</>
                )}
             </Code>
          </Box>

@@ -1,0 +1,9 @@
+fragment RegProblem on Problem {
+   _id
+   name
+   description
+   difficulty
+   correctSolution
+   placeHolder
+   placeHolderExpectation
+}

@@ -1,0 +1,5 @@
+query GetProblemById($_id: ID!) {
+   getProblemById(_id: $_id) {
+      ...RegProblem
+   }
+}
