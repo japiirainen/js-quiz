@@ -1,4 +1,5 @@
 import { Flex, useColorMode, Box } from '@chakra-ui/core'
+import React from 'react'
 
 export type ContainerVariant = 'small' | 'regular'
 

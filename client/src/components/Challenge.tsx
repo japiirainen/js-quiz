@@ -30,7 +30,7 @@ interface ChallengeProps {
 
 export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCasesToDisplay, problemId }) => {
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
-   const [{ data, error }, submitResult] = useSubmitResultMutation()
+   const [{ data }, submitResult] = useSubmitResultMutation()
 
    console.log(data)
    const router = useRouter()
@@ -50,6 +50,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCasesToD
    const handleSubmit = () => {
       setLoading(true)
       handleLoading()
+      //need to make a function for this
       submitResult({ input: { problemId, solution: value, userId: meData!.me!._id } })
    }
    if (loading) return <LoadingSpinner />
