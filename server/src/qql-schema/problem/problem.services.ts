@@ -31,8 +31,7 @@ export const formatTestCases = async (parent: Problem) => {
    }
 }
 
-export const getProblemById = async (_: any, { _id }: { _id: string }, ctx: MyContext) => {
-   isAuth(ctx)
+export const getProblemById = async (_: any, { _id }: { _id: string }) => {
    const doc = await ProblemModel.findById(_id)
    if (!doc) throw new ApolloError('something went wrong')
    return doc
