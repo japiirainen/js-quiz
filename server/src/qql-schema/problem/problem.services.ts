@@ -1,13 +1,17 @@
 import { Problem, ProblemModel } from './problem.model'
 import { ApolloError } from 'apollo-server-express'
+import { MyContext } from 'src/utils/types'
+import { isAuth } from '../../utils/middleware'
 
-export const newProblem = async (_: any, { input }: { input: Problem }) => {
+export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyContext) => {
+   isAuth(ctx)
    const doc = await ProblemModel.create(input)
    if (!doc) throw new ApolloError('something went wrong!')
    return doc
 }
 
-export const addTestCase = async (_: any, { input }: { input: { _id: string; testCase: string } }) => {
+export const addTestCase = async (_: any, { input }: { input: { _id: string; testCase: string } }, ctx: MyContext) => {
+   isAuth(ctx)
    await ProblemModel.updateOne(
       { _id: input._id },
       {
@@ -27,7 +31,8 @@ export const formatTestCases = async (parent: Problem) => {
    }
 }
 
-export const getProblemById = async (_: any, { _id }: { _id: string }) => {
+export const getProblemById = async (_: any, { _id }: { _id: string }, ctx: MyContext) => {
+   isAuth(ctx)
    const doc = await ProblemModel.findById(_id)
    if (!doc) throw new ApolloError('something went wrong')
    return doc

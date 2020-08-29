@@ -3,6 +3,8 @@ import cors from 'cors'
 import session from 'express-session'
 import Redis from 'ioredis'
 import { cookieName, sessionSecret, __prod__ } from './constants'
+import { MyContext } from './types'
+import { AuthenticationError } from 'apollo-server-express'
 
 export const redis = new Redis()
 const RedisStore = connectRedis(session)
@@ -26,3 +28,7 @@ export const myCors = cors({
    origin: 'http://localhost:3000',
    credentials: true,
 })
+
+export const isAuth = (ctx: MyContext) => {
+   if (!ctx.req.session?.userId) throw new AuthenticationError('no auth')
+}
