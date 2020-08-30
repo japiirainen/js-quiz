@@ -16,14 +16,14 @@ import {
    useDisclosure,
 } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CombinedError } from 'urql'
-import { RegProblemFragment, useMeQuery, useSubmitResultMutation } from '../generated/graphql'
-import { isServer } from '../utils/isServer'
+import { RegProblemFragment, useSubmitResultMutation, useMeQuery } from '../generated/graphql'
 import { ChallengeComplete } from './ChallengeComplete'
 import { Editor } from './Editor'
 import { LoadingSpinner } from './LoadingSpinner'
 import { hasCompleted } from '../utils/hasCompleted'
+import { isServer } from '../utils/isServer'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined
@@ -32,21 +32,28 @@ export interface ChallengeProps {
 }
 
 export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, error }) => {
-   const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [{ data }, submitResult] = useSubmitResultMutation()
-
+   const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const router = useRouter()
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const theme = { light: 'kuroir', dark: 'pastel_on_dark' }
 
    const [value, setValue] = useState(problemData?.placeHolder)
-   const [completedState, setCompletedState] = useState(
-      hasCompleted({
-         problemId: problemData?._id,
-         completedProblems: meData?.me?.completedProblems || [],
-      })
-   )
+   const [completedState, setCompletedState] = useState(false)
+
+   useEffect(() => {
+      if (
+         hasCompleted({
+            problemId: problemData?._id,
+            completedProblems: meData?.me?.completedProblems || [],
+         })
+      ) {
+         setCompletedState(true)
+      } else {
+         setCompletedState(false)
+      }
+   }, [meData?.me])
 
    return (
       <Box minH="30vh">
