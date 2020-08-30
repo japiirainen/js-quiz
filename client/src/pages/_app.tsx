@@ -1,7 +1,6 @@
 import { ColorModeProvider, CSSReset, ThemeProvider } from '@chakra-ui/core'
 import { NextComponentType } from 'next'
 import theme from '../theme'
-
 interface MyAppProps {
    Component: NextComponentType
    pageProps: any

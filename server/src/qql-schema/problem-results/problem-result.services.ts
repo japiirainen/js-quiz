@@ -4,7 +4,7 @@ import { ApolloError } from 'apollo-server-express'
 import { UserModel } from '../user/user.model'
 
 interface ProblemResultInput {
-   userId: string
+   userId: string | undefined
    problemId: string
    solution: string
 }
@@ -29,7 +29,11 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
       result = { success: false, errors: formatError(testResults), solution: input.solution }
       return result
    } else {
-      await UserModel.updateOne({ _id: input.userId }, { $push: { completedProblems: problem._id } })
+      input.userId &&
+         (await UserModel.updateOne(
+            { _id: input.userId },
+            { $push: { completedProblems: problem._id } }
+         ))
       result = { success: true, errors: [], solution: input.solution }
       return result
    }

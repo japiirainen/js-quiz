@@ -20,7 +20,7 @@ export default gql`
    }
 
    input ProblemResultInput {
-      userId: ID!
+      userId: ID
       problemId: ID!
       solution: String!
    }

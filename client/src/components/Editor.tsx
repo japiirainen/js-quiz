@@ -16,7 +16,7 @@ interface EditorProps {
    defaultValue: string
    theme: string
    value: string
-   setValue: React.Dispatch<React.SetStateAction<string>>
+   setValue: any
 }
 
 export const Editor: React.FC<EditorProps> = ({ height, defaultValue, theme, value, setValue }) => {

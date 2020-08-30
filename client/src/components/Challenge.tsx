@@ -19,62 +19,77 @@ import {
 import { Editor } from './Editor'
 import { useRouter } from 'next/router'
 import { LoadingSpinner } from './LoadingSpinner'
-import { useSubmitResultMutation, useMeQuery } from '../generated/graphql'
+import { useSubmitResultMutation, useMeQuery, RegProblemFragment } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
+import { CombinedError } from 'urql'
+import { ChallengeComplete } from './ChallengeComplete'
 
-interface ChallengeProps {
-   defaultValue: string
-   testCasesToDisplay: string
-   problemId: string
+export interface ChallengeProps {
+   problemData: RegProblemFragment | undefined
+   loading?: Boolean
+   error?: CombinedError | undefined
 }
 
-export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCasesToDisplay, problemId }) => {
+export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, error }) => {
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [{ data }, submitResult] = useSubmitResultMutation()
 
-   console.log(data)
    const router = useRouter()
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const theme = { light: 'kuroir', dark: 'pastel_on_dark' }
 
-   const [value, setValue] = useState(defaultValue)
-   const [loading, setLoading] = useState(false)
-
-   const handleLoading = () => {
-      setTimeout(() => {
-         setLoading(() => false)
-         onToggle()
-      }, 1000)
-   }
-   const handleSubmit = () => {
-      setLoading(true)
-      handleLoading()
-      //need to make a function for this
-      submitResult({ input: { problemId, solution: value, userId: meData!.me!._id } })
-   }
-   if (loading) return <LoadingSpinner />
+   const [value, setValue] = useState(problemData?.placeHolder)
+   const [completedState, setCompletedState] = useState(false)
 
    return (
       <>
          <Box>
-            <Editor
-               height={'200px'}
-               defaultValue={defaultValue}
-               theme={theme[colorMode]}
-               value={value}
-               setValue={setValue}
-            />
-            <Button leftIcon="check" mt={2} bg="green.300" onClick={handleSubmit}>
-               run
-            </Button>
+            {loading && !value && <LoadingSpinner />}
+            {problemData && !completedState && (
+               <Editor
+                  height={'200px'}
+                  defaultValue={problemData!.placeHolder}
+                  theme={theme[colorMode]}
+                  value={value || ''}
+                  setValue={setValue}
+               />
+            )}
+            {completedState && (
+               <ChallengeComplete
+                  onNextClick={() => router.push('/basics')}
+                  onRedoClick={() => setCompletedState(false)}
+               />
+            )}
+            {completedState ? null : (
+               <Button
+                  leftIcon="check"
+                  mt={2}
+                  bg="green.300"
+                  onClick={async () => {
+                     const res = await await submitResult({
+                        input: {
+                           problemId: problemData!._id,
+                           solution: value || '',
+                           userId: meData?.me?._id,
+                        },
+                     })
+                     if (res.data?.submitResult?.success && !meData?.me?._id) {
+                        onToggle()
+                     } else if (res.data?.submitResult?.success) {
+                        setCompletedState(true)
+                     }
+                  }}
+               >
+                  run
+               </Button>
+            )}
             <Code width="100%" mt={2} height={'auto'} p={10}>
                {data?.submitResult?.success && (
                   <>
-                     <Alert status="success">
-                        <AlertIcon />
-                        {data.submitResult.solution}
-                     </Alert>
+                     <Text color="green.500" fontSize={15}>
+                        your solution: {data.submitResult.solution}
+                     </Text>
                   </>
                )}
                {data?.submitResult?.errors ? (
@@ -94,9 +109,15 @@ export const Challenge: React.FC<ChallengeProps> = ({ defaultValue, testCasesToD
                      )
                   )
                ) : (
-                  <>{testCasesToDisplay}</>
+                  <>{problemData?.placeHolderExpectation}</>
                )}
             </Code>
+            {error && (
+               <Alert status="error">
+                  <AlertIcon />
+                  {error?.message}
+               </Alert>
+            )}
          </Box>
          <Modal onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay />

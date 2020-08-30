@@ -136,7 +136,7 @@ export type Result = {
 }
 
 export type ProblemResultInput = {
-   userId: Scalars['ID']
+   userId?: Maybe<Scalars['ID']>
    problemId: Scalars['ID']
    solution: Scalars['String']
 }
@@ -201,7 +201,13 @@ export type AddProblem = {
 
 export type RegProblemFragment = { __typename?: 'Problem' } & Pick<
    Problem,
-   '_id' | 'name' | 'description' | 'difficulty' | 'correctSolution' | 'placeHolder' | 'placeHolderExpectation'
+   | '_id'
+   | 'name'
+   | 'description'
+   | 'difficulty'
+   | 'correctSolution'
+   | 'placeHolder'
+   | 'placeHolderExpectation'
 >
 
 export type RegUserFragment = { __typename?: 'User' } & Pick<User, '_id' | 'username'>
@@ -224,7 +230,9 @@ export type LoginMutationVariables = Exact<{
    input?: Maybe<LoginInput>
 }>
 
-export type LoginMutation = { __typename?: 'Mutation' } & { login: { __typename?: 'User' } & RegUserFragment }
+export type LoginMutation = { __typename?: 'Mutation' } & {
+   login: { __typename?: 'User' } & RegUserFragment
+}
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never }>
 
@@ -234,7 +242,9 @@ export type RegisterMutationVariables = Exact<{
    input?: Maybe<RegisterInput>
 }>
 
-export type RegisterMutation = { __typename?: 'Mutation' } & { register: { __typename?: 'User' } & RegUserFragment }
+export type RegisterMutation = { __typename?: 'Mutation' } & {
+   register: { __typename?: 'User' } & RegUserFragment
+}
 
 export type SubmitResultMutationVariables = Exact<{
    input: ProblemResultInput
@@ -243,7 +253,11 @@ export type SubmitResultMutationVariables = Exact<{
 export type SubmitResultMutation = { __typename?: 'Mutation' } & {
    submitResult?: Maybe<
       { __typename?: 'Result' } & Pick<Result, 'solution' | 'success'> & {
-            errors?: Maybe<Array<Maybe<{ __typename?: 'Error' } & Pick<Error, 'message' | 'actual' | 'expected'>>>>
+            errors?: Maybe<
+               Array<
+                  Maybe<{ __typename?: 'Error' } & Pick<Error, 'message' | 'actual' | 'expected'>>
+               >
+            >
          }
    >
 }
@@ -258,7 +272,9 @@ export type GetProblemByIdQuery = { __typename?: 'Query' } & {
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>
 
-export type MeQuery = { __typename?: 'Query' } & { me?: Maybe<{ __typename?: 'User' } & RegUserFragment> }
+export type MeQuery = { __typename?: 'Query' } & {
+   me?: Maybe<{ __typename?: 'User' } & RegUserFragment>
+}
 
 export const RegProblemFragmentDoc = gql`
    fragment RegProblem on Problem {
@@ -287,7 +303,9 @@ export const ChangePasswordDocument = gql`
 `
 
 export function useChangePasswordMutation() {
-   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument)
+   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(
+      ChangePasswordDocument
+   )
 }
 export const ForgotPasswordDocument = gql`
    mutation ForgotPassword($input: forgotPasswordInput) {
@@ -296,7 +314,9 @@ export const ForgotPasswordDocument = gql`
 `
 
 export function useForgotPasswordMutation() {
-   return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument)
+   return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(
+      ForgotPasswordDocument
+   )
 }
 export const LoginDocument = gql`
    mutation Login($input: loginInput) {
@@ -346,7 +366,9 @@ export const SubmitResultDocument = gql`
 `
 
 export function useSubmitResultMutation() {
-   return Urql.useMutation<SubmitResultMutation, SubmitResultMutationVariables>(SubmitResultDocument)
+   return Urql.useMutation<SubmitResultMutation, SubmitResultMutationVariables>(
+      SubmitResultDocument
+   )
 }
 export const GetProblemByIdDocument = gql`
    query GetProblemById($_id: ID!) {
@@ -357,7 +379,9 @@ export const GetProblemByIdDocument = gql`
    ${RegProblemFragmentDoc}
 `
 
-export function useGetProblemByIdQuery(options: Omit<Urql.UseQueryArgs<GetProblemByIdQueryVariables>, 'query'> = {}) {
+export function useGetProblemByIdQuery(
+   options: Omit<Urql.UseQueryArgs<GetProblemByIdQueryVariables>, 'query'> = {}
+) {
    return Urql.useQuery<GetProblemByIdQuery>({ query: GetProblemByIdDocument, ...options })
 }
 export const MeDocument = gql`

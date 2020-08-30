@@ -2,14 +2,9 @@ import { Box, List, ListIcon, ListItem, Text } from '@chakra-ui/core'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import { Container } from './Container'
+import { ChallengeProps } from './Challenge'
 
-interface ChallengeDescProps {
-   primary: string
-   difficulty?: string
-   secondary?: string
-}
-
-export const ChallengeDesc: React.FC<ChallengeDescProps> = ({ primary, secondary }) => {
+export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
    return (
       <Container>
          <List spacing={3} my={0}>
@@ -17,17 +12,9 @@ export const ChallengeDesc: React.FC<ChallengeDescProps> = ({ primary, secondary
                <ListItem>
                   <Text fontSize={20}>
                      <ListIcon icon={FaAngleRight} size="15px" />
-                     {primary}
+                     {problemData?.description}
                   </Text>
                </ListItem>
-               {secondary && (
-                  <ListItem>
-                     <Text fontSize={20}>
-                        <ListIcon icon={FaAngleRight} size="15px" />
-                        {secondary}
-                     </Text>
-                  </ListItem>
-               )}
             </Box>
          </List>
       </Container>
