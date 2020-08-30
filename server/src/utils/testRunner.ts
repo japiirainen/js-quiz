@@ -1,9 +1,6 @@
 import { expect } from 'chai'
-import { startsWith, replace } from 'ramda'
+import { startsWith, replace, map } from 'ramda'
 
-const resolveArrowFn = (str: string) => {
-   return startsWith('const', str) || startsWith('let', str) || startsWith('var', str)
-}
 export function testRunner(maybeSolution: string, tests: Function[]) {
    let solution: any
    try {
@@ -29,19 +26,15 @@ export function testRunner(maybeSolution: string, tests: Function[]) {
    return results
 }
 
+const resolveArrowFn = (str: string) => {
+   return startsWith('const', str) || startsWith('let', str) || startsWith('var', str)
+}
+
 export function testsToFnCalls(testCases: string[]) {
    return testCases.map((f: any) => new Function('solution', 'expect', f))
 }
 
-export function formatError(testResults: any[]) {
-   let errors: any = []
-   testResults.map(item => {
-      const error = {
-         message: item.message,
-         actual: item.actual,
-         expected: item.expected,
-      }
-      errors.push(error)
-   })
-   return errors
+const errorMapper = (item: any) => {
+   return { message: item.message, actual: item.actual, expected: item.expected }
 }
+export const formatError = (testResults: any[]) => map(errorMapper, testResults)
