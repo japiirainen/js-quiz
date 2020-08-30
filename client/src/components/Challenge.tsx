@@ -22,8 +22,8 @@ import { RegProblemFragment, useSubmitResultMutation, useMeQuery } from '../gene
 import { ChallengeComplete } from './ChallengeComplete'
 import { Editor } from './Editor'
 import { LoadingSpinner } from './LoadingSpinner'
-import { hasCompleted } from '../utils/hasCompleted'
 import { isServer } from '../utils/isServer'
+import { includes } from 'ramda'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined
@@ -32,7 +32,7 @@ export interface ChallengeProps {
 }
 
 export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, error }) => {
-   const [{ data }, submitResult] = useSubmitResultMutation()
+   const [{ data, fetching }, submitResult] = useSubmitResultMutation()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const router = useRouter()
    const { colorMode } = useColorMode()
@@ -43,21 +43,17 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const [completedState, setCompletedState] = useState(false)
 
    useEffect(() => {
-      if (
-         hasCompleted({
-            problemId: problemData?._id,
-            completedProblems: meData?.me?.completedProblems || [],
-         })
-      ) {
+      if (includes(problemData?._id, meData?.me?.completedProblems || [])) {
          setCompletedState(true)
       } else {
          setCompletedState(false)
       }
-   }, [meData?.me])
+   }, [problemData?._id, meData?.me?.completedProblems])
 
    return (
       <Box minH="30vh">
          <Box>
+            {fetching && <LoadingSpinner />}
             {loading && !value && <LoadingSpinner />}
             {problemData && !completedState && (
                <Editor

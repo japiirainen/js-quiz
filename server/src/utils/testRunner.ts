@@ -1,14 +1,21 @@
 import { expect } from 'chai'
+import { startsWith, replace } from 'ramda'
 
+const resolveArrowFn = (str: string) => {
+   return startsWith('const', str) || startsWith('let', str) || startsWith('var', str)
+}
 export function testRunner(maybeSolution: string, tests: Function[]) {
    let solution: any
    try {
+      if (resolveArrowFn(maybeSolution)) {
+         maybeSolution = replace(/[^(]*/, '', maybeSolution)
+      }
       solution = eval(` 
    const func = ${maybeSolution};
    func
    `)
    } catch (e) {
-      console.error('syntax error')
+      console.error(e)
    }
 
    const results = tests.map(fn => {
