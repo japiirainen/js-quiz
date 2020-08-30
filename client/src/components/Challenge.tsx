@@ -1,28 +1,29 @@
-import React, { useState } from 'react'
 import {
-   Box,
-   Code,
-   useColorMode,
-   Button,
-   Text,
-   Modal,
-   ModalOverlay,
-   ModalContent,
-   ModalHeader,
-   ModalCloseButton,
-   ModalBody,
-   useDisclosure,
-   ModalFooter,
    Alert,
    AlertIcon,
+   Box,
+   Button,
+   Code,
+   Modal,
+   ModalBody,
+   ModalCloseButton,
+   ModalContent,
+   ModalFooter,
+   ModalHeader,
+   ModalOverlay,
+   Text,
+   useColorMode,
+   useDisclosure,
 } from '@chakra-ui/core'
-import { Editor } from './Editor'
 import { useRouter } from 'next/router'
-import { LoadingSpinner } from './LoadingSpinner'
-import { useSubmitResultMutation, useMeQuery, RegProblemFragment } from '../generated/graphql'
-import { isServer } from '../utils/isServer'
+import React, { useState } from 'react'
 import { CombinedError } from 'urql'
+import { RegProblemFragment, useMeQuery, useSubmitResultMutation } from '../generated/graphql'
+import { isServer } from '../utils/isServer'
 import { ChallengeComplete } from './ChallengeComplete'
+import { Editor } from './Editor'
+import { LoadingSpinner } from './LoadingSpinner'
+import { hasCompleted } from '../utils/hasCompleted'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined
@@ -40,10 +41,15 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const theme = { light: 'kuroir', dark: 'pastel_on_dark' }
 
    const [value, setValue] = useState(problemData?.placeHolder)
-   const [completedState, setCompletedState] = useState(false)
+   const [completedState, setCompletedState] = useState(
+      hasCompleted({
+         problemId: problemData?._id,
+         completedProblems: meData?.me?.completedProblems || [],
+      })
+   )
 
    return (
-      <>
+      <Box minH="30vh">
          <Box>
             {loading && !value && <LoadingSpinner />}
             {problemData && !completedState && (
@@ -134,6 +140,6 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                </ModalFooter>
             </ModalContent>
          </Modal>
-      </>
+      </Box>
    )
 }
