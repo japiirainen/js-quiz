@@ -7,13 +7,13 @@ import { Layout } from '../components/Layout'
 import { useGetProblemsInGroupQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { LoadingSpinner } from '../components/LoadingSpinner'
+import { v4 } from 'uuid'
 
 const Basics = () => {
    const [{ fetching, data, error }] = useGetProblemsInGroupQuery({
       variables: { groupName: 'basics' },
       pause: isServer(),
    })
-
    return (
       <Layout title={'JavaScript basics'} height={'8vh'} fontSize={'4vh'}>
          <Text fontSize={30}>
@@ -21,12 +21,13 @@ const Basics = () => {
             <Icon name="unlock" color="blue.500" mx="2px" size={'5'} />
          </Text>
          <Divider m={10} />
+
          {fetching && <LoadingSpinner />}
          {data?.findProblemsInGroup?.map(problem => {
             return (
                <>
-                  <Box p={4}>
-                     <ChallengeDesc problemData={problem} key={problem?._id} />
+                  <Box p={4} key={v4()}>
+                     <ChallengeDesc problemData={problem} key={problem?.name} />
                      <Challenge
                         problemData={problem}
                         error={error}
@@ -34,7 +35,7 @@ const Basics = () => {
                         key={problem?._id}
                      />
                   </Box>
-                  <Divider m={10} />
+                  <Divider m={10} key={v4()} />
                </>
             )
          })}

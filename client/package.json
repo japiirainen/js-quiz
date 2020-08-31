@@ -29,7 +29,8 @@
       "react-dom": "^16.12.0",
       "react-icons": "^3.11.0",
       "server": "1.0.0",
-      "urql": "^1.10.0"
+      "urql": "^1.10.0",
+      "uuidv4": "^6.2.3"
    },
    "devDependencies": {
       "@graphql-codegen/cli": "1.17.8",

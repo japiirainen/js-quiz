@@ -22,6 +22,7 @@ export default gql`
       correctSolution: String!
       placeHolder: String!
       placeHolderExpectation: String!
+      category: String!
    }
 
    input problemInput {
@@ -34,6 +35,7 @@ export default gql`
       correctSolution: String!
       placeHolder: String!
       placeHolderExpectation: String!
+      category: String!
    }
 
    input testCaseInput {

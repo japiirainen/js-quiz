@@ -39,6 +39,9 @@ export class Problem extends TimeStamps {
 
    @prop({})
    public placeHolderExpectation!: string
+
+   @prop({})
+   public category!: string
 }
 
 export const ProblemModel = getModelForClass(Problem)
