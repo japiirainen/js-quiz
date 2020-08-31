@@ -9,11 +9,6 @@ import {
    DrawerContent,
    useDisclosure,
    Link,
-   Button,
-   Box,
-   Flex,
-   useToast,
-   Divider,
    Text,
    ListItem,
    ListIcon,
@@ -21,63 +16,14 @@ import {
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
 import { FaAlignJustify, FaArrowLeft, FaArrowRight } from 'react-icons/fa'
-import { useMeQuery, useLogoutMutation } from '../generated/graphql'
-import { isServer } from '../utils/isServer'
 import { useRouter } from 'next/router'
 
 interface SideDrawerProps {}
 
 export const SideDrawer: React.FC<SideDrawerProps> = ({}) => {
    const router = useRouter()
-   const toast = useToast()
-   const { isOpen, onClose, onOpen, onToggle } = useDisclosure()
-   const [{ data, fetching: loginFetching }] = useMeQuery({ pause: isServer() })
-   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
-   let userStatus = null
-   if (loginFetching) {
-      userStatus = null
-   } else if (!data?.me) {
-      userStatus = (
-         <Flex>
-            <Button fontSize={20} mr={2} variant="link" variantColor="gray" onClick={() => router.push('/login')}>
-               Login
-            </Button>
+   const { isOpen, onClose, onOpen } = useDisclosure()
 
-            <Button fontSize={20} ml={2} variant="link" variantColor="gray" onClick={() => router.push('/register')}>
-               Register
-            </Button>
-         </Flex>
-      )
-   } else {
-      userStatus = (
-         <Flex align="center">
-            <Box>
-               <Text> Logged in as:</Text>
-               <Text as="ins" fontSize={30}>
-                  {data.me.username}
-               </Text>
-            </Box>
-            <Button
-               ml={'auto'}
-               isLoading={logoutFetching}
-               variant="outline"
-               variantColor="blue"
-               onClick={() => {
-                  logout()
-                  onToggle()
-                  toast({
-                     title: 'logged out',
-                     status: 'info',
-                     duration: 4000,
-                     isClosable: true,
-                  })
-               }}
-            >
-               logout
-            </Button>
-         </Flex>
-      )
-   }
    const btnRef = React.useRef()
    return (
       <>
@@ -96,10 +42,8 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({}) => {
             <DrawerOverlay />
             <DrawerContent>
                <DrawerHeader borderBottomWidth="1px">
-                  {userStatus}
                   {router.pathname !== '/' && (
                      <>
-                        <Divider mt={6} />
                         <List spacing={3} my={0}>
                            <ListItem>
                               <ListIcon icon={FaArrowLeft} size="15px" ml={3} />
