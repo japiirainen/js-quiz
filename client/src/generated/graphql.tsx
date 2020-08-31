@@ -273,6 +273,14 @@ export type GetProblemByIdQuery = { __typename?: 'Query' } & {
    getProblemById: { __typename?: 'Problem' } & RegProblemFragment
 }
 
+export type GetProblemsInGroupQueryVariables = Exact<{
+   groupName: Scalars['String']
+}>
+
+export type GetProblemsInGroupQuery = { __typename?: 'Query' } & {
+   findProblemsInGroup?: Maybe<Array<Maybe<{ __typename?: 'Problem' } & RegProblemFragment>>>
+}
+
 export type MeQueryVariables = Exact<{ [key: string]: never }>
 
 export type MeQuery = { __typename?: 'Query' } & {
@@ -387,6 +395,20 @@ export function useGetProblemByIdQuery(
    options: Omit<Urql.UseQueryArgs<GetProblemByIdQueryVariables>, 'query'> = {}
 ) {
    return Urql.useQuery<GetProblemByIdQuery>({ query: GetProblemByIdDocument, ...options })
+}
+export const GetProblemsInGroupDocument = gql`
+   query GetProblemsInGroup($groupName: String!) {
+      findProblemsInGroup(groupName: $groupName) {
+         ...RegProblem
+      }
+   }
+   ${RegProblemFragmentDoc}
+`
+
+export function useGetProblemsInGroupQuery(
+   options: Omit<Urql.UseQueryArgs<GetProblemsInGroupQueryVariables>, 'query'> = {}
+) {
+   return Urql.useQuery<GetProblemsInGroupQuery>({ query: GetProblemsInGroupDocument, ...options })
 }
 export const MeDocument = gql`
    query Me {

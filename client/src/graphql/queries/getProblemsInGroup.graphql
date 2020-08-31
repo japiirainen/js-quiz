@@ -1,0 +1,5 @@
+query GetProblemsInGroup($groupName: String!) {
+   findProblemsInGroup(groupName: $groupName) {
+      ...RegProblem
+   }
+}

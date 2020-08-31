@@ -1,16 +1,19 @@
 import { Box, Divider, Text, Icon } from '@chakra-ui/core'
 import { Challenge } from '../components/Challenge'
 import { ChallengeDesc } from '../components/ChallengeDesc'
-import { basicsPageChallenges } from '../questions/basicsPage'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
 import { Layout } from '../components/Layout'
+import { useGetProblemsInGroupQuery } from '../generated/graphql'
+import { isServer } from '../utils/isServer'
+import { LoadingSpinner } from '../components/LoadingSpinner'
 
 const Basics = () => {
-   const {
-      q1: { testCases1, defVal1, correctAnswer1 },
-      q2: { testCases2, defVal2, correctAnswer2 },
-   } = basicsPageChallenges
+   const [{ fetching, data, error }] = useGetProblemsInGroupQuery({
+      variables: { groupName: 'basics' },
+      pause: isServer(),
+   })
+
    return (
       <Layout title={'JavaScript basics'} height={'8vh'} fontSize={'4vh'}>
          <Text fontSize={30}>
@@ -18,23 +21,25 @@ const Basics = () => {
             <Icon name="unlock" color="blue.500" mx="2px" size={'5'} />
          </Text>
          <Divider m={10} />
-         <Box p={4}>
-            <ChallengeDesc
-               primary={'In this this challenge you will have to make the function add the two inputs together.'}
-               secondary={'You should only need to touch the function body! 🤨'}
-            />
-            <Challenge defaultValue={defVal1} testCases={testCases1} correctAnswer={correctAnswer1} />
-         </Box>
-         <Divider m={10} />
-         <Box p={4}>
-            <ChallengeDesc
-               primary={'Now I want you to concatinate two strings and return a full sentence.'}
-               secondary={'tip: here could be a dropdown'}
-            />
-            <Challenge defaultValue={defVal2} testCases={testCases2} correctAnswer={correctAnswer2} />
-         </Box>
+         {fetching && <LoadingSpinner />}
+         {data?.findProblemsInGroup?.map(problem => {
+            return (
+               <>
+                  <Box p={4}>
+                     <ChallengeDesc problemData={problem} key={problem?._id} />
+                     <Challenge
+                        problemData={problem}
+                        error={error}
+                        loading={fetching}
+                        key={problem?._id}
+                     />
+                  </Box>
+                  <Divider m={10} />
+               </>
+            )
+         })}
       </Layout>
    )
 }
 
-export default withUrqlClient(createUrqlClient)(Basics)
+export default withUrqlClient(createUrqlClient, { ssr: true })(Basics)

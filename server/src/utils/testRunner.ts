@@ -14,7 +14,7 @@ export function testRunner(maybeSolution: string, tests: Function[]) {
    } catch (e) {
       console.error(e)
    }
-
+   console.log(solution)
    const results = tests.map(fn => {
       try {
          fn(solution, expect)

@@ -26,7 +26,7 @@ import { isServer } from '../utils/isServer'
 import { includes } from 'ramda'
 
 export interface ChallengeProps {
-   problemData: RegProblemFragment | undefined
+   problemData: RegProblemFragment | undefined | null
    loading?: Boolean
    error?: CombinedError | undefined
 }
@@ -37,7 +37,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const router = useRouter()
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
-   const theme = { light: 'kuroir', dark: 'pastel_on_dark' }
+   const theme = { light: 'tomorrow', dark: 'merbivore' }
 
    const [value, setValue] = useState(problemData?.placeHolder)
    const [completedState, setCompletedState] = useState(false)
