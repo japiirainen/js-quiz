@@ -43,7 +43,7 @@ const Conditionals: NextPage = () => {
                   }}
                   ml={'auto'}
                   variant="solid"
-                  bg="blue.200"
+                  variantColor="blue"
                >
                   <Text mr={4}>next:</Text>
                   <Text>({nextProblem.name})</Text>
@@ -56,7 +56,7 @@ const Conditionals: NextPage = () => {
                   }}
                   mr={'auto'}
                   variant="solid"
-                  bg="red.200"
+                  variantColor="pink"
                >
                   <Text mr={4}>Prev:</Text>
                   <Text>({prevProblem.name})</Text>
