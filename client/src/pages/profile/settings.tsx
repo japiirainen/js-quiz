@@ -21,7 +21,7 @@ const Settings = () => {
          bc2Text={'settings'}
          bc2Href={'/profile/settings'}
          bc1Text={'progress'}
-         bc1Href={'/profile'}
+         bc1Href={'/profile/progress'}
          fontSize={'4vh'}
          height={'8vh'}
          title={'Profile'}

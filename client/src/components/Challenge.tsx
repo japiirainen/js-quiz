@@ -99,7 +99,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                {data?.submitResult?.success && (
                   <Flex direction="column">
                      <Text fontSize={15}>your solution:</Text>
-                     <Text color="green.500" fontSize={20}>
+                     <Text color="green.500" fontSize={15}>
                         {data.submitResult.solution}
                      </Text>
                   </Flex>
@@ -121,7 +121,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                      )
                   )
                ) : (
-                  <Text fontSize={20}>{problemData?.placeHolderExpectation}</Text>
+                  <Text fontSize={15}>{problemData?.placeHolderExpectation}</Text>
                )}
             </Code>
             {error && (

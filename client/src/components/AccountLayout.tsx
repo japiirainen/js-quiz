@@ -33,6 +33,7 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
 }) => {
    return (
       <Container height={'100%'} variant={variant} minH={minH}>
+         <AccountPopover />
          <BreadCrumbs
             bc1Href={bc1Href}
             bc1Text={bc1Text}
@@ -43,7 +44,6 @@ export const AccountLayout: React.FC<AccountLayoutProps> = ({
          />
          <Main marginTop={'0'}>{children}</Main>
          <SideDrawer />
-         <AccountPopover />
          <Footer>
             <Text>© js-quiz</Text>
          </Footer>

@@ -25,15 +25,15 @@ const Conditionals: NextPage = () => {
    const findProblemWithIndex = (queryIndex: number) => {
       return data?.findProblemsInGroup?.filter(problem => problem?.index === queryIndex)[0]
    }
-   console.log(sub(routeIndex))
-   console.log(inc(routeIndex))
+
    const problem = findProblemWithIndex(routeIndex)
+
    const nextProblem = findProblemWithIndex(inc(routeIndex))
    const prevProblem = findProblemWithIndex(sub(routeIndex))
 
    return (
       <Layout
-         fontSize={'3vh'}
+         fontSize={'4vh'}
          height={'1vh'}
          title={problem?.name}
          variant={'regular'}
@@ -45,7 +45,7 @@ const Conditionals: NextPage = () => {
             {nextProblem && (
                <NextLink href={`/conditionals/${inc(routeIndex)}`}>
                   <Button ml={'auto'} variant="solid" variantColor="blue">
-                     <Text mr={4}>next:</Text>
+                     <Text mr={2}>next:</Text>
                      <Text>({nextProblem.name})</Text>
                   </Button>
                </NextLink>
@@ -53,7 +53,7 @@ const Conditionals: NextPage = () => {
             {prevProblem && (
                <NextLink href={`/conditionals/${sub(routeIndex)}`}>
                   <Button mr={'auto'} variant="solid" variantColor="pink">
-                     <Text mr={4}>Prev:</Text>
+                     <Text mr={2}>Prev:</Text>
                      <Text>({prevProblem.name})</Text>
                   </Button>
                </NextLink>
