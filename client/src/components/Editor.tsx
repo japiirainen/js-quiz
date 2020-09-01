@@ -15,7 +15,7 @@ interface EditorProps {
    height: string
    defaultValue: string
    theme: string
-   value: string
+   value: string | undefined
    setValue: any
 }
 

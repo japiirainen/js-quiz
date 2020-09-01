@@ -60,7 +60,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                   height={'200px'}
                   defaultValue={problemData!.placeHolder}
                   theme={theme[colorMode]}
-                  value={value || ''}
+                  value={value}
                   setValue={setValue}
                />
             )}
