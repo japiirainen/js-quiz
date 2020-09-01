@@ -14,6 +14,7 @@ import {
    Text,
    useColorMode,
    useDisclosure,
+   Flex,
 } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
@@ -93,13 +94,15 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                   run
                </Button>
             )}
-            <Code width="100%" mt={2} height={'auto'} p={10}>
+
+            <Code bg={'black'} color={'white'} width="100%" height={'auto'} p={10} mt={5}>
                {data?.submitResult?.success && (
-                  <>
-                     <Text color="green.500" fontSize={15}>
-                        your solution: {data.submitResult.solution}
+                  <Flex direction="column">
+                     <Text fontSize={15}>your solution:</Text>
+                     <Text color="green.500" fontSize={20}>
+                        {data.submitResult.solution}
                      </Text>
-                  </>
+                  </Flex>
                )}
                {data?.submitResult?.errors ? (
                   data.submitResult.errors.map(err =>
@@ -118,7 +121,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                      )
                   )
                ) : (
-                  <>{problemData?.placeHolderExpectation}</>
+                  <Text fontSize={20}>{problemData?.placeHolderExpectation}</Text>
                )}
             </Code>
             {error && (

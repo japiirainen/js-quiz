@@ -12,6 +12,7 @@ import {
    Link,
    Button,
    useToast,
+   Divider,
 } from '@chakra-ui/core'
 import { FaUserCircle } from 'react-icons/fa'
 import NextLink from 'next/link'
@@ -34,24 +35,30 @@ export const AccountPopover: React.FC<AccountPopoverProps> = () => {
    } else if (!data?.me) {
       userStatus = (
          <Flex>
-            <Button fontSize={20} mr={2} variant="ghost" onClick={() => router.push('/login')}>
-               Login
-            </Button>
-            <Button fontSize={20} ml={2} variant="ghost" onClick={() => router.push('/register')}>
-               Register
-            </Button>
+            <MenuItem>
+               <Button fontSize={20} mr={2} variant="ghost" onClick={() => router.push('/login')}>
+                  Login
+               </Button>
+               <Button
+                  fontSize={20}
+                  ml={2}
+                  variant="ghost"
+                  onClick={() => router.push('/register')}
+               >
+                  Register
+               </Button>
+            </MenuItem>
          </Flex>
       )
    } else {
       userStatus = (
-         <Box ml={4}>
-            <Text fontSize={20}> Logged in as {data.me.username}</Text>
-            <NextLink href="/account">
+         <MenuItem as="button">
+            <NextLink href="/profile/progress">
                <Link ml={8} fontSize={20}>
-                  Account page
+                  Account page ({data.me.username})
                </Link>
             </NextLink>
-         </Box>
+         </MenuItem>
       )
    }
    return (
@@ -60,16 +67,18 @@ export const AccountPopover: React.FC<AccountPopoverProps> = () => {
             <Box as={FaUserCircle} fontSize={25} />
          </Box>
          <MenuList>
-            <MenuItem>{userStatus}</MenuItem>
-            <Flex>
-               <Text fontSize={20} ml={8}>
-                  color mode:
-               </Text>
+            {userStatus}
+            <Divider />
+            <Flex alignItems="flex-end" mt={3} ml={6}>
+               <Text fontSize={20}>Dark mode:</Text>
                <Switch ml={4} color="green" isChecked={isDark} onChange={toggleColorMode} />
             </Flex>
+            <Divider />
             {data?.me && (
                <Button
-                  ml={4}
+                  isFullWidth
+                  fontSize={20}
+                  color="red.500"
                   isLoading={logoutFetching}
                   variant="ghost"
                   onClick={() => {
