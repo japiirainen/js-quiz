@@ -9,6 +9,7 @@ import { isServer } from '../../utils/isServer'
 import { ChallengeDesc } from '../../components/ChallengeDesc'
 import { Challenge } from '../../components/Challenge'
 import { Button, Flex, Text } from '@chakra-ui/core'
+import NextLink from 'next/link'
 
 const Conditionals: NextPage = () => {
    const router = useRouter()
@@ -28,7 +29,7 @@ const Conditionals: NextPage = () => {
    return (
       <Layout
          fontSize={'3vh'}
-         height={'8vh'}
+         height={'1vh'}
          title={problem?.name}
          variant={'regular'}
          minH={'100vh'}
@@ -37,10 +38,8 @@ const Conditionals: NextPage = () => {
          <Challenge problemData={problem} error={error} loading={fetching} />
          <Flex mt={15}>
             {nextProblem && (
+               <NextLink href={`/conditionals/${routeIndex + 1}`}>
                <Button
-                  onClick={() => {
-                     router.push(`/conditionals/${routeIndex + 1}`)
-                  }}
                   ml={'auto'}
                   variant="solid"
                   variantColor="blue"
@@ -48,12 +47,11 @@ const Conditionals: NextPage = () => {
                   <Text mr={4}>next:</Text>
                   <Text>({nextProblem.name})</Text>
                </Button>
+               </NextLink>
             )}
             {prevProblem && (
+               <NextLink href={`/conditionals/${routeIndex - 1}`}>
                <Button
-                  onClick={() => {
-                     router.push(`/conditionals/${routeIndex - 1}`)
-                  }}
                   mr={'auto'}
                   variant="solid"
                   variantColor="pink"
@@ -61,6 +59,7 @@ const Conditionals: NextPage = () => {
                   <Text mr={4}>Prev:</Text>
                   <Text>({prevProblem.name})</Text>
                </Button>
+               </NextLink>
             )}
          </Flex>
       </Layout>
