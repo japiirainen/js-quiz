@@ -4,9 +4,13 @@ import { MyContext } from 'src/utils/types'
 import { ProblemModel, Problem } from '../problem/problem.model'
 import { isAuth } from '../../utils/middleware'
 
-export const newProblemGroup = async (_: any, { input }: { input: ProblemGroup }, ctx: MyContext) => {
+export const newProblemGroup = async (
+   _: any,
+   { input }: { input: ProblemGroup },
+   ctx: MyContext
+) => {
    isAuth(ctx)
-   const maybeDoc = ProblemGroupModel.findOne({ name: input.name })
+   const maybeDoc = await ProblemGroupModel.findOne({ name: input.name })
    if (maybeDoc) throw new ApolloError('group with that name already exists')
    const doc = await ProblemGroupModel.create(input)
    if (!doc) throw new ApolloError('Something went wrong!')
@@ -36,7 +40,11 @@ const getGroupById = async (groupId: any) => {
 }
 
 //resolver to return all problems in a group
-export const findProblemsInGroup = async (_: any, { groupName }: { groupName: string }, { req }: MyContext) => {
+export const findProblemsInGroup = async (
+   _: any,
+   { groupName }: { groupName: string },
+   { req }: MyContext
+) => {
    if (!req.session!.cookie) throw new AuthenticationError('no auth')
    const group = await ProblemGroupModel.findOne({ name: groupName })
    if (!group) throw new ApolloError('something went wrong')

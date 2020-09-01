@@ -6,4 +6,5 @@ fragment RegProblem on Problem {
    correctSolution
    placeHolder
    placeHolderExpectation
+   index
 }

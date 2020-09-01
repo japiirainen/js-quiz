@@ -22,7 +22,7 @@ export class Problem extends TimeStamps {
    @prop({ required: true, enum: DIFFICULTY })
    public difficulty!: string
 
-   @prop({ required: true, unique: true })
+   @prop({ required: true })
    public index!: number
 
    @prop({ ref: ProblemGroup })

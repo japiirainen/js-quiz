@@ -41,7 +41,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
 
    const [value, setValue] = useState(problemData?.placeHolder)
    const [completedState, setCompletedState] = useState(false)
-   console.log(data?.submitResult)
+
    useEffect(() => {
       if (includes(problemData?._id, meData?.me?.completedProblems || [])) {
          setCompletedState(true)

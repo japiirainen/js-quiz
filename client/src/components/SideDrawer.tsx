@@ -15,8 +15,9 @@ import {
    List,
 } from '@chakra-ui/core'
 import { IconButton } from '@chakra-ui/core'
-import { FaAlignJustify, FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { FaAlignJustify, FaArrowLeft } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import { DrawerLink } from './DrawerLink'
 
 interface SideDrawerProps {}
 
@@ -58,16 +59,8 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({}) => {
                </DrawerHeader>
                <DrawerBody>
                   <List spacing={3} my={0}>
-                     <NextLink href="/basics">
-                        <Link fontSize={20}>
-                           <ListItem>
-                              <Text fontSize={20}>
-                                 JavaScript basics
-                                 <ListIcon icon={FaArrowRight} size="15px" ml={3} />
-                              </Text>
-                           </ListItem>
-                        </Link>
-                     </NextLink>
+                     <DrawerLink href={'/basics'} text={'Javascript Basics'} />
+                     <DrawerLink href={'/conditionals/11'} text={'Javascript Conditionals'} />
                   </List>
                </DrawerBody>
                <DrawerFooter>
