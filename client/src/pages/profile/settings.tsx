@@ -39,7 +39,6 @@ const Settings = () => {
                   23.36%
                </StatHelpText>
             </Stat>
-
             <Stat>
                <StatLabel>Clicked</StatLabel>
                <StatNumber>45</StatNumber>

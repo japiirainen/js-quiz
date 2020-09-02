@@ -12,10 +12,10 @@ import { createUrqlClient } from '../../utils/createUrqlClient'
 import { dec, inc } from '../../utils/helpers'
 import { isServer } from '../../utils/isServer'
 
-const Conditionals: NextPage = () => {
+const Basics: NextPage = () => {
    const router = useRouter()
    const [{ data, fetching, error }] = useGetProblemsInGroupQuery({
-      variables: { groupName: 'conditionals' },
+      variables: { groupName: 'basics' },
       pause: isServer(),
    })
    const routeIndex = parseInt(router.query.index as string) as number
@@ -38,18 +38,18 @@ const Conditionals: NextPage = () => {
       >
          <ChallengeDesc problemData={problem} />
          <Challenge problemData={problem} error={error} loading={fetching} />
-         <Flex mt={15}>
+         <Flex mt={15} direction={'row-reverse'}>
             {nextProblem && (
                <NextOrPrevButton
                   problemName={nextProblem.name}
-                  url={`/conditionals/${inc(routeIndex)}`}
+                  url={`/basics/${inc(routeIndex)}`}
                   variant={'Next'}
                />
             )}
             {prevProblem && (
                <NextOrPrevButton
                   problemName={prevProblem.name}
-                  url={`/conditionals/${dec(routeIndex)}`}
+                  url={`/basics/${dec(routeIndex)}`}
                   variant={'Prev'}
                />
             )}
@@ -58,4 +58,4 @@ const Conditionals: NextPage = () => {
    )
 }
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Conditionals)
+export default withUrqlClient(createUrqlClient, { ssr: true })(Basics)
