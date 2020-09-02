@@ -1,5 +1,5 @@
 import { AccountLayout } from '../../components/AccountLayout'
-import { length, __ } from 'ramda'
+import { length, __, prop, map } from 'ramda'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import {
@@ -19,7 +19,7 @@ import {
 } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
-import { calcPercentage } from '../../utils/helperFns'
+import { calcPercentage, calcAmount } from '../../utils/helperFns'
 
 const Progress = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
@@ -41,20 +41,21 @@ const Progress = () => {
       basicsData?.findProblemsInGroup?.length && length(basicsData?.findProblemsInGroup)
    const condProblemsLen =
       condData?.findProblemsInGroup?.length && length(condData?.findProblemsInGroup)
+
    const userBasicsProblemsLen =
       basicsData?.findProblemsInGroup &&
-      length(
-         basicsData?.findProblemsInGroup.filter(
-            x => x && meData?.me?.completedProblems?.includes(x?._id)
-         )
+      meData?.me?.completedProblems &&
+      calcAmount(
+         meData.me.completedProblems,
+         map(prop('_id') as any, basicsData.findProblemsInGroup)
       )
 
    const userCondProblemsLen =
       condData?.findProblemsInGroup &&
-      length(
-         condData?.findProblemsInGroup.filter(
-            x => x && meData?.me?.completedProblems?.includes(x?._id)
-         )
+      meData?.me?.completedProblems &&
+      calcAmount(
+         meData?.me?.completedProblems,
+         map(prop('_id') as any, condData?.findProblemsInGroup)
       )
 
    const allPercentage =
