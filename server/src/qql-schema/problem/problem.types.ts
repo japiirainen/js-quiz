@@ -45,7 +45,7 @@ export default gql`
 
    extend type Query {
       getProblemById(_id: ID!): Problem!
-      allProblems: [Problem]!
+      getAllProblems: [Problem]!
    }
 
    extend type Mutation {

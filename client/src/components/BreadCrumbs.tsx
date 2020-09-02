@@ -21,7 +21,7 @@ export const BreadCrumbs: React.FC<BreadCrumbsProps> = ({
    const router = useRouter()
    const path = router.pathname
    return (
-      <Breadcrumb addSeparator={false} position="fixed" top="0rem" left="4rem">
+      <Breadcrumb addSeparator={false} position="fixed" top="0rem" left="4rem, 8rem, 15rem, 20rem">
          <BreadcrumbItem>
             <BreadcrumbLink
                borderBottom={path === bc1Href ? '1px' : undefined}

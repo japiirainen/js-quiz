@@ -17,6 +17,7 @@ export default gql`
       solution: String!
       success: Boolean
       errors: [Error]
+      user: User
    }
 
    input ProblemResultInput {

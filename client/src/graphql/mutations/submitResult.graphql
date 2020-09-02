@@ -7,5 +7,8 @@ mutation SubmitResult($input: ProblemResultInput!) {
          actual
          expected
       }
+      user {
+         ...RegUser
+      }
    }
 }

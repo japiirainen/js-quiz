@@ -1,0 +1,11 @@
+query GetAllProblems {
+   getAllProblems {
+      _id
+      name
+      description
+      difficulty
+      index
+      problemGroup
+      correctSolution
+   }
+}

@@ -51,3 +51,10 @@ export const getProblemById = async (_: any, { _id }: { _id: string }) => {
    if (!doc) throw new ApolloError('something went wrong')
    return doc
 }
+
+export const getAllProblems = async (_: any, __: any, ctx: MyContext) => {
+   isAuth(ctx)
+   const docs = await ProblemModel.find()
+   if (!docs) throw new ApolloError('something went wrong')
+   return docs
+}

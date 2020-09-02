@@ -1,4 +1,5 @@
 import { AccountLayout } from '../../components/AccountLayout'
+import { length, divide, multiply } from 'ramda'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import {
@@ -10,8 +11,21 @@ import {
    StatArrow,
    Heading,
 } from '@chakra-ui/core'
+import { useGetAllProblemsQuery, useMeQuery } from '../../generated/graphql'
+import { isServer } from '../../utils/isServer'
 
 const Progress = () => {
+   const [{ data: problemData }] = useGetAllProblemsQuery({ pause: isServer() })
+   const [{ data: meData }] = useMeQuery({ pause: isServer() })
+
+   const allProblemsLen = problemData?.getAllProblems.length && length(problemData?.getAllProblems)
+   const userProblemsLen = meData?.me?.completedProblems && length(meData.me.completedProblems)
+
+   const allPercentage =
+      userProblemsLen &&
+      allProblemsLen &&
+      Math.round(multiply(divide(userProblemsLen, allProblemsLen), 100))
+
    return (
       <AccountLayout
          bc2Text={'settings'}
@@ -27,11 +41,13 @@ const Progress = () => {
          <Heading>Progress in challenges</Heading>
          <StatGroup>
             <Stat>
-               <StatLabel>Sent</StatLabel>
-               <StatNumber>345,670</StatNumber>
+               <StatLabel>Total completed:</StatLabel>
+               <StatNumber>
+                  {userProblemsLen} / {allProblemsLen}
+               </StatNumber>
                <StatHelpText>
                   <StatArrow type="increase" />
-                  23.36%
+                  {allPercentage} %
                </StatHelpText>
             </Stat>
 

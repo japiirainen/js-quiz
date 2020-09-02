@@ -47,7 +47,7 @@ export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
   getProblemById: Problem;
-  allProblems: Array<Maybe<Problem>>;
+  getAllProblems: Array<Maybe<Problem>>;
   problemGroup: ProblemGroup;
   findProblemsInGroup?: Maybe<Array<Maybe<Problem>>>;
 };
@@ -145,6 +145,7 @@ export type Result = {
   solution: Scalars['String'];
   success?: Maybe<Scalars['Boolean']>;
   errors?: Maybe<Array<Maybe<Error>>>;
+  user?: Maybe<User>;
 };
 
 export type ProblemResultInput = {
@@ -293,8 +294,22 @@ export type SubmitResultMutation = (
     & { errors?: Maybe<Array<Maybe<(
       { __typename?: 'Error' }
       & Pick<Error, 'message' | 'actual' | 'expected'>
-    )>>> }
+    )>>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & RegUserFragment
+    )> }
   )> }
+);
+
+export type GetAllProblemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllProblemsQuery = (
+  { __typename?: 'Query' }
+  & { getAllProblems: Array<Maybe<(
+    { __typename?: 'Problem' }
+    & Pick<Problem, '_id' | 'name' | 'description' | 'difficulty' | 'index' | 'problemGroup' | 'correctSolution'>
+  )>> }
 );
 
 export type GetProblemByIdQueryVariables = Exact<{
@@ -414,12 +429,32 @@ export const SubmitResultDocument = gql`
       actual
       expected
     }
+    user {
+      ...RegUser
+    }
+  }
+}
+    ${RegUserFragmentDoc}`;
+
+export function useSubmitResultMutation() {
+  return Urql.useMutation<SubmitResultMutation, SubmitResultMutationVariables>(SubmitResultDocument);
+};
+export const GetAllProblemsDocument = gql`
+    query GetAllProblems {
+  getAllProblems {
+    _id
+    name
+    description
+    difficulty
+    index
+    problemGroup
+    correctSolution
   }
 }
     `;
 
-export function useSubmitResultMutation() {
-  return Urql.useMutation<SubmitResultMutation, SubmitResultMutationVariables>(SubmitResultDocument);
+export function useGetAllProblemsQuery(options: Omit<Urql.UseQueryArgs<GetAllProblemsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetAllProblemsQuery>({ query: GetAllProblemsDocument, ...options });
 };
 export const GetProblemByIdDocument = gql`
     query GetProblemById($_id: ID!) {

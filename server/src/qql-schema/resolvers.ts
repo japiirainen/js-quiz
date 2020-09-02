@@ -1,7 +1,17 @@
 import { register, login, me, logout, forgotPassword, changePassword } from './user/user.services'
-import { newProblem, addTestCase, formatTestCases, getProblemById } from './problem/problem.services'
+import {
+   newProblem,
+   addTestCase,
+   formatTestCases,
+   getProblemById,
+   getAllProblems,
+} from './problem/problem.services'
 import { submitResult } from './problem-results/problem-result.services'
-import { newProblemGroup, findProblemsInGroup, addProblemToGroup } from './problem-group/problem-group.services'
+import {
+   newProblemGroup,
+   findProblemsInGroup,
+   addProblemToGroup,
+} from './problem-group/problem-group.services'
 
 export const resolvers = {
    Problem: {
@@ -11,6 +21,7 @@ export const resolvers = {
       me: me,
       getProblemById: getProblemById,
       findProblemsInGroup: findProblemsInGroup,
+      getAllProblems: getAllProblems,
    },
    Mutation: {
       register: register,
