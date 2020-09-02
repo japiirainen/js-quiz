@@ -9,7 +9,7 @@ import { Layout } from '../../components/Layout'
 import { NextOrPrevButton } from '../../components/NextOrPrevButton'
 import { useGetProblemsInGroupQuery } from '../../generated/graphql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
-import { dec, inc } from '../../utils/helpers'
+import { dec, inc } from '../../utils/helperFns'
 import { isServer } from '../../utils/isServer'
 
 const Basics: NextPage = () => {

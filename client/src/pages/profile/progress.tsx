@@ -19,7 +19,7 @@ import {
 } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
-import { calcPercentage } from '../../utils/helpers'
+import { calcPercentage } from '../../utils/helperFns'
 
 const Progress = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
