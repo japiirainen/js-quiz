@@ -1,5 +1,5 @@
 import { AccountLayout } from '../../components/AccountLayout'
-import { length, divide, multiply } from 'ramda'
+import { length, __ } from 'ramda'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import {
@@ -19,6 +19,7 @@ import {
 } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
+import { calcPercentage } from '../../utils/helpers'
 
 const Progress = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
@@ -47,6 +48,7 @@ const Progress = () => {
             x => x && meData?.me?.completedProblems?.includes(x?._id)
          )
       )
+
    const userCondProblemsLen =
       condData?.findProblemsInGroup &&
       length(
@@ -54,19 +56,16 @@ const Progress = () => {
             x => x && meData?.me?.completedProblems?.includes(x?._id)
          )
       )
-   const allPercentage =
-      userAllProblemsLen &&
-      allProblemsLen &&
-      Math.round(multiply(divide(userAllProblemsLen, allProblemsLen), 100))
 
+   const allPercentage =
+      userAllProblemsLen && allProblemsLen && calcPercentage(userAllProblemsLen, allProblemsLen)
    const basicsPercentage =
       userBasicsProblemsLen &&
       basicProblemsLen &&
-      Math.round(multiply(divide(userBasicsProblemsLen, basicProblemsLen), 100))
+      calcPercentage(userBasicsProblemsLen, basicProblemsLen)
    const condPercentage =
-      userCondProblemsLen &&
-      condProblemsLen &&
-      Math.round(multiply(divide(userCondProblemsLen, condProblemsLen), 100))
+      userCondProblemsLen && condProblemsLen && calcPercentage(userCondProblemsLen, condProblemsLen)
+
    return (
       <AccountLayout
          bc2Text={'settings'}
