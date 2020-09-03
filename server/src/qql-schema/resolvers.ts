@@ -1,4 +1,12 @@
-import { register, login, me, logout, forgotPassword, changePassword } from './user/user.services'
+import {
+   register,
+   login,
+   me,
+   logout,
+   forgotPassword,
+   changePassword,
+   updateUser,
+} from './user/user.services'
 import {
    newProblem,
    addTestCase,
@@ -34,5 +42,6 @@ export const resolvers = {
       submitResult: submitResult,
       newProblemGroup: newProblemGroup,
       addProblemToGroup: addProblemToGroup,
+      updateUser: updateUser,
    },
 }

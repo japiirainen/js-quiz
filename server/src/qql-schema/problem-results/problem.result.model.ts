@@ -4,6 +4,25 @@ import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
 import { Problem } from '../problem/problem.model'
 import { User } from '../user/user.model'
 
+//types
+export interface ProblemResultInputIf {
+   userId: string | undefined
+   problemId: string
+   solution: string
+}
+
+export interface ErrorIf {
+   message: any
+   actual: any
+   expected: any
+}
+
+export interface ResultIf {
+   solution: string
+   success: Boolean
+   errors: ErrorIf[]
+   user: User | null
+}
 @modelOptions({
    options: { customName: 'result' },
 })

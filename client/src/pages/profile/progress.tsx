@@ -19,7 +19,7 @@ import {
 } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
-import { calcPercentage, calcAmount } from '../../utils/helperFns'
+import { calcPercentage, calcLen } from '../../utils/helperFns'
 
 const Progress = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
@@ -34,6 +34,10 @@ const Progress = () => {
       variables: { groupName: 'conditionals' },
       pause: isServer(),
    })
+   const [{ data: loopsData, fetching: loopsFetching }] = useGetProblemsInGroupQuery({
+      variables: { groupName: 'loops' },
+      pause: isServer(),
+   })
 
    const allProblemsLen = problemData?.getAllProblems.length && length(problemData?.getAllProblems)
    const userAllProblemsLen = meData?.me?.completedProblems && length(meData.me.completedProblems)
@@ -42,20 +46,25 @@ const Progress = () => {
    const condProblemsLen =
       condData?.findProblemsInGroup?.length && length(condData?.findProblemsInGroup)
 
+   const loopsProbLen =
+      loopsData?.findProblemsInGroup?.length && length(loopsData?.findProblemsInGroup)
+
    const userBasicsProblemsLen =
       basicsData?.findProblemsInGroup &&
       meData?.me?.completedProblems &&
-      calcAmount(
-         meData.me.completedProblems,
-         map(prop('_id') as any, basicsData.findProblemsInGroup)
-      )
+      calcLen(meData.me.completedProblems, map(prop('_id') as any, basicsData.findProblemsInGroup))
 
    const userCondProblemsLen =
       condData?.findProblemsInGroup &&
       meData?.me?.completedProblems &&
-      calcAmount(
+      calcLen(meData?.me?.completedProblems, map(prop('_id') as any, condData?.findProblemsInGroup))
+
+   const userLoopsProbLen =
+      loopsData?.findProblemsInGroup &&
+      meData?.me?.completedProblems &&
+      calcLen(
          meData?.me?.completedProblems,
-         map(prop('_id') as any, condData?.findProblemsInGroup)
+         map(prop('_id') as any, loopsData?.findProblemsInGroup)
       )
 
    const allPercentage =
@@ -66,7 +75,8 @@ const Progress = () => {
       calcPercentage(userBasicsProblemsLen, basicProblemsLen)
    const condPercentage =
       userCondProblemsLen && condProblemsLen && calcPercentage(userCondProblemsLen, condProblemsLen)
-
+   const loopsPercentage =
+      userLoopsProbLen && loopsProbLen && calcPercentage(userLoopsProbLen, loopsProbLen)
    return (
       <AccountLayout
          bc2Text={'settings'}
@@ -127,6 +137,22 @@ const Progress = () => {
                      <StatHelpText>
                         <StatArrow type={userCondProblemsLen === 0 ? 'decrease' : 'increase'} />
                         {condPercentage} %
+                     </StatHelpText>
+                  </Flex>
+               )}
+            </Stat>
+            <Stat mt={8}>
+               <StatLabel fontSize={20}>Loops completed:</StatLabel>
+               {loopsFetching ? (
+                  <LoadingSpinner />
+               ) : (
+                  <Flex direction="column" alignItems="center">
+                     <StatNumber>
+                        {userLoopsProbLen} / {loopsProbLen}
+                     </StatNumber>
+                     <StatHelpText>
+                        <StatArrow type={userLoopsProbLen === 0 ? 'decrease' : 'increase'} />
+                        {loopsPercentage} %
                      </StatHelpText>
                   </Flex>
                )}

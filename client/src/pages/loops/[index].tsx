@@ -12,10 +12,10 @@ import { createUrqlClient } from '../../utils/createUrqlClient'
 import { dec, inc } from '../../utils/helperFns'
 import { isServer } from '../../utils/isServer'
 
-const Basics: NextPage = () => {
+const Loops: NextPage = () => {
    const router = useRouter()
    const [{ data, fetching, error }] = useGetProblemsInGroupQuery({
-      variables: { groupName: 'basics' },
+      variables: { groupName: 'loops' },
       pause: isServer(),
    })
    const routeIndex = parseInt(router.query.index as string) as number
@@ -24,6 +24,7 @@ const Basics: NextPage = () => {
    }
 
    const problem = findProblemWithIndex(routeIndex)
+
    const nextProblem = findProblemWithIndex(inc(routeIndex))
    const prevProblem = findProblemWithIndex(dec(routeIndex))
 
@@ -37,18 +38,18 @@ const Basics: NextPage = () => {
       >
          <ChallengeDesc problemData={problem} />
          <Challenge problemData={problem} error={error} loading={fetching} />
-         <Flex mt={15} direction={'row-reverse'}>
+         <Flex mt={15}>
             {nextProblem && (
                <NextOrPrevButton
                   problemName={nextProblem.name}
-                  url={`/basics/${inc(routeIndex)}`}
+                  url={`/loops/${inc(routeIndex)}`}
                   variant={'Next'}
                />
             )}
             {prevProblem && (
                <NextOrPrevButton
                   problemName={prevProblem.name}
-                  url={`/basics/${dec(routeIndex)}`}
+                  url={`/loops/${dec(routeIndex)}`}
                   variant={'Prev'}
                />
             )}
@@ -57,4 +58,4 @@ const Basics: NextPage = () => {
    )
 }
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(Basics)
+export default withUrqlClient(createUrqlClient, { ssr: true })(Loops)

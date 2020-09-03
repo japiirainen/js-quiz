@@ -6,6 +6,7 @@ import { MyContext } from 'src/utils/types'
 import { cookieName, PASSWORD_RESET_TEXT, FORGOT_PASSWORD_PREFIX } from '../../utils/constants'
 import { sendEmail } from '../../utils/sendEmail'
 import { v4 } from 'uuid'
+import { isAuth } from '../../utils/middleware'
 
 export const register = async (_: any, { input }: { input: User }, { req }: MyContext) => {
    const user = await UserModel.findOne({ username: input.username })
@@ -101,4 +102,27 @@ export const changePassword = async (
    )
    await redis.del(key)
    return await UserModel.findById(userId)
+}
+
+export const updateUser = async (
+   _: any,
+   { input }: { input: { password: string; _id: string } },
+   ctx: MyContext
+) => {
+   isAuth(ctx)
+   const maybeUser = await UserModel.findById(input._id)
+   if (!maybeUser) throw new AuthenticationError('no user found')
+   if (input.password) {
+      const validPassword = await validatePassword(input.password)
+      if (!validPassword)
+         throw new AuthenticationError('Password must be at least 2 characters long')
+      await maybeUser.updateOne({
+         ...input,
+         password: await argon2.hash(validPassword.password),
+      })
+      return await UserModel.findById(maybeUser._id)
+   } else {
+      await maybeUser.updateOne({ ...input })
+      return await UserModel.findById(maybeUser._id)
+   }
 }

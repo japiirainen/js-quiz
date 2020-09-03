@@ -1,34 +1,18 @@
 import { testRunner, testsToFnCalls, formatError } from '../../utils/testRunner'
 import { ProblemModel } from '../problem/problem.model'
 import { ApolloError } from 'apollo-server-express'
-import { UserModel, User } from '../user/user.model'
+import { UserModel } from '../user/user.model'
+import { ProblemResultInputIf, ResultIf } from './problem.result.model'
 
-interface ProblemResultInput {
-   userId: string | undefined
-   problemId: string
-   solution: string
-}
-
-interface Error {
-   message: any
-   actual: any
-   expected: any
-}
-
-interface Result {
-   solution: string
-   success: Boolean
-   errors: Error[]
-   user: User | null
-}
-
-export const submitResult = async (_: any, { input }: { input: ProblemResultInput }) => {
-   const problem = await ProblemModel.findById(input.problemId)
-   const user = await UserModel.findById(input.userId)
+export const submitResult = async (_: any, { input }: { input: ProblemResultInputIf }) => {
+   const [problem, user] = await Promise.all([
+      ProblemModel.findById(input.problemId),
+      UserModel.findById(input.userId),
+   ])
    if (!problem?.testCases) throw new ApolloError('No testcases found')
    const testFunctions = testsToFnCalls(problem.testCases)
    const testResults = testRunner(input.solution, testFunctions)
-   let result: Result = {
+   let result: ResultIf = {
       success: false,
       errors: [],
       solution: input.solution,

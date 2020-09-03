@@ -29,6 +29,13 @@ export default gql`
       newPassword: String!
    }
 
+   input updateUserInput {
+      _id: ID!
+      username: String
+      email: String
+      password: String
+   }
+
    type Query {
       me: User
    }
@@ -39,5 +46,6 @@ export default gql`
       forgotPassword(input: forgotPasswordInput): Boolean
       changePassword(input: changePasswordInput): User!
       logout: Boolean
+      updateUser(input: updateUserInput): User!
    }
 `

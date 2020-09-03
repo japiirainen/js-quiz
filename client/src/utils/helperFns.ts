@@ -12,4 +12,4 @@ export const calcPercentage = compose(Math.round, multBy100, divide(__))
 export const filterIds = (userIds: Maybe<string>[], groupIds: string[]) =>
    groupIds.filter((x: Maybe<string>) => userIds.includes(x))
 
-export const calcAmount = compose(length, filterIds)
+export const calcLen = compose(length, filterIds)
