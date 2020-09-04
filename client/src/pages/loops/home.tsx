@@ -6,10 +6,8 @@ import { ChallengeHomePage } from '../../components/ChallengeHomePage'
 const Home: NextPage = () => {
    return (
       <ChallengeHomePage
-         description="In this section you will be challenged with a few challenges touching on some core
-      concepts of Javascript. The problems will get harder throughout the section. Hope
-      you enjoy!"
-         groupName="basics"
+         description="In this section you will be challenged with some problems that require using loops. This is also an essential part of programming so spend some time on these!"
+         groupName="loops"
       />
    )
 }

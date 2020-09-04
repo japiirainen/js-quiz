@@ -16,7 +16,6 @@ const listMapper = (x: RegProblemFragment) => (
 )
 
 export const ChallengeList: React.FC<ChallengeListProps> = ({ problemList }) => {
-   console.log('list', problemList)
    return (
       <List as="ol" styleType="decimal" spacing={3}>
          <Text fontSize={20} textDecoration="underline" mb={4}>

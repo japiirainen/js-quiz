@@ -19,7 +19,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ ProblemData }) => {
    const problemsLen =
       ProblemData?.findProblemsInGroup?.length && length(ProblemData.findProblemsInGroup)
 
-   const percentage = userProblemLen && problemsLen && calcPercentage(userProblemLen, problemsLen)
+   const percentage =
+      userProblemLen && problemsLen && (calcPercentage(userProblemLen, problemsLen) as never)
 
    return (
       <Box width="60%" ml={'auto'}>
@@ -35,7 +36,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ ProblemData }) => {
                {percentage} %
             </StatHelpText>
          </Flex>
-         {percentage && (
+         {percentage ? (
             <Progress
                color={calcColor(percentage)}
                hasStripe
@@ -44,6 +45,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ ProblemData }) => {
                isAnimated
                mt={7}
             />
+         ) : (
+            <Progress color={'red'} hasStripe value={1} size={'lg'} isAnimated mt={7} />
          )}
       </Box>
    )

@@ -7,10 +7,10 @@ test('it should return the number of problems completed by the user in a group',
 })
 
 test('should calculate color based on value', () => {
-   const color = calcColor(50)
+   const color = calcColor(50 as never)
    expect(color).toBe('orange')
-   const color2 = calcColor(20)
+   const color2 = calcColor(20 as never)
    expect(color2).toBe('red')
-   const color3 = calcColor(80)
+   const color3 = calcColor(80 as never)
    expect(color3).toBe('green')
 })

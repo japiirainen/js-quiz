@@ -60,8 +60,8 @@ export const SideDrawer: React.FC<SideDrawerProps> = ({}) => {
                <DrawerBody>
                   <List spacing={3} my={0}>
                      <DrawerLink href={'/basics/home'} text={'Javascript Basics'} />
-                     <DrawerLink href={'/conditionals/11'} text={'Javascript Conditionals'} />
-                     <DrawerLink href={'/loops/21'} text={'Javascript Loops'} />
+                     <DrawerLink href={'/conditionals/home'} text={'Javascript Conditionals'} />
+                     <DrawerLink href={'/loops/home'} text={'Javascript Loops'} />
                   </List>
                </DrawerBody>
                <DrawerFooter>
