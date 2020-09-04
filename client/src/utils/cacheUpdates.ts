@@ -5,6 +5,7 @@ import {
    MeQuery,
    RegisterMutation,
    SubmitResultMutation,
+   UpdateUserMutation,
 } from '../generated/graphql'
 import { updateQuery } from './updateQuery'
 import { Data, Variables, ResolveInfo } from '@urql/exchange-graphcache'
@@ -65,6 +66,27 @@ export const submitResultUpdate = (_result: Data, _: Variables, cache: any, __: 
                   _id: result.submitResult.user._id,
                   username: result.submitResult.user.username,
                   completedProblems: result.submitResult.user.completedProblems,
+               },
+            }
+         }
+      }
+   )
+}
+
+export const updateUser = (_result: Data, _: Variables, cache: any, __: ResolveInfo) => {
+   updateQuery<UpdateUserMutation, MeQuery>(
+      cache,
+      { query: MeDocument },
+      _result,
+      (result, query) => {
+         if (!result.updateUser._id) {
+            return query
+         } else {
+            return {
+               me: {
+                  _id: result.updateUser._id,
+                  username: result.updateUser.username,
+                  completedProblems: result.updateUser.completedProblems,
                },
             }
          }

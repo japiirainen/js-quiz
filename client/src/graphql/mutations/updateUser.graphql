@@ -1,0 +1,5 @@
+mutation UpdateUser($input: updateUserInput) {
+   updateUser(input: $input) {
+      ...RegUser
+   }
+}

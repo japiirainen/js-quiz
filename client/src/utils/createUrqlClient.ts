@@ -1,7 +1,13 @@
 import { cacheExchange } from '@urql/exchange-graphcache'
 import { dedupExchange, fetchExchange } from 'urql'
 import { isServer } from './isServer'
-import { loginUpdate, logoutUpdate, registerUpdate, submitResultUpdate } from './cacheUpdates'
+import {
+   loginUpdate,
+   logoutUpdate,
+   registerUpdate,
+   submitResultUpdate,
+   updateUser,
+} from './cacheUpdates'
 
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
    let cookie = ''
@@ -28,6 +34,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   login: loginUpdate,
                   register: registerUpdate,
                   submitResult: submitResultUpdate,
+                  updateUser: updateUser,
                },
             },
          }),
