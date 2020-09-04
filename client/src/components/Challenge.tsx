@@ -14,7 +14,6 @@ import {
    Text,
    useColorMode,
    useDisclosure,
-   Flex,
 } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
@@ -58,7 +57,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
             {loading && !value && <LoadingSpinner />}
             {problemData && !completedState && (
                <Editor
-                  height={'200px'}
+                  height={'300px'}
                   defaultValue={problemData!.placeHolder}
                   theme={theme[colorMode]}
                   value={value}
@@ -67,7 +66,8 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
             )}
             {completedState && (
                <ChallengeComplete
-                  onNextClick={() => router.push('/basics')}
+                  problem={problemData}
+                  userSolution={data?.submitResult?.solution}
                   onRedoClick={() => setCompletedState(false)}
                />
             )}
@@ -94,36 +94,29 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                   run
                </Button>
             )}
-
-            <Code bg={'black'} color={'white'} width="100%" height={'auto'} p={10} mt={5}>
-               {data?.submitResult?.success && (
-                  <Flex direction="column">
-                     <Text fontSize={15}>your solution:</Text>
-                     <Text color="green.500" fontSize={15}>
-                        {data.submitResult.solution}
-                     </Text>
-                  </Flex>
-               )}
-               {data?.submitResult?.errors ? (
-                  data.submitResult.errors.map(err =>
-                     !err ? null : (
-                        <>
-                           <Text color="red.500" fontSize={15}>
-                              message: {err.message}
-                           </Text>
-                           <Text color="red.500" fontSize={15}>
-                              actual: {err.actual}
-                           </Text>
-                           <Text color="red.500" fontSize={15}>
-                              expected: {err.expected}
-                           </Text>
-                        </>
+            {completedState ? null : (
+               <Code bg={'black'} color={'white'} width="100%" height={'auto'} p={10} mt={5}>
+                  {data?.submitResult?.errors ? (
+                     data.submitResult.errors.map(err =>
+                        !err ? null : (
+                           <>
+                              <Text color="red.500" fontSize={15}>
+                                 message: {err.message}
+                              </Text>
+                              <Text color="red.500" fontSize={15}>
+                                 actual: {err.actual}
+                              </Text>
+                              <Text color="red.500" fontSize={15}>
+                                 expected: {err.expected}
+                              </Text>
+                           </>
+                        )
                      )
-                  )
-               ) : (
-                  <Text fontSize={15}>{problemData?.placeHolderExpectation}</Text>
-               )}
-            </Code>
+                  ) : (
+                     <Text fontSize={15}>{problemData?.placeHolderExpectation}</Text>
+                  )}
+               </Code>
+            )}
             {error && (
                <Alert status="error">
                   <AlertIcon />
