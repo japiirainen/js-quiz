@@ -14,10 +14,6 @@ export const filterIds = (userIds: Maybe<string>[], groupIds: string[]) =>
 
 export const calcLen = compose(length, filterIds)
 
-export const lte30 = lte(__, 30)
-export const lte70 = lte(__, 70)
-export const lte100 = lte(__, 100)
-
 export const calcColor_ = (val: number) => {
    if (val <= 30) {
       return 'red'
@@ -29,7 +25,7 @@ export const calcColor_ = (val: number) => {
 }
 
 export const calcColor = cond([
-   [lte30, always('red')],
-   [lte70, always('orange')],
+   [lte(__, 30), always('red')],
+   [lte(__, 70), always('orange')],
    [T, always('green')],
 ])
