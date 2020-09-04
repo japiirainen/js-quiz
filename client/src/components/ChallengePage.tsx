@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useGetProblemsInGroupQuery } from '../generated/graphql'
+import { useGetProblemByIndexQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { inc, dec } from 'ramda'
 import { Layout } from './Layout'
@@ -9,23 +9,21 @@ import { Flex } from '@chakra-ui/core'
 import { NextOrPrevButton } from './NextOrPrevButton'
 
 interface ChallengePageProps {
+   index: number
    problemGroup: string
 }
 
-export const ChallengePage: React.FC<ChallengePageProps> = ({ problemGroup }) => {
+export const ChallengePage: React.FC<ChallengePageProps> = ({ index, problemGroup }) => {
    const router = useRouter()
-   const [{ data, fetching, error }] = useGetProblemsInGroupQuery({
-      variables: { groupName: problemGroup },
+   const [{ data, fetching, error }] = useGetProblemByIndexQuery({
+      variables: { index: index },
       pause: isServer(),
    })
    const routeIndex = parseInt(router.query.index as string) as number
-   const findProblemWithIndex = (queryIndex: number) => {
-      return data?.findProblemsInGroup?.filter(problem => problem?.index === queryIndex)[0]
-   }
 
-   const problem = findProblemWithIndex(routeIndex)
-   const nextProblem = findProblemWithIndex(inc(routeIndex))
-   const prevProblem = findProblemWithIndex(dec(routeIndex))
+   const problem = data?.getProblemByIndex?.currProblem
+   const nextProblem = data?.getProblemByIndex?.nextProblem
+   const prevProblem = data?.getProblemByIndex?.prevProblem
 
    return (
       <Layout

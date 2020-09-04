@@ -3,6 +3,7 @@ import { ApolloError } from 'apollo-server-express'
 import { MyContext } from 'src/utils/types'
 import { isAuth } from '../../utils/middleware'
 import { ProblemGroupModel } from '../problem-group/problem-group.model'
+import { dec, inc } from 'ramda'
 
 export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyContext) => {
    isAuth(ctx)
@@ -57,4 +58,22 @@ export const getAllProblems = async (_: any, __: any, ctx: MyContext) => {
    const docs = await ProblemModel.find()
    if (!docs) throw new ApolloError('something went wrong')
    return docs
+}
+
+//returns problem with index and with previous and next indexes
+export const getProblemByIndex = async (_: any, { index }: { index: number }) => {
+   const [currProblem, prevProblem, nextProblem] = await Promise.all([
+      ProblemModel.findOne({ index }),
+      ProblemModel.findOne({ index: dec(index) }),
+      ProblemModel.findOne({ index: inc(index) }),
+   ])
+   if (currProblem) {
+      return {
+         currProblem,
+         prevProblem,
+         nextProblem,
+      }
+   } else {
+      throw new ApolloError('no problem found with that index')
+   }
 }

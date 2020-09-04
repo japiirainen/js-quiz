@@ -1,0 +1,13 @@
+query GetProblemByIndex($index: Int!) {
+   getProblemByIndex(index: $index) {
+      currProblem {
+         ...RegProblem
+      }
+      prevProblem {
+         ...RegProblem
+      }
+      nextProblem {
+         ...RegProblem
+      }
+   }
+}

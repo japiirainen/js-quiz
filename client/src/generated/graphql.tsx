@@ -54,6 +54,7 @@ export type Query = {
    __typename?: 'Query'
    me?: Maybe<User>
    getProblemById: Problem
+   getProblemByIndex?: Maybe<ByIndexRes>
    getAllProblems: Array<Maybe<Problem>>
    problemGroup: ProblemGroup
    findProblemsInGroup?: Maybe<Array<Maybe<Problem>>>
@@ -61,6 +62,10 @@ export type Query = {
 
 export type QueryGetProblemByIdArgs = {
    _id: Scalars['ID']
+}
+
+export type QueryGetProblemByIndexArgs = {
+   index: Scalars['Int']
 }
 
 export type QueryProblemGroupArgs = {
@@ -198,6 +203,13 @@ export type TestCaseInput = {
    testCase: Scalars['String']
 }
 
+export type ByIndexRes = {
+   __typename?: 'byIndexRes'
+   currProblem: Problem
+   prevProblem?: Maybe<Problem>
+   nextProblem?: Maybe<Problem>
+}
+
 export type ProblemGroup = {
    __typename?: 'ProblemGroup'
    _id: Scalars['ID']
@@ -315,6 +327,20 @@ export type GetProblemByIdQueryVariables = Exact<{
 
 export type GetProblemByIdQuery = { __typename?: 'Query' } & {
    getProblemById: { __typename?: 'Problem' } & RegProblemFragment
+}
+
+export type GetProblemByIndexQueryVariables = Exact<{
+   index: Scalars['Int']
+}>
+
+export type GetProblemByIndexQuery = { __typename?: 'Query' } & {
+   getProblemByIndex?: Maybe<
+      { __typename?: 'byIndexRes' } & {
+         currProblem: { __typename?: 'Problem' } & RegProblemFragment
+         prevProblem?: Maybe<{ __typename?: 'Problem' } & RegProblemFragment>
+         nextProblem?: Maybe<{ __typename?: 'Problem' } & RegProblemFragment>
+      }
+   >
 }
 
 export type GetProblemsInGroupQueryVariables = Exact<{
@@ -475,6 +501,28 @@ export function useGetProblemByIdQuery(
    options: Omit<Urql.UseQueryArgs<GetProblemByIdQueryVariables>, 'query'> = {}
 ) {
    return Urql.useQuery<GetProblemByIdQuery>({ query: GetProblemByIdDocument, ...options })
+}
+export const GetProblemByIndexDocument = gql`
+   query GetProblemByIndex($index: Int!) {
+      getProblemByIndex(index: $index) {
+         currProblem {
+            ...RegProblem
+         }
+         prevProblem {
+            ...RegProblem
+         }
+         nextProblem {
+            ...RegProblem
+         }
+      }
+   }
+   ${RegProblemFragmentDoc}
+`
+
+export function useGetProblemByIndexQuery(
+   options: Omit<Urql.UseQueryArgs<GetProblemByIndexQueryVariables>, 'query'> = {}
+) {
+   return Urql.useQuery<GetProblemByIndexQuery>({ query: GetProblemByIndexDocument, ...options })
 }
 export const GetProblemsInGroupDocument = gql`
    query GetProblemsInGroup($groupName: String!) {

@@ -13,6 +13,7 @@ import {
    formatTestCases,
    getProblemById,
    getAllProblems,
+   getProblemByIndex,
 } from './problem/problem.services'
 import { submitResult } from './problem-results/problem-result.services'
 import {
@@ -28,6 +29,7 @@ export const resolvers = {
    Query: {
       me: me,
       getProblemById: getProblemById,
+      getProblemByIndex: getProblemByIndex,
       findProblemsInGroup: findProblemsInGroup,
       getAllProblems: getAllProblems,
    },

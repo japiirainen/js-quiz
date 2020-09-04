@@ -43,8 +43,15 @@ export default gql`
       testCase: String!
    }
 
+   type byIndexRes {
+      currProblem: Problem!
+      prevProblem: Problem
+      nextProblem: Problem
+   }
+
    extend type Query {
       getProblemById(_id: ID!): Problem!
+      getProblemByIndex(index: Int!): byIndexRes
       getAllProblems: [Problem]!
    }
 
