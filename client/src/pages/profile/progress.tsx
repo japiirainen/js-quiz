@@ -73,6 +73,7 @@ const Progress = () => {
       userBasicsProblemsLen &&
       basicProblemsLen &&
       calcPercentage(userBasicsProblemsLen, basicProblemsLen)
+
    const condPercentage =
       userCondProblemsLen && condProblemsLen && calcPercentage(userCondProblemsLen, condProblemsLen)
    const loopsPercentage =

@@ -13,3 +13,12 @@ export const filterIds = (userIds: Maybe<string>[], groupIds: string[]) =>
    groupIds.filter((x: Maybe<string>) => userIds.includes(x))
 
 export const calcLen = compose(length, filterIds)
+
+export const calcColor = (val: number) => {
+   if (val < 30) {
+      return 'red'
+   } else if (val < 70) {
+      return 'orange'
+   }
+   return 'green'
+}
