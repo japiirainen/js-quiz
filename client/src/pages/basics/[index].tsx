@@ -6,10 +6,10 @@ import { createUrqlClient } from '../../utils/createUrqlClient'
 import { useRouter } from 'next/router'
 
 const Basics: NextPage = () => {
-   const router = useRouter()
-   const routeIndex = parseInt(router.query.index as string) as number
+  const router = useRouter()
+  const routeIndex = parseInt(router.query.index as string) as number
 
-   return <ChallengePage index={routeIndex} problemGroup={'basics'} />
+  return <ChallengePage index={routeIndex} problemGroup={'basics'} />
 }
 
 export default withUrqlClient(createUrqlClient, { ssr: true })(Basics)
