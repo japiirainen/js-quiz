@@ -20,10 +20,24 @@ export default gql`
       user: User
    }
 
+   type Solution {
+      userId: ID!
+      problemId: ID!
+      solution: String!
+   }
+   input getSolutionInput {
+      userId: ID
+      problemId: ID
+   }
+
    input ProblemResultInput {
       userId: ID
       problemId: ID!
       solution: String!
+   }
+
+   extend type Query {
+      getSolution(input: getSolutionInput): Solution
    }
 
    extend type Mutation {

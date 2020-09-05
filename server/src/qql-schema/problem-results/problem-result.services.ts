@@ -3,6 +3,9 @@ import { ProblemModel } from '../problem/problem.model'
 import { ApolloError } from 'apollo-server-express'
 import { UserModel } from '../user/user.model'
 import { ProblemResultInputIf, ResultIf } from './problem.result.model'
+import { SolutionModel } from './problem.result.model'
+import { isAuth } from '../../utils/middleware'
+import { MyContext } from '../../utils/types'
 
 export const submitResult = async (_: any, { input }: { input: ProblemResultInputIf }) => {
    const [problem, user] = await Promise.all([
@@ -43,6 +46,21 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
          solution: input.solution,
          user: await UserModel.findById(input.userId),
       }
+      input.userId &&
+         (await SolutionModel.create({
+            userId: input.userId,
+            problemId: input.problemId,
+            solution: input.solution,
+         }))
       return result
    }
+}
+
+export const getSolution = async (
+   _: any,
+   { input }: { input: { userId: string; problemId: string } },
+   ctx: MyContext
+) => {
+   isAuth(ctx)
+   return await SolutionModel.findOne({ userId: input.userId, problemId: input.problemId })
 }

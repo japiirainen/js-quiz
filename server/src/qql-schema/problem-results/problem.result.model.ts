@@ -34,7 +34,7 @@ export class Result extends TimeStamps {
    public success?: Boolean
 
    @prop({ required: true })
-   public errors: Array<string>
+   public errorMessages: Array<string>
 }
 
 @modelOptions({
@@ -51,5 +51,20 @@ export class ProblemResult extends TimeStamps {
    public result!: string
 }
 
+@modelOptions({
+   options: { customName: 'solution' },
+})
+export class Solution extends TimeStamps {
+   @prop({ required: true, ref: User })
+   public userId!: mongoose.Types.ObjectId
+
+   @prop({ required: true, ref: Problem })
+   public problemId!: mongoose.Types.ObjectId
+
+   @prop({ required: true })
+   public solution!: string
+}
+
 export const ResultModel = getModelForClass(Result)
 export const ProblemResultModel = getModelForClass(ProblemResult)
+export const SolutionModel = getModelForClass(Solution)

@@ -15,7 +15,7 @@ import {
    getAllProblems,
    getProblemByIndex,
 } from './problem/problem.services'
-import { submitResult } from './problem-results/problem-result.services'
+import { submitResult, getSolution } from './problem-results/problem-result.services'
 import {
    newProblemGroup,
    findProblemsInGroup,
@@ -32,6 +32,7 @@ export const resolvers = {
       getProblemByIndex: getProblemByIndex,
       findProblemsInGroup: findProblemsInGroup,
       getAllProblems: getAllProblems,
+      getSolution: getSolution,
    },
    Mutation: {
       register: register,

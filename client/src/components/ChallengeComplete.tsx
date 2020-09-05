@@ -1,19 +1,22 @@
 import React from 'react'
 import { Box, Text, Button, Flex, Stack, Heading, Code } from '@chakra-ui/core'
 import { Container } from './Container'
-import { RegProblemFragment } from '../generated/graphql'
+import { RegProblemFragment, useGetSolutionQuery } from '../generated/graphql'
+import { isServer } from '../utils/isServer'
 
 interface ChallengeCompleteProps {
    onRedoClick: any
    problem: RegProblemFragment | undefined | null
-   userSolution: string | undefined
+   userId: string | undefined
 }
 
 export const ChallengeComplete: React.FC<ChallengeCompleteProps> = ({
    onRedoClick,
    problem,
-   userSolution,
+   userId,
 }) => {
+   const [{data, fetching}] = useGetSolutionQuery({ pause: isServer(), variables: {input: { userId: userId, problemId: problem?._id }} })
+   console.log(data)
    return (
       <Box h="500px">
          <Container textAlign={'center'}>
@@ -24,11 +27,13 @@ export const ChallengeComplete: React.FC<ChallengeCompleteProps> = ({
                   similarities and differences between them.
                </Text>
                <Text>Your solution:</Text>
+               {!fetching && data?.getSolution?.solution && 
                <Code color={'white'} width="100%" height={'auto'} p={5} mt={2}>
                   <Text color="green.900" fontSize={15}>
-                     {userSolution}
+                     {data?.getSolution?.solution}
                   </Text>
                </Code>
+               }
                <Text>Creator solution:</Text>
                <Code color={'white'} width="100%" height={'auto'} p={5} mt={2}>
                   <Text color="green.900" fontSize={15}>

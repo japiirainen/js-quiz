@@ -67,7 +67,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
             {completedState && (
                <ChallengeComplete
                   problem={problemData}
-                  userSolution={data?.submitResult?.solution}
+                  userId={meData?.me?._id}
                   onRedoClick={() => setCompletedState(false)}
                />
             )}
