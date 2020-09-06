@@ -202,6 +202,17 @@ export type TestCase = {
   case?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
+export type PlaceHolderInputOutput = {
+  __typename?: 'PlaceHolderInputOutput';
+  input?: Maybe<Scalars['String']>;
+  output?: Maybe<Scalars['String']>;
+};
+
+export type PlaceHolderInputOutputInput = {
+  input?: Maybe<Scalars['String']>;
+  output?: Maybe<Scalars['String']>;
+};
+
 export type Problem = {
   __typename?: 'Problem';
   _id: Scalars['ID'];
@@ -215,6 +226,7 @@ export type Problem = {
   placeHolder: Scalars['String'];
   placeHolderExpectation: Scalars['String'];
   category: Scalars['String'];
+  placeHolderInputOutput: PlaceHolderInputOutput;
 };
 
 export type ProblemInput = {
@@ -228,6 +240,7 @@ export type ProblemInput = {
   placeHolder: Scalars['String'];
   placeHolderExpectation: Scalars['String'];
   category: Scalars['String'];
+  placeHolderInputOutput: PlaceHolderInputOutputInput;
 };
 
 export type TestCaseInput = {
@@ -261,6 +274,10 @@ export type AddProblem = {
 export type RegProblemFragment = (
   { __typename?: 'Problem' }
   & Pick<Problem, '_id' | 'name' | 'description' | 'difficulty' | 'correctSolution' | 'placeHolder' | 'placeHolderExpectation' | 'index'>
+  & { placeHolderInputOutput: (
+    { __typename?: 'PlaceHolderInputOutput' }
+    & Pick<PlaceHolderInputOutput, 'input' | 'output'>
+  ) }
 );
 
 export type RegUserFragment = (
@@ -451,6 +468,10 @@ export const RegProblemFragmentDoc = gql`
   placeHolder
   placeHolderExpectation
   index
+  placeHolderInputOutput {
+    input
+    output
+  }
 }
     `;
 export const RegUserFragmentDoc = gql`

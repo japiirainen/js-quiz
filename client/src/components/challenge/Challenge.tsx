@@ -39,6 +39,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const theme = { light: 'tomorrow', dark: 'merbivore' }
+   //@ts-ignore
    const { completedState, setCompletedState } = useContext(ChallengeContext)
    const [value, setValue] = useState(problemData?.placeHolder)
 

@@ -1,7 +1,9 @@
-import { List, ListItem, Link, Text } from '@chakra-ui/core'
-import { RegProblemFragment } from '../../generated/graphql'
-import { map } from 'ramda'
+import { List, ListItem, Link, Text, ListIcon } from '@chakra-ui/core'
+import { RegProblemFragment, useMeQuery } from '../../generated/graphql'
+import { map, includes } from 'ramda'
 import NextLink from 'next/link'
+import { isServer } from '../../utils/isServer'
+import { FaCheckCircle } from 'react-icons/fa'
 
 interface ChallengeListProps {
    problemList: any
@@ -9,10 +11,16 @@ interface ChallengeListProps {
 }
 
 export const ChallengeList: React.FC<ChallengeListProps> = ({ problemList, groupName }) => {
+   const [{ data }] = useMeQuery({ pause: isServer() })
+   const isComplete = (id: string) => includes(id, data?.me?.completedProblems as any)
+
    const listMapper = (x: RegProblemFragment) => (
       <ListItem key={x._id} fontSize={18}>
          <Link>
             <NextLink href={`/${groupName}/${x.index}`}>{x.name}</NextLink>
+            {isComplete(x._id) && (
+               <ListIcon icon={FaCheckCircle} ml={2} color="green.500" size={'13px'} />
+            )}
          </Link>
       </ListItem>
    )

@@ -16,6 +16,7 @@ const calculateBorderColor = (difficulty: string | undefined) => {
 }
 
 export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
+   //@ts-ignore
    const { completedState } = useContext(ChallengeContext)
 
    return !completedState ? (
@@ -35,21 +36,34 @@ export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
                   <StatLabel>Problem description:</StatLabel>
                   <StatNumber>{problemData?.description}</StatNumber>
                </Stat>
-               <Stat
-                  paddingTop="2"
-                  paddingBottom="2"
-                  paddingRight="4"
-                  paddingLeft="4"
-                  mt={4}
-                  ml={'auto'}
-               >
-                  <StatLabel>Difficulty:</StatLabel>
-                  <StatNumber>
-                     <Text color={calculateBorderColor(problemData?.difficulty)}>
-                        {problemData?.difficulty}
-                     </Text>
-                  </StatNumber>
-               </Stat>
+               <Flex direction="row-reverse">
+                  <Flex direction="column">
+                     <Stat>
+                        <StatLabel borderBottom="1px" borderBottomColor="red.200">
+                           example input:
+                        </StatLabel>
+                        <StatNumber fontSize={18}>
+                           <Text>{problemData?.placeHolderInputOutput.input}</Text>
+                        </StatNumber>
+                     </Stat>
+                     <Stat>
+                        <StatLabel borderBottom="1px" borderBottomColor="red.200">
+                           example output:
+                        </StatLabel>
+                        <StatNumber fontSize={18}>
+                           <Text>{problemData?.placeHolderInputOutput.output}</Text>
+                        </StatNumber>
+                     </Stat>
+                  </Flex>
+                  <Stat>
+                     <StatLabel>Difficulty:</StatLabel>
+                     <StatNumber>
+                        <Text color={calculateBorderColor(problemData?.difficulty)}>
+                           {problemData?.difficulty}
+                        </Text>
+                     </StatNumber>
+                  </Stat>
+               </Flex>
             </Flex>
          </List>
       </Container>

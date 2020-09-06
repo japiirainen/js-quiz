@@ -8,6 +8,12 @@ export enum DIFFICULTY {
    MEDIUM = 'MEDIUM',
    HARD = 'HARD',
 }
+class PlaceHolderInputOutput {
+   @prop({})
+   public input: string
+   @prop({})
+   public output: string
+}
 
 @modelOptions({
    options: { customName: 'problem' },
@@ -39,6 +45,9 @@ export class Problem extends TimeStamps {
 
    @prop({})
    public placeHolderExpectation!: string
+
+   @prop({})
+   public placeHolderInputOutput!: PlaceHolderInputOutput
 
    @prop({})
    public category!: string

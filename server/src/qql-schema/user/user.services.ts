@@ -106,7 +106,7 @@ export const changePassword = async (
 
 export const updateUser = async (
    _: any,
-   { input }: { input: { password: string; _id: string } },
+   { input }: { input: { password: string; _id: string; username: string } },
    ctx: MyContext
 ) => {
    isAuth(ctx)
@@ -117,12 +117,12 @@ export const updateUser = async (
       if (!validPassword)
          throw new AuthenticationError('Password must be at least 2 characters long')
       await maybeUser.updateOne({
-         ...input,
+         username: input.username || maybeUser.username,
          password: await argon2.hash(validPassword.password),
       })
       return await UserModel.findById(maybeUser._id)
    } else {
-      await maybeUser.updateOne({ ...input })
+      await maybeUser.updateOne({ username: input.username })
       return await UserModel.findById(maybeUser._id)
    }
 }

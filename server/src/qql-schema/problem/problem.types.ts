@@ -11,6 +11,16 @@ export default gql`
       case: [String]
    }
 
+   type PlaceHolderInputOutput {
+      input: String
+      output: String
+   }
+
+   input PlaceHolderInputOutputInput {
+      input: String
+      output: String
+   }
+
    type Problem {
       _id: ID!
       name: String!
@@ -23,6 +33,7 @@ export default gql`
       placeHolder: String!
       placeHolderExpectation: String!
       category: String!
+      placeHolderInputOutput: PlaceHolderInputOutput!
    }
 
    input problemInput {
@@ -36,6 +47,7 @@ export default gql`
       placeHolder: String!
       placeHolderExpectation: String!
       category: String!
+      placeHolderInputOutput: PlaceHolderInputOutputInput!
    }
 
    input testCaseInput {
