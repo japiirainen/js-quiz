@@ -6,7 +6,7 @@ import { cookieName, sessionSecret, __prod__ } from './constants'
 import { MyContext } from './types'
 import { AuthenticationError } from 'apollo-server-express'
 
-export const redis = new Redis()
+export const redis = new Redis({ port: 6379 })
 const RedisStore = connectRedis(session)
 
 export const mySession = session({
