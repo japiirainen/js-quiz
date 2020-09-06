@@ -7,7 +7,7 @@ import { useChangePasswordMutation } from '../../generated/graphql'
 import { useRouter } from 'next/router'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
-import { Layout } from '../../components/Layout'
+import { Layout } from '../../components/layouts/Layout'
 
 const ChangePassword: NextPage = () => {
    const [submitted, setSubmitted] = useState(false)
@@ -30,11 +30,19 @@ const ChangePassword: NextPage = () => {
    }
 
    return (
-      <Layout fontSize={'3vh'} height={'8vh'} title={'Reset password'} variant={'small'} minH={'100vh'}>
+      <Layout
+         fontSize={'3vh'}
+         height={'8vh'}
+         title={'Reset password'}
+         variant={'small'}
+         minH={'100vh'}
+      >
          <Formik
             initialValues={{ newPassword: '' }}
             onSubmit={async (values, { setErrors }) => {
-               const res = await changePassword({ input: { newPassword: values.newPassword, token } })
+               const res = await changePassword({
+                  input: { newPassword: values.newPassword, token },
+               })
                console.log(res)
                if (res.error) {
                   setErrors({
@@ -47,7 +55,12 @@ const ChangePassword: NextPage = () => {
          >
             {({ isSubmitting }) => (
                <Form>
-                  <InputField name="newPassword" placeholder="new password" label="New Password" type="password" />
+                  <InputField
+                     name="newPassword"
+                     placeholder="new password"
+                     label="New Password"
+                     type="password"
+                  />
                   <Button mt={4} type="submit" variantColor="blue" isLoading={isSubmitting}>
                      confirm
                   </Button>

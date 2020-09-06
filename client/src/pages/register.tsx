@@ -4,7 +4,7 @@ import { withUrqlClient } from 'next-urql'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { InputField } from '../components/InputField'
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/layouts/Layout'
 import { useRegisterMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
 
@@ -37,7 +37,12 @@ const Register: React.FC<registerProps> = ({}) => {
                      <InputField name="username" placeholder="username" label="Username" />
                   </Box>
                   <Box mt={4}>
-                     <InputField name="password" placeholder="password" label="Password" type="password" />
+                     <InputField
+                        name="password"
+                        placeholder="password"
+                        label="Password"
+                        type="password"
+                     />
                   </Box>
                   <Button mt={4} type="submit" isLoading={isSubmitting} variantColor="blue">
                      register

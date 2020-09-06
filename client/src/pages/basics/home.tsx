@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
-import { ChallengeHomePage } from '../../components/ChallengeHomePage'
+import { ChallengeHomePage } from '../../components/challenge/ChallengeHomePage'
 
 const Home: NextPage = () => {
    return (

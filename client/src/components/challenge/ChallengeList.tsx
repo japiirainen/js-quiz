@@ -1,5 +1,5 @@
 import { List, ListItem, Link, Text } from '@chakra-ui/core'
-import { RegProblemFragment } from '../generated/graphql'
+import { RegProblemFragment } from '../../generated/graphql'
 import { map } from 'ramda'
 import NextLink from 'next/link'
 

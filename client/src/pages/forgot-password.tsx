@@ -5,7 +5,7 @@ import { Button, Text, Icon } from '@chakra-ui/core'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
 import { useForgotPasswordMutation } from '../generated/graphql'
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/layouts/Layout'
 
 const ForgotPassword = () => {
    const [complete, setComplete] = useState(false)
@@ -22,7 +22,13 @@ const ForgotPassword = () => {
       )
 
    return (
-      <Layout fontSize={'3vh'} height={'8vh'} title={'Forgot password?'} variant={'small'} minH={'100vh'}>
+      <Layout
+         fontSize={'3vh'}
+         height={'8vh'}
+         title={'Forgot password?'}
+         variant={'small'}
+         minH={'100vh'}
+      >
          <Formik
             initialValues={{ email: '' }}
             onSubmit={async values => {

@@ -16,14 +16,15 @@ import {
    useDisclosure,
 } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { CombinedError } from 'urql'
-import { RegProblemFragment, useSubmitResultMutation, useMeQuery } from '../generated/graphql'
+import { RegProblemFragment, useSubmitResultMutation, useMeQuery } from '../../generated/graphql'
 import { ChallengeComplete } from './ChallengeComplete'
-import { Editor } from './Editor'
-import { LoadingSpinner } from './LoadingSpinner'
-import { isServer } from '../utils/isServer'
+import { Editor } from '../Editor'
+import { LoadingSpinner } from '../LoadingSpinner'
+import { isServer } from '../../utils/isServer'
 import { includes } from 'ramda'
+import { ChallengeContext } from '../../context/challengeContext'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined | null
@@ -38,9 +39,8 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const theme = { light: 'tomorrow', dark: 'merbivore' }
-
+   const { completedState, setCompletedState } = useContext(ChallengeContext)
    const [value, setValue] = useState(problemData?.placeHolder)
-   const [completedState, setCompletedState] = useState(false)
 
    useEffect(() => {
       if (includes(problemData?._id, meData?.me?.completedProblems || [])) {
@@ -69,6 +69,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                   problem={problemData}
                   userId={meData?.me?._id}
                   onRedoClick={() => setCompletedState(false)}
+                  tempSolution={data?.submitResult?.solution}
                />
             )}
             {completedState ? null : (

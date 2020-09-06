@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
 import NextLink from 'next/link'
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/layouts/Layout'
 
 interface LoginProps {}
 
@@ -34,10 +34,21 @@ const Login: React.FC<LoginProps> = ({}) => {
                <Form>
                   <InputField name="username" placeholder="username" label="Username" />
                   <Box mt={4}>
-                     <InputField name="password" placeholder="password" label="Password" type="password" />
+                     <InputField
+                        name="password"
+                        placeholder="password"
+                        label="Password"
+                        type="password"
+                     />
                   </Box>
                   <Flex>
-                     <Button mr={4} mt={4} type="submit" isLoading={isSubmitting} variantColor="blue">
+                     <Button
+                        mr={4}
+                        mt={4}
+                        type="submit"
+                        isLoading={isSubmitting}
+                        variantColor="blue"
+                     >
                         login
                      </Button>
                      <Flex ml="auto" mt={2}>

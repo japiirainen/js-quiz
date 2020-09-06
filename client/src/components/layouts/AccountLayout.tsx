@@ -1,10 +1,10 @@
-import { Container, ContainerVariant } from './Container'
-import { Main } from './Main'
-import { Footer } from './Footer'
+import { Container, ContainerVariant } from '../Container'
+import { Main } from '../Main'
+import { Footer } from '../Footer'
 import { Text } from '@chakra-ui/core'
-import { SideDrawer } from './SideDrawer'
-import { AccountPopover } from './AccountMenu'
-import { BreadCrumbs } from './BreadCrumbs'
+import { SideDrawer } from '../SideDrawer'
+import { AccountPopover } from '../AccountMenu'
+import { BreadCrumbs } from '../BreadCrumbs'
 
 interface AccountLayoutProps {
    title?: string

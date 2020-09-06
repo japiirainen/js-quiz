@@ -1,4 +1,4 @@
-import { AccountLayout } from '../../components/AccountLayout'
+import { AccountLayout } from '../../components/layouts/AccountLayout'
 import { length, __, prop, map } from 'ramda'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'

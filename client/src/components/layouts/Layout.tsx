@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { Container, ContainerVariant } from './Container'
-import { Hero } from './Hero'
-import { Main } from './Main'
-import { Footer } from './Footer'
+import { Container, ContainerVariant } from '../Container'
+import { Hero } from '../Hero'
+import { Main } from '../Main'
+import { Footer } from '../Footer'
 import { Text } from '@chakra-ui/core'
-import { SideDrawer } from './SideDrawer'
-import { AccountPopover } from './AccountMenu'
+import { SideDrawer } from '../SideDrawer'
+import { AccountPopover } from '../AccountMenu'
 
 interface LayoutProps {
    title?: string

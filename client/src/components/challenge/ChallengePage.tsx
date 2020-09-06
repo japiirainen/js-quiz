@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
-import { useGetProblemByIndexQuery, GetProblemByIndexQuery } from '../generated/graphql'
-import { isServer } from '../utils/isServer'
+import { GetProblemByIndexQuery } from '../../generated/graphql'
 import { inc, dec } from 'ramda'
-import { Layout } from './Layout'
+import { Layout } from '../layouts/Layout'
 import { ChallengeDesc } from './ChallengeDesc'
 import { Challenge } from './Challenge'
 import { Flex } from '@chakra-ui/core'
-import { NextOrPrevButton } from './NextOrPrevButton'
+import { NextOrPrevButton } from '../NextOrPrevButton'
 import { CombinedError } from 'urql'
 
 interface ChallengePageProps {

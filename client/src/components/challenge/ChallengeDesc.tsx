@@ -1,8 +1,9 @@
 import { List, Text, Stat, StatLabel, StatNumber, Flex } from '@chakra-ui/core'
-import React from 'react'
+import React, { useContext } from 'react'
 
-import { Container } from './Container'
+import { Container } from '../Container'
 import { ChallengeProps } from './Challenge'
+import { ChallengeContext } from '../../context/challengeContext'
 
 const calculateBorderColor = (difficulty: string | undefined) => {
    if (difficulty === 'EASY') {
@@ -15,7 +16,9 @@ const calculateBorderColor = (difficulty: string | undefined) => {
 }
 
 export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
-   return (
+   const { completedState } = useContext(ChallengeContext)
+
+   return !completedState ? (
       <Container>
          <List spacing={3} my={0}>
             <Flex p={4} width="100%" direction="column">
@@ -50,5 +53,5 @@ export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
             </Flex>
          </List>
       </Container>
-   )
+   ) : null
 }

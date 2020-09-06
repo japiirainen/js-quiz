@@ -1,10 +1,10 @@
-import { useGetProblemsInGroupQuery } from '../generated/graphql'
-import { isServer } from '../utils/isServer'
-import { Layout } from './Layout'
-import { LoadingSpinner } from './LoadingSpinner'
+import { useGetProblemsInGroupQuery } from '../../generated/graphql'
+import { isServer } from '../../utils/isServer'
+import { Layout } from '../layouts/Layout'
+import { LoadingSpinner } from '../LoadingSpinner'
 import { Icon, Stack, Text } from '@chakra-ui/core'
 import { ChallengeList } from './ChallengeList'
-import { ProgressBar } from './ProgressBar'
+import { ProgressBar } from '../ProgressBar'
 
 interface ChallengeHomeProps {
    groupName: string

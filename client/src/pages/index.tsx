@@ -1,9 +1,9 @@
 import { Divider, Icon, Text } from '@chakra-ui/core'
-import { Challenge } from '../components/Challenge'
-import { ChallengeDesc } from '../components/ChallengeDesc'
+import { Challenge } from '../components/challenge/Challenge'
+import { ChallengeDesc } from '../components/challenge/ChallengeDesc'
 import { createUrqlClient } from '../utils/createUrqlClient'
 import { withUrqlClient } from 'next-urql'
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/layouts/Layout'
 import { useGetProblemByIdQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 

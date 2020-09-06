@@ -1,4 +1,4 @@
-import { AccountLayout } from '../../components/AccountLayout'
+import { AccountLayout } from '../../components/layouts/AccountLayout'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import { useMeQuery, useUpdateUserMutation } from '../../generated/graphql'
