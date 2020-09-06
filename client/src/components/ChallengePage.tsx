@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useGetProblemByIndexQuery } from '../generated/graphql'
+import { useGetProblemByIndexQuery, GetProblemByIndexQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { inc, dec } from 'ramda'
 import { Layout } from './Layout'
@@ -7,18 +7,22 @@ import { ChallengeDesc } from './ChallengeDesc'
 import { Challenge } from './Challenge'
 import { Flex } from '@chakra-ui/core'
 import { NextOrPrevButton } from './NextOrPrevButton'
+import { CombinedError } from 'urql'
 
 interface ChallengePageProps {
-   index: number
    problemGroup: string
+   data: GetProblemByIndexQuery | undefined
+   error: CombinedError | undefined
+   fetching: Boolean
 }
 
-export const ChallengePage: React.FC<ChallengePageProps> = ({ index, problemGroup }) => {
+export const ChallengePage: React.FC<ChallengePageProps> = ({
+   problemGroup,
+   data,
+   error,
+   fetching,
+}) => {
    const router = useRouter()
-   const [{ data, fetching, error }] = useGetProblemByIndexQuery({
-      variables: { index: index },
-      pause: isServer(),
-   })
    const routeIndex = parseInt(router.query.index as string) as number
 
    const problem = data?.getProblemByIndex?.currProblem
@@ -54,5 +58,3 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({ index, problemGrou
       </Layout>
    )
 }
-
-

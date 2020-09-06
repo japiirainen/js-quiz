@@ -3,12 +3,11 @@ import { withUrqlClient } from 'next-urql'
 import React from 'react'
 import { ChallengePage } from '../../components/ChallengePage'
 import { createUrqlClient } from '../../utils/createUrqlClient'
-import { useRouter } from 'next/router'
+import { useGetPostFromUrl } from '../../utils/usegetProblemFromUrl'
 
-const Loops: NextPage = () => {
-   const router = useRouter()
-   const routeIndex = parseInt(router.query.index as string) as number
-   return <ChallengePage index={routeIndex} problemGroup={'loops'} />
+const Loops: NextPage = ({}) => {
+   const [{ data, fetching, error }] = useGetPostFromUrl()
+   return <ChallengePage error={error} fetching={fetching} data={data} problemGroup={'loops'} />
 }
 
 export default withUrqlClient(createUrqlClient, { ssr: true })(Loops)
