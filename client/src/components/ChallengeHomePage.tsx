@@ -35,7 +35,7 @@ export const ChallengeHomePage: React.FC<ChallengeHomeProps> = ({ groupName, des
                   <Icon name="info" color="blue.500" mx="2px" />
                </Text>
                <Stack isInline spacing={8} align="center" mt={50}>
-                  <ChallengeList problemList={data?.findProblemsInGroup} />
+                  <ChallengeList groupName={groupName} problemList={data?.findProblemsInGroup} />
                   <ProgressBar ProblemData={data} />
                </Stack>
             </>
