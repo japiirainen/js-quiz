@@ -1,6 +1,8 @@
-import { Link, ListItem, ListIcon, Text } from '@chakra-ui/core'
+import { Link, ListItem, ListIcon, Text, Button, useToast } from '@chakra-ui/core'
 import { FaArrowRight } from 'react-icons/fa'
-import NextLink from 'next/link'
+import { useMeQuery } from '../generated/graphql'
+import { isServer } from '../utils/isServer'
+import { useRouter } from 'next/router'
 
 interface DrawerLinkProps {
    text: string
@@ -8,16 +10,30 @@ interface DrawerLinkProps {
 }
 
 export const DrawerLink: React.FC<DrawerLinkProps> = ({ href, text }) => {
+   const router = useRouter()
+   const toast = useToast()
+   const [{ data: meData }] = useMeQuery({ pause: isServer() })
+   const authCheck = () => {
+      if (!meData?.me?.username) {
+         toast({
+            title: 'need to be logged in to view that route',
+            status: 'error',
+            duration: 4000,
+            isClosable: true,
+         })
+         router.push(`/login?next=${href}`)
+      } else {
+         router.push(href)
+      }
+   }
    return (
-      <NextLink href={href}>
-         <Link fontSize={20} m={1}>
-            <ListItem>
-               <Text fontSize={20}>
-                  {text}
-                  <ListIcon icon={FaArrowRight} size="15px" ml={3} />
-               </Text>
-            </ListItem>
-         </Link>
-      </NextLink>
+      <Button as={Link} variant="ghost" onClick={authCheck} fontSize={20} m={1}>
+         <ListItem>
+            <Text fontSize={20}>
+               {text}
+               <ListIcon icon={FaArrowRight} size="15px" ml={3} />
+            </Text>
+         </ListItem>
+      </Button>
    )
 }

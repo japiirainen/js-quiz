@@ -12,7 +12,7 @@ export const start = async () => {
 
    const app = express()
 
-   // app.set('trust proxy', 1) uncomment this when prod to make cookies work
+   app.set('trust proxy', 1)
    app.use(mySession)
    app.use(myCors)
 
@@ -25,5 +25,7 @@ export const start = async () => {
 
    const port = PORT
 
-   app.listen({ port }, () => console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`))
+   app.listen({ port }, () =>
+      console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
+   )
 }

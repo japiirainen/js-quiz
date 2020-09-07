@@ -88,6 +88,7 @@ export const AccountPopover: React.FC<AccountPopoverProps> = () => {
                            duration: 4000,
                            isClosable: true,
                         })
+                        router.push('/')
                      }}
                   >
                      logout
