@@ -38,7 +38,7 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
       >
          <ChallengeDesc problemData={problem} />
          <Challenge problemData={problem} error={error} loading={fetching} />
-         <Flex mt={15} direction={'row-reverse'}>
+         <Flex mt={20} direction={'row-reverse'}>
             {nextProblem && (
                <NextOrPrevButton
                   problemName={nextProblem.name}
