@@ -52,13 +52,11 @@ export const AccountPopover: React.FC<AccountPopoverProps> = () => {
       )
    } else {
       userStatus = (
-         <MenuItem as="button">
-            <NextLink href="/profile/progress">
-               <Link ml={8} fontSize={20}>
-                  Account page ({data.me.username})
-               </Link>
-            </NextLink>
-         </MenuItem>
+         <NextLink href="/profile/progress">
+            <Link ml={6} fontSize={20}>
+               Account page ({data.me.username})
+            </Link>
+         </NextLink>
       )
    }
    return (
@@ -75,24 +73,26 @@ export const AccountPopover: React.FC<AccountPopoverProps> = () => {
             </Flex>
             <Divider />
             {data?.me && (
-               <Button
-                  isFullWidth
-                  fontSize={20}
-                  color="red.500"
-                  isLoading={logoutFetching}
-                  variant="ghost"
-                  onClick={() => {
-                     logout()
-                     toast({
-                        title: 'logged out',
-                        status: 'info',
-                        duration: 4000,
-                        isClosable: true,
-                     })
-                  }}
-               >
-                  logout
-               </Button>
+               <MenuItem>
+                  <Button
+                     isFullWidth
+                     fontSize={20}
+                     color="red.500"
+                     isLoading={logoutFetching}
+                     variant="ghost"
+                     onClick={() => {
+                        logout()
+                        toast({
+                           title: 'logged out',
+                           status: 'info',
+                           duration: 4000,
+                           isClosable: true,
+                        })
+                     }}
+                  >
+                     logout
+                  </Button>
+               </MenuItem>
             )}
          </MenuList>
       </Menu>

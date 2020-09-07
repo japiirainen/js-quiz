@@ -10,7 +10,7 @@ interface DrawerLinkProps {
 export const DrawerLink: React.FC<DrawerLinkProps> = ({ href, text }) => {
    return (
       <NextLink href={href}>
-         <Link fontSize={20}>
+         <Link fontSize={20} m={1}>
             <ListItem>
                <Text fontSize={20}>
                   {text}
