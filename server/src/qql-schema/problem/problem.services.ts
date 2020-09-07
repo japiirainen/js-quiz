@@ -20,7 +20,6 @@ export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyC
 
    return doc
 }
-//need to make some kind of testCase formatter
 
 export const addTestCase = async (
    _: any,

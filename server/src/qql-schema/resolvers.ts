@@ -20,6 +20,7 @@ import {
    newProblemGroup,
    findProblemsInGroup,
    addProblemToGroup,
+   getManyGroupsOfProblems,
 } from './problem-group/problem-group.services'
 
 export const resolvers = {
@@ -30,6 +31,7 @@ export const resolvers = {
       me: me,
       getProblemById: getProblemById,
       getProblemByIndex: getProblemByIndex,
+      getManyGroupsOfProblems: getManyGroupsOfProblems,
       findProblemsInGroup: findProblemsInGroup,
       getAllProblems: getAllProblems,
       getSolution: getSolution,

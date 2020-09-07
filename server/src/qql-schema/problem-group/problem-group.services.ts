@@ -52,3 +52,24 @@ export const findProblemsInGroup = async (
    if (!problems) throw new ApolloError('no problems found')
    return problems
 }
+
+export const getManyGroupsOfProblems = async (
+   _: any,
+   { names }: { names: string[] },
+   ctx: MyContext
+) => {
+   isAuth(ctx)
+   const [...problemGroups] = await Promise.all(
+      names.map(name => ProblemGroupModel.findOne({ name: name }))
+   )
+   const [...problems] = await Promise.all(
+      problemGroups.map(g => g && Promise.all(g.problems.map(getGroupById)))
+   )
+   return {
+      g1: problems[0],
+      g2: problems[1],
+      g3: problems[2],
+      g4: problems[3],
+      g5: problems[4],
+   }
+}

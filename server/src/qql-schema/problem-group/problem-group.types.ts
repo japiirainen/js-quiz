@@ -15,10 +15,18 @@ export default gql`
       groupId: ID!
       problemId: ID!
    }
+   type manyGroupRes {
+      g1: [Problem]
+      g2: [Problem]
+      g3: [Problem]
+      g4: [Problem]
+      g5: [Problem]
+   }
 
    extend type Query {
       problemGroup(_id: ID!): ProblemGroup!
       findProblemsInGroup(groupName: String!): [Problem]
+      getManyGroupsOfProblems(names: [String]): manyGroupRes!
    }
 
    extend type Mutation {
