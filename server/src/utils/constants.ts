@@ -1,5 +1,4 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import 'dotenv-safe/config'
 
 export const PORT = process.env.PORT
 export const CORS_ORIGIN = process.env.CORS_ORIGIN

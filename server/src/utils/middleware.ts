@@ -2,12 +2,12 @@ import connectRedis from 'connect-redis'
 import cors from 'cors'
 import session from 'express-session'
 import Redis from 'ioredis'
-import { cookieName, sessionSecret, __prod__, CORS_ORIGIN, REDIS_SETTINGS } from './constants'
+import { cookieName, sessionSecret, __prod__, CORS_ORIGIN, REDIS_URL } from './constants'
 import { MyContext } from './types'
 import { AuthenticationError } from 'apollo-server-express'
 
-export const redis = new Redis(REDIS_SETTINGS)
 const RedisStore = connectRedis(session)
+export const redis = new Redis(REDIS_URL)
 
 export const mySession = session({
    name: cookieName,
@@ -17,7 +17,7 @@ export const mySession = session({
       httpOnly: true,
       sameSite: 'lax',
       secure: __prod__,
-      domain: __prod__ ? '.some.com' : undefined,
+      domain: __prod__ ? '.js-quiz.me' : undefined,
    },
    secret: sessionSecret,
    saveUninitialized: false,
