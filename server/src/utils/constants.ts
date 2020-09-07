@@ -13,3 +13,4 @@ export const EMAIL_PASSWORD = process.env!.EMAIL_PASSWORD
 export const FORGOT_PASSWORD_PREFIX = 'forgot-password'
 export const PASSWORD_RESET_TEXT = (token: string) =>
    `<a href="http://localhost:3000/change-password/${token}">reset password</a>`
+export const REDIS_SETTINGS = __prod__ ? { host: 'redis-server', port: 6379 } : undefined

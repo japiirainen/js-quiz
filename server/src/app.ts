@@ -23,9 +23,7 @@ export const start = async () => {
 
    server.applyMiddleware({ app, cors: false })
 
-   const port = PORT
-
-   app.listen({ port }, () =>
-      console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
+   app.listen({ port: PORT }, () =>
+      console.log(`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`)
    )
 }
