@@ -1,0 +1,19 @@
+query GetManyGroupsOfProblems($names: [String]) {
+   getManyGroupsOfProblems(names: $names) {
+      g1 {
+         ...RegProblem
+      }
+      g2 {
+         ...RegProblem
+      }
+      g3 {
+         ...RegProblem
+      }
+      g4 {
+         ...RegProblem
+      }
+      g5 {
+         ...RegProblem
+      }
+   }
+}

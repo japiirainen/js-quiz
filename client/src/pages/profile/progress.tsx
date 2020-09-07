@@ -15,7 +15,7 @@ import {
 import {
    useGetAllProblemsQuery,
    useMeQuery,
-   useGetProblemsInGroupQuery,
+   useGetManyGroupsOfProblemsQuery,
 } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../../components/LoadingSpinner'
@@ -26,46 +26,37 @@ const Progress = () => {
       pause: isServer(),
    })
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
-   const [{ data: basicsData, fetching: basicsFetching }] = useGetProblemsInGroupQuery({
-      variables: { groupName: 'basics' },
+   const [{ data: groupsData, fetching }] = useGetManyGroupsOfProblemsQuery({
+      variables: {
+         names: ['basics', 'conditionals', 'loops'],
+      },
       pause: isServer(),
    })
-   const [{ data: condData, fetching: condFetching }] = useGetProblemsInGroupQuery({
-      variables: { groupName: 'conditionals' },
-      pause: isServer(),
-   })
-   const [{ data: loopsData, fetching: loopsFetching }] = useGetProblemsInGroupQuery({
-      variables: { groupName: 'loops' },
-      pause: isServer(),
-   })
+   const basics =
+      groupsData?.getManyGroupsOfProblems.g1?.length && groupsData?.getManyGroupsOfProblems.g1
+   const conditionals =
+      groupsData?.getManyGroupsOfProblems.g2?.length && groupsData?.getManyGroupsOfProblems.g2
+   const loops =
+      groupsData?.getManyGroupsOfProblems.g3?.length && groupsData?.getManyGroupsOfProblems.g3
 
    const allProblemsLen = problemData?.getAllProblems.length && length(problemData?.getAllProblems)
    const userAllProblemsLen = meData?.me?.completedProblems && length(meData.me.completedProblems)
-   const basicProblemsLen =
-      basicsData?.findProblemsInGroup?.length && length(basicsData?.findProblemsInGroup)
-   const condProblemsLen =
-      condData?.findProblemsInGroup?.length && length(condData?.findProblemsInGroup)
-
-   const loopsProbLen =
-      loopsData?.findProblemsInGroup?.length && length(loopsData?.findProblemsInGroup)
+   const basicProblemsLen = basics && length(basics)
+   const condProblemsLen = conditionals && length(conditionals)
+   const loopsProbLen = loops && length(loops)
 
    const userBasicsProblemsLen =
-      basicsData?.findProblemsInGroup &&
+      basics &&
       meData?.me?.completedProblems &&
-      calcLen(meData.me.completedProblems, map(prop('_id') as any, basicsData.findProblemsInGroup))
-
+      calcLen(meData.me.completedProblems, map(prop('_id') as any, basics))
    const userCondProblemsLen =
-      condData?.findProblemsInGroup &&
+      conditionals &&
       meData?.me?.completedProblems &&
-      calcLen(meData?.me?.completedProblems, map(prop('_id') as any, condData?.findProblemsInGroup))
-
+      calcLen(meData?.me?.completedProblems, map(prop('_id') as any, conditionals))
    const userLoopsProbLen =
-      loopsData?.findProblemsInGroup &&
+      loops &&
       meData?.me?.completedProblems &&
-      calcLen(
-         meData?.me?.completedProblems,
-         map(prop('_id') as any, loopsData?.findProblemsInGroup)
-      )
+      calcLen(meData?.me?.completedProblems, map(prop('_id') as any, loops))
 
    const allPercentage =
       userAllProblemsLen && allProblemsLen && calcPercentage(userAllProblemsLen, allProblemsLen)
@@ -112,7 +103,7 @@ const Progress = () => {
             </Stat>
             <Stat mt={8}>
                <StatLabel fontSize={20}>Basics completed:</StatLabel>
-               {basicsFetching ? (
+               {fetching ? (
                   <LoadingSpinner />
                ) : (
                   <Flex direction="column" alignItems="center">
@@ -128,7 +119,7 @@ const Progress = () => {
             </Stat>
             <Stat mt={8}>
                <StatLabel fontSize={20}>Conditionals completed:</StatLabel>
-               {condFetching ? (
+               {fetching ? (
                   <LoadingSpinner />
                ) : (
                   <Flex direction="column" alignItems="center">
@@ -144,7 +135,7 @@ const Progress = () => {
             </Stat>
             <Stat mt={8}>
                <StatLabel fontSize={20}>Loops completed:</StatLabel>
-               {loopsFetching ? (
+               {fetching ? (
                   <LoadingSpinner />
                ) : (
                   <Flex direction="column" alignItems="center">

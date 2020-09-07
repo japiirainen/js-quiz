@@ -2,7 +2,7 @@ import { testRunner, testsToFnCalls, formatError } from '../../utils/testRunner'
 import { ProblemModel } from '../problem/problem.model'
 import { ApolloError } from 'apollo-server-express'
 import { UserModel } from '../user/user.model'
-import { ProblemResultInputIf, ResultIf } from './problem.result.model'
+import { ProblemResultInputIf } from './problem.result.model'
 import { SolutionModel } from './problem.result.model'
 import { isAuth } from '../../utils/middleware'
 import { MyContext } from '../../utils/types'
@@ -15,20 +15,14 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
    if (!problem?.testCases) throw new ApolloError('No testcases found')
    const testFunctions = testsToFnCalls(problem.testCases)
    const testResults = testRunner(input.solution, testFunctions)
-   let result: ResultIf = {
-      success: false,
-      errors: [],
-      solution: input.solution,
-      user: null,
-   }
+
    if (!testResults.includes('pass')) {
-      result = {
+      return {
          success: false,
          errors: formatError(testResults),
          solution: input.solution,
          user: null,
       }
-      return result
    } else {
       input.userId &&
          !user?.completedProblems?.includes(problem.id) &&
@@ -40,19 +34,18 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
                },
             }
          ))
-      result = {
-         success: true,
-         errors: [],
-         solution: input.solution,
-         user: await UserModel.findById(input.userId),
-      }
       input.userId &&
          (await SolutionModel.create({
             userId: input.userId,
             problemId: input.problemId,
             solution: input.solution,
          }))
-      return result
+      return {
+         success: true,
+         errors: [],
+         solution: input.solution,
+         user: await UserModel.findById(input.userId),
+      }
    }
 }
 
