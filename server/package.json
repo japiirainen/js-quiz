@@ -5,7 +5,7 @@
    "author": "Joona Piirainen",
    "license": "MIT",
    "scripts": {
-      "build": "tsc --build tsconfig.json",
+      "build": "tsc --build server/tsconfig.json",
       "start": "node dist/index.js",
       "dev": "nodemon --exec ts-node --files src/index.ts",
       "test": "jest --watchAll"
