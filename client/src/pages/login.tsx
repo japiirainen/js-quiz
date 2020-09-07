@@ -55,9 +55,12 @@ const Login: React.FC<LoginProps> = ({}) => {
                      >
                         login
                      </Button>
-                     <Flex ml="auto" mt={2}>
+                     <Flex direction="column-reverse" ml="auto" mt={4}>
                         <NextLink href="/forgot-password">
                            <Link ml="auto">forgot password?</Link>
+                        </NextLink>
+                        <NextLink href="/register">
+                           <Link ml="auto">go to register?</Link>
                         </NextLink>
                      </Flex>
                   </Flex>

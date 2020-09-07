@@ -1,11 +1,17 @@
 FROM node:latest
 
-WORKDIR /usr/app
+WORKDIR /usr/src/app
 
-COPY ./package.json ./
+COPY package.json ./
+COPY yarn.lock ./
 
 RUN yarn
+RUN yarn build
 
-COPY ./ ./
+COPY . .
 
-CMD ["yarn","start"]
+ENV NODE_ENV production
+
+EXPOSE 8080
+CMD [ "yarn", "start" ]
+USER node
