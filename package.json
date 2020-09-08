@@ -6,6 +6,7 @@
    ],
    "scripts": {
       "client": "yarn workspace client dev",
-      "server": "yarn workspace server dev"
+      "server": "yarn workspace server dev",
+      "vercel-build": "cd client && next build"
    }
 }
