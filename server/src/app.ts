@@ -19,6 +19,8 @@ export const start = async () => {
    const server = new ApolloServer({
       schema: applyMiddleware(schema),
       context: ({ req, res }): MyContext => ({ req, res, redis }),
+      introspection: true,
+      playground: true,
    })
 
    server.applyMiddleware({ app, cors: false })
