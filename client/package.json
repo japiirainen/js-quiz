@@ -7,6 +7,7 @@
       "build": "next build",
       "start": "next start",
       "test": "jest --watch",
+      "deploy": "vercel --prod",
       "gen": "graphql-codegen --config codegen.yml"
    },
    "dependencies": {
