@@ -7,6 +7,7 @@ import { Challenge } from './Challenge'
 import { Flex } from '@chakra-ui/core'
 import { NextOrPrevButton } from '../NextOrPrevButton'
 import { CombinedError } from 'urql'
+import { LoadingSpinner } from '../LoadingSpinner'
 
 interface ChallengePageProps {
    problemGroup: string
@@ -37,7 +38,11 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
          minH={'100vh'}
       >
          <ChallengeDesc problemData={problem} />
-         <Challenge problemData={problem} error={error} loading={fetching} />
+         {fetching ? (
+            <LoadingSpinner />
+         ) : (
+            <Challenge problemData={problem} error={error} loading={fetching} />
+         )}
          <Flex mt={20} direction={'row-reverse'}>
             {nextProblem && (
                <NextOrPrevButton

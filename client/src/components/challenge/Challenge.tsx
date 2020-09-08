@@ -96,7 +96,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                   run
                </Button>
             )}
-            {completedState ? null : (
+            {completedState || fetching ? null : (
                <Code bg={'black'} color={'white'} width="100%" height={'auto'} p={10} mt={5}>
                   {data?.submitResult?.errors ? (
                      data.submitResult.errors.map(err =>
