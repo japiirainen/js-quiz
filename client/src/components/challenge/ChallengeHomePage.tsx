@@ -19,13 +19,7 @@ export const ChallengeHomePage: React.FC<ChallengeHomeProps> = ({ groupName, des
       pause: isServer(),
    })
    return (
-      <Layout
-         fontSize={'4vh'}
-         height={'8vh'}
-         title={'Javascript Basics'}
-         variant={'regular'}
-         minH={'100vh'}
-      >
+      <Layout fontSize={'4vh'} height={'8vh'} title={groupName} variant={'regular'} minH={'100vh'}>
          {fetching ? (
             <LoadingSpinner />
          ) : (
