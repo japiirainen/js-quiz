@@ -25,7 +25,7 @@ export const mySession = session({
 })
 
 export const myCors = cors({
-   origin: __prod__ ? CORS_ORIGIN : 'http://localhost:3000',
+   origin: CORS_ORIGIN,
    credentials: true,
 })
 
