@@ -6,6 +6,7 @@ import { withUrqlClient } from 'next-urql'
 import { Layout } from '../components/layouts/Layout'
 import { useGetProblemByIdQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
+import { LoadingSpinner } from '../components/LoadingSpinner'
 
 const Index = () => {
    const [{ data, fetching, error }] = useGetProblemByIdQuery({
@@ -19,8 +20,14 @@ const Index = () => {
             <Icon name="check-circle" color="green.500" mx="2px" />
          </Text>
          <Divider m={10} />
-         <ChallengeDesc problemData={data?.getProblemById} />
-         <Challenge problemData={data?.getProblemById} error={error} loading={fetching} />
+         {data && !fetching ? (
+            <>
+               <ChallengeDesc problemData={data?.getProblemById} />
+               <Challenge problemData={data?.getProblemById} error={error} loading={fetching} />
+            </>
+         ) : (
+            <LoadingSpinner />
+         )}
       </Layout>
    )
 }

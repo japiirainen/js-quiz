@@ -37,11 +37,13 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
          variant={'regular'}
          minH={'100vh'}
       >
-         <ChallengeDesc problemData={problem} />
-         {fetching ? (
-            <LoadingSpinner />
+         {data && !fetching ? (
+            <>
+               <ChallengeDesc problemData={problem} />
+               <Challenge problemData={problem} error={error} loading={fetching} />
+            </>
          ) : (
-            <Challenge problemData={problem} error={error} loading={fetching} />
+            <LoadingSpinner />
          )}
          <Flex mt={20} direction={'row-reverse'}>
             {nextProblem && (
