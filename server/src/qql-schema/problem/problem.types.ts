@@ -34,6 +34,7 @@ export default gql`
       placeHolderExpectation: String!
       category: String!
       placeHolderInputOutput: PlaceHolderInputOutput!
+      isCompleted: Boolean
    }
 
    input problemInput {

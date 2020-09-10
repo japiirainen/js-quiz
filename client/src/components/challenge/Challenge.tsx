@@ -23,7 +23,6 @@ import { ChallengeComplete } from './ChallengeComplete'
 import { Editor } from '../Editor'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { isServer } from '../../utils/isServer'
-import { includes } from 'ramda'
 import { ChallengeContext } from '../../context/challengeContext'
 
 export interface ChallengeProps {
@@ -44,13 +43,11 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const [value, setValue] = useState(problemData?.placeHolder)
 
    useEffect(() => {
-      if (includes(problemData?._id, meData?.me?.completedProblems || [])) {
+      if (problemData?.isCompleted) {
          setCompletedState(true)
-      } else {
-         setCompletedState(false)
       }
    }, [problemData?._id, meData?.me?.completedProblems])
-
+   console.log(problemData?.isCompleted)
    return (
       <Box minH="30vh">
          <Box>

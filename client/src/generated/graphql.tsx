@@ -217,6 +217,7 @@ export type Problem = {
    placeHolderExpectation: Scalars['String']
    category: Scalars['String']
    placeHolderInputOutput: PlaceHolderInputOutput
+   isCompleted?: Maybe<Scalars['Boolean']>
 }
 
 export type ProblemInput = {
@@ -280,6 +281,7 @@ export type RegProblemFragment = { __typename?: 'Problem' } & Pick<
    | 'placeHolder'
    | 'placeHolderExpectation'
    | 'index'
+   | 'isCompleted'
 > & {
       placeHolderInputOutput: { __typename?: 'PlaceHolderInputOutput' } & Pick<
          PlaceHolderInputOutput,
@@ -442,6 +444,7 @@ export const RegProblemFragmentDoc = gql`
          input
          output
       }
+      isCompleted
    }
 `
 export const RegUserFragmentDoc = gql`

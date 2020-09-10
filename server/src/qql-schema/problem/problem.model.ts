@@ -51,6 +51,9 @@ export class Problem extends TimeStamps {
 
    @prop({})
    public category!: string
+
+   @prop({})
+   public isCompleted?: boolean
 }
 
 export const ProblemModel = getModelForClass(Problem)

@@ -11,4 +11,5 @@ fragment RegProblem on Problem {
       input
       output
    }
+   isCompleted
 }

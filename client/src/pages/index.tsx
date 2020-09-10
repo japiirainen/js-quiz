@@ -16,7 +16,7 @@ const Index = () => {
    return (
       <Layout fontSize={'8vh'} height={'15vh'} title={'Js-quiz'}>
          <Text fontSize={30}>
-            Website for learning or test you're skills in javascript through fun little challenges
+            Website for learning or to test you're skills in javascript through fun challenges
             <Icon name="check-circle" color="green.500" mx="2px" />
          </Text>
          <Divider m={10} />
