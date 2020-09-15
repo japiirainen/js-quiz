@@ -2,4 +2,8 @@ fragment RegUser on User {
    _id
    username
    completedProblems
+   progress {
+      level
+      points
+   }
 }

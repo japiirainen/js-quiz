@@ -18,7 +18,12 @@ import {
 import { useRouter } from 'next/router'
 import React, { useState, useEffect, useContext } from 'react'
 import { CombinedError } from 'urql'
-import { RegProblemFragment, useSubmitResultMutation, useMeQuery } from '../../generated/graphql'
+import {
+   RegProblemFragment,
+   useSubmitResultMutation,
+   useMeQuery,
+   useUpdateUserProgressMutation,
+} from '../../generated/graphql'
 import { ChallengeComplete } from './ChallengeComplete'
 import { Editor } from '../Editor'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -34,6 +39,7 @@ export interface ChallengeProps {
 export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, error }) => {
    const [{ data, fetching }, submitResult] = useSubmitResultMutation()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
+   const [, updateUserProgress] = useUpdateUserProgressMutation()
    const router = useRouter()
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
@@ -43,11 +49,13 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    const [value, setValue] = useState(problemData?.placeHolder)
 
    useEffect(() => {
-      if (problemData?.isCompleted) {
+      if (problemData?.isCompleted && meData?.me) {
          setCompletedState(true)
+      } else {
+         setCompletedState(false)
       }
    }, [problemData?._id, meData?.me?.completedProblems])
-   console.log(problemData?.isCompleted)
+
    return (
       <Box minH="30vh">
          <Box>
@@ -85,8 +93,14 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                      })
                      if (res.data?.submitResult?.success && !meData?.me?._id) {
                         onToggle()
-                     } else if (res.data?.submitResult?.success) {
+                     } else if (res.data?.submitResult?.success && meData?.me) {
                         setCompletedState(true)
+                        updateUserProgress({
+                           input: {
+                              _id: meData?.me?._id,
+                              points: 20,
+                           },
+                        })
                      }
                   }}
                >

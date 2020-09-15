@@ -1,0 +1,5 @@
+mutation UpdateUserProgress($input: updateUserProgressInput) {
+   updateUserProgress(input: $input) {
+      ...RegUser
+   }
+}
