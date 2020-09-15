@@ -6,6 +6,7 @@ import {
    forgotPassword,
    changePassword,
    updateUser,
+   updateUserProgress,
 } from './user/user.services'
 import {
    newProblem,
@@ -48,5 +49,6 @@ export const resolvers = {
       newProblemGroup: newProblemGroup,
       addProblemToGroup: addProblemToGroup,
       updateUser: updateUser,
+      updateUserProgress: updateUserProgress,
    },
 }

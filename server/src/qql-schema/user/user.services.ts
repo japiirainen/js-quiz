@@ -7,6 +7,7 @@ import { cookieName, PASSWORD_RESET_TEXT, FORGOT_PASSWORD_PREFIX } from '../../u
 import { sendEmail } from '../../utils/sendEmail'
 import { v4 } from 'uuid'
 import { isAuth } from '../../utils/middleware'
+import { add } from 'ramda'
 
 export const register = async (_: any, { input }: { input: User }, { req }: MyContext) => {
    const user = await UserModel.findOne({ username: input.username })
@@ -125,4 +126,35 @@ export const updateUser = async (
       await maybeUser.updateOne({ username: input.username })
       return await UserModel.findById(maybeUser._id)
    }
+}
+
+const calcNewProgress = async (user: User, incPoints: number) => {
+   const points = user.progress?.points as number
+   const updatedPoints = points ? add(points, incPoints) : incPoints
+   if (!points || updatedPoints < 100) {
+      return { newLevel: 'BEGINNER', newPoints: updatedPoints }
+   } else if (updatedPoints >= 100 && updatedPoints < 200) {
+      return { newLevel: 'MEDIUM', newPoints: updatedPoints }
+   } else return { newLevel: 'MASTER', newPoints: updatedPoints }
+}
+
+export const updateUserProgress = async (
+   _: any,
+   { input }: { input: { _id: User; points: number } }
+) => {
+   const user = await UserModel.findById(input._id)
+   if (!user) return
+   const { newLevel, newPoints } = await calcNewProgress(user, input.points)
+   return await UserModel.findOneAndUpdate(
+      { _id: input._id },
+      {
+         $set: {
+            progress: {
+               level: newLevel as any,
+               points: newPoints,
+            },
+         },
+      },
+      { new: true }
+   )
 }

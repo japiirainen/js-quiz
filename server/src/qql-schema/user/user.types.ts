@@ -7,8 +7,20 @@ export default gql`
       username: String!
       password: String!
       completedProblems: [ID]
+      progress: UserProgress
       createdAt: String!
       updatedAt: String!
+   }
+
+   enum LEVEL {
+      BEGINNER
+      MEDIUM
+      MASTER
+   }
+
+   type UserProgress {
+      level: LEVEL!
+      points: Int!
    }
 
    input registerInput {
@@ -36,6 +48,11 @@ export default gql`
       password: String
    }
 
+   input updateUserProgressInput {
+      _id: ID!
+      points: Int!
+   }
+
    type Query {
       me: User
    }
@@ -47,5 +64,6 @@ export default gql`
       changePassword(input: changePasswordInput): User!
       logout: Boolean
       updateUser(input: updateUserInput): User!
+      updateUserProgress(input: updateUserProgressInput): User!
    }
 `
