@@ -1,8 +1,8 @@
 import { AccountLayout } from '../../components/layouts/AccountLayout'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
-import { ProgressInAllChallenges } from '../../components/progress/ProgressInAllCategories'
 import { UserLevelDisplay } from '../../components/progress/UserLevel'
+import { ProgressInAllChallenges } from '../../components/progress/ProgressInAllCategories'
 
 const Progress = () => {
    return (

@@ -18,7 +18,6 @@ import { LoadingSpinner } from '../LoadingSpinner'
 
 export const UserLevelDisplay = () => {
    const [{ data: meData, fetching }] = useMeQuery({ pause: isServer() })
-   console.log(meData)
    return (
       <>
          <Heading textAlign="center" fontSize={30}>

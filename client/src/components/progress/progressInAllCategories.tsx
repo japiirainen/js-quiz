@@ -68,75 +68,87 @@ export const ProgressInAllChallenges = () => {
       userLoopsProbLen && loopsProbLen && calcPercentage(userLoopsProbLen, loopsProbLen)
    return (
       <>
-         <Heading textAlign="center" fontSize={30}>
-            Progress in challenges
-         </Heading>
-         <StatGroup direction="column" alignItems={'center'}>
-            <Stat mt={8}>
-               <StatLabel fontSize={20}>Total completed:</StatLabel>
-               {problemFetching ? (
-                  <LoadingSpinner />
-               ) : (
-                  <Flex direction="column" alignItems="center">
-                     <StatNumber>
-                        {userAllProblemsLen} / {allProblemsLen}
-                     </StatNumber>
-                     <StatHelpText>
-                        <StatArrow type={userAllProblemsLen === 0 ? 'decrease' : 'increase'} />
-                        {allPercentage} %
-                     </StatHelpText>
-                  </Flex>
-               )}
-            </Stat>
-            <Stat mt={8}>
-               <StatLabel fontSize={20}>Basics completed:</StatLabel>
-               {fetching ? (
-                  <LoadingSpinner />
-               ) : (
-                  <Flex direction="column" alignItems="center">
-                     <StatNumber>
-                        {userBasicsProblemsLen} / {basicProblemsLen}
-                     </StatNumber>
-                     <StatHelpText>
-                        <StatArrow type={userBasicsProblemsLen === 0 ? 'decrease' : 'increase'} />
-                        {basicsPercentage} %
-                     </StatHelpText>
-                  </Flex>
-               )}
-            </Stat>
-            <Stat mt={8}>
-               <StatLabel fontSize={20}>Conditionals completed:</StatLabel>
-               {fetching ? (
-                  <LoadingSpinner />
-               ) : (
-                  <Flex direction="column" alignItems="center">
-                     <StatNumber>
-                        {userCondProblemsLen} / {condProblemsLen}
-                     </StatNumber>
-                     <StatHelpText>
-                        <StatArrow type={userCondProblemsLen === 0 ? 'decrease' : 'increase'} />
-                        {condPercentage} %
-                     </StatHelpText>
-                  </Flex>
-               )}
-            </Stat>
-            <Stat mt={8}>
-               <StatLabel fontSize={20}>Loops completed:</StatLabel>
-               {fetching ? (
-                  <LoadingSpinner />
-               ) : (
-                  <Flex direction="column" alignItems="center">
-                     <StatNumber>
-                        {userLoopsProbLen} / {loopsProbLen}
-                     </StatNumber>
-                     <StatHelpText>
-                        <StatArrow type={userLoopsProbLen === 0 ? 'decrease' : 'increase'} />
-                        {loopsPercentage} %
-                     </StatHelpText>
-                  </Flex>
-               )}
-            </Stat>
-         </StatGroup>
+         {fetching || problemFetching ? (
+            <LoadingSpinner />
+         ) : (
+            <>
+               <Heading textAlign="center" fontSize={30}>
+                  Progress in challenges
+               </Heading>
+               <StatGroup direction="column" alignItems={'center'}>
+                  <Stat mt={8}>
+                     <StatLabel fontSize={20}>Total completed:</StatLabel>
+                     {problemFetching ? (
+                        <LoadingSpinner />
+                     ) : (
+                        <Flex direction="column" alignItems="center">
+                           <StatNumber>
+                              {userAllProblemsLen} / {allProblemsLen}
+                           </StatNumber>
+                           <StatHelpText>
+                              <StatArrow
+                                 type={userAllProblemsLen === 0 ? 'decrease' : 'increase'}
+                              />
+                              {allPercentage} %
+                           </StatHelpText>
+                        </Flex>
+                     )}
+                  </Stat>
+                  <Stat mt={8}>
+                     <StatLabel fontSize={20}>Basics completed:</StatLabel>
+                     {fetching ? (
+                        <LoadingSpinner />
+                     ) : (
+                        <Flex direction="column" alignItems="center">
+                           <StatNumber>
+                              {userBasicsProblemsLen} / {basicProblemsLen}
+                           </StatNumber>
+                           <StatHelpText>
+                              <StatArrow
+                                 type={userBasicsProblemsLen === 0 ? 'decrease' : 'increase'}
+                              />
+                              {basicsPercentage} %
+                           </StatHelpText>
+                        </Flex>
+                     )}
+                  </Stat>
+                  <Stat mt={8}>
+                     <StatLabel fontSize={20}>Conditionals completed:</StatLabel>
+                     {fetching ? (
+                        <LoadingSpinner />
+                     ) : (
+                        <Flex direction="column" alignItems="center">
+                           <StatNumber>
+                              {userCondProblemsLen} / {condProblemsLen}
+                           </StatNumber>
+                           <StatHelpText>
+                              <StatArrow
+                                 type={userCondProblemsLen === 0 ? 'decrease' : 'increase'}
+                              />
+                              {condPercentage} %
+                           </StatHelpText>
+                        </Flex>
+                     )}
+                  </Stat>
+                  <Stat mt={8}>
+                     <StatLabel fontSize={20}>Loops completed:</StatLabel>
+                     {fetching ? (
+                        <LoadingSpinner />
+                     ) : (
+                        <Flex direction="column" alignItems="center">
+                           <StatNumber>
+                              {userLoopsProbLen} / {loopsProbLen}
+                           </StatNumber>
+                           <StatHelpText>
+                              <StatArrow type={userLoopsProbLen === 0 ? 'decrease' : 'increase'} />
+                              {loopsPercentage} %
+                           </StatHelpText>
+                        </Flex>
+                     )}
+                  </Stat>
+               </StatGroup>
+            </>
+         )}
       </>
    )
 }
