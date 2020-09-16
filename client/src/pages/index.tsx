@@ -14,7 +14,7 @@ const Index = () => {
       pause: isServer(),
    })
    return (
-      <Layout fontSize={'8vh'} height={'15vh'} title={'Js-quiz'}>
+      <Layout fontSize={'8vh'} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
          <Text fontSize={30}>
             Website for learning or to test you're skills in javascript through fun challenges
             <Icon name="check-circle" color="green.500" mx="2px" />
