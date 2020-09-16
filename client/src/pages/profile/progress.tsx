@@ -22,7 +22,6 @@ import {
 import { isServer } from '../../utils/isServer'
 import { calcLen, calcPercentage } from '../../utils/helperFns'
 import { map, prop, length } from 'ramda'
-import { ProgressInAllCategories } from '../../components/progress/ProgressInAllCategories'
 
 const Progress: NextPage = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
@@ -166,7 +165,6 @@ const Progress: NextPage = () => {
                </StatGroup>
             </>
          )}
-         <ProgressInAllCategories />
       </AccountLayout>
    )
 }

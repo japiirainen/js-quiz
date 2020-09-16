@@ -1,6 +1,6 @@
 import argon2 from 'argon2'
 import { validateUser, validatePassword } from '../../utils/validations'
-import { User, UserModel } from './user.model'
+import { User, UserModel, UserProgressModel } from './user.model'
 import { AuthenticationError } from 'apollo-server-express'
 import { MyContext } from 'src/utils/types'
 import { cookieName, PASSWORD_RESET_TEXT, FORGOT_PASSWORD_PREFIX } from '../../utils/constants'
@@ -144,7 +144,19 @@ export const updateUserProgress = async (
 ) => {
    const user = await UserModel.findById(input._id)
    if (!user) return
+
    const { newLevel, newPoints } = await calcNewProgress(user, input.points)
+   const maybePoints = await UserProgressModel.findOne({
+      userId: user._id,
+      problemId: input.problemId,
+   })
+   if (maybePoints) return user
+   await UserProgressModel.create({
+      level: newLevel as any,
+      points: newPoints,
+      problemId: input.problemId,
+      userId: user._id,
+   })
    return await UserModel.findOneAndUpdate(
       { _id: input._id },
       {
@@ -152,6 +164,8 @@ export const updateUserProgress = async (
             progress: {
                level: newLevel as any,
                points: newPoints,
+               problemId: input.problemId,
+               userId: user._id,
             },
          },
       },

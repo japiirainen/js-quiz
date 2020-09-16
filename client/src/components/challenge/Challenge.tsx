@@ -104,12 +104,25 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                            },
                         })
                         setCompletedState(true)
-                        if (res.data) {
+                        if (
+                           res.data &&
+                           res.data?.updateUserProgress.progress?.points !==
+                              meData.me.progress?.points
+                        ) {
                            return toast({
                               title: 'You just gained 20 points',
                               description:
                                  'Go to account page to have more information about your progress!',
                               status: 'success',
+                              duration: 10000,
+                              isClosable: true,
+                           })
+                        } else {
+                           return toast({
+                              title: 'Nice',
+                              description:
+                                 'You have already won the points from this challenge! Complete other challenges to level up!',
+                              status: 'info',
                               duration: 10000,
                               isClosable: true,
                            })

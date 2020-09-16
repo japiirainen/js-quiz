@@ -7,11 +7,18 @@ export enum LEVEL {
    MEDIUM = 'MEDIUM',
    MASTER = 'MASTER',
 }
+@modelOptions({
+   options: { customName: 'points-history' },
+})
 export class UserProgress {
    @prop({ default: 'BEGINNER' })
    public level: LEVEL
    @prop({ default: 0 })
    public points: number
+   @prop({})
+   public userId: string
+   @prop({})
+   public problemId: string
 }
 @modelOptions({
    options: { customName: 'users' },
@@ -34,3 +41,4 @@ export class User extends TimeStamps {
 }
 
 export const UserModel = getModelForClass(User)
+export const UserProgressModel = getModelForClass(UserProgress)
