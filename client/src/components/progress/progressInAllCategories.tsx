@@ -15,7 +15,7 @@ import {
    useGetManyGroupsOfProblemsQuery,
 } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
-import { LoadingSpinner } from '../../components/LoadingSpinner'
+import { LoadingSpinner } from '../LoadingSpinner'
 import { calcPercentage, calcLen } from '../../utils/helperFns'
 
 export const ProgressInAllChallenges = () => {
