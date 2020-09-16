@@ -101,6 +101,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                            input: {
                               _id: meData?.me?._id,
                               points: 20,
+                              problemId: problemData!._id,
                            },
                         })
                         if (res.data) {

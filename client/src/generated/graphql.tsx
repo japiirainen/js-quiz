@@ -66,6 +66,7 @@ export type UpdateUserInput = {
 export type UpdateUserProgressInput = {
   _id: Scalars['ID'];
   points: Scalars['Int'];
+  problemId: Scalars['ID'];
 };
 
 export type Query = {

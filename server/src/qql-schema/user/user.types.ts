@@ -51,6 +51,7 @@ export default gql`
    input updateUserProgressInput {
       _id: ID!
       points: Int!
+      problemId: ID!
    }
 
    type Query {

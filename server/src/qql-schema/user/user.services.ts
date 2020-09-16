@@ -140,7 +140,7 @@ const calcNewProgress = async (user: User, incPoints: number) => {
 
 export const updateUserProgress = async (
    _: any,
-   { input }: { input: { _id: User; points: number } }
+   { input }: { input: { _id: User; points: number; problemId: string } }
 ) => {
    const user = await UserModel.findById(input._id)
    if (!user) return

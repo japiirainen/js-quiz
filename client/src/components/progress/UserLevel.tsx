@@ -36,7 +36,7 @@ export const UserLevelDisplay = () => {
                         as={'span'}
                         color={calcColor(meData?.me?.progress?.points as never) + '.500'}
                      >
-                        {meData?.me?.progress?.level}
+                        {meData?.me?.progress?.level || 'BEGINNER'}
                      </Text>
                   </Text>
                </Flex>
