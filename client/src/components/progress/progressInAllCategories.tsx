@@ -18,7 +18,7 @@ import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { calcPercentage, calcLen } from '../../utils/helperFns'
 
-export const ProgressInAllChallenges = () => {
+export const ProgressInAllCategories: React.FC = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
       pause: isServer(),
    })
