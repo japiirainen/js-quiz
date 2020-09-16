@@ -3,8 +3,9 @@ import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import { UserLevelDisplay } from '../../components/progress/UserLevel'
 import { ProgressInAllChallenges } from '../../components/progress/ProgressInAllCategories'
+import { NextPage } from 'next'
 
-const Progress = () => {
+const Progress: NextPage = () => {
    return (
       <AccountLayout
          bc2Text={'settings'}

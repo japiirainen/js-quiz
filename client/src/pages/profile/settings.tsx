@@ -8,8 +8,9 @@ import { Formik, Form } from 'formik'
 import { InputField } from '../../components/InputField'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { NextPage } from 'next'
 
-const Settings = () => {
+const Settings: NextPage = () => {
    const [submitted, setSubmitted] = useState(false)
    const router = useRouter()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
