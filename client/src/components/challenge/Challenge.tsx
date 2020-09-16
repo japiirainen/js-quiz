@@ -96,7 +96,6 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                      if (res.data?.submitResult?.success && !meData?.me?._id) {
                         onToggle()
                      } else if (res.data?.submitResult?.success && meData?.me) {
-                        setCompletedState(true)
                         const res = await updateUserProgress({
                            input: {
                               _id: meData?.me?._id,
@@ -104,6 +103,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                               problemId: problemData!._id,
                            },
                         })
+                        setCompletedState(true)
                         if (res.data) {
                            return toast({
                               title: 'You just gained 20 points',
