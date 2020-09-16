@@ -14,6 +14,7 @@ import {
    Text,
    useColorMode,
    useDisclosure,
+   useToast,
 } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect, useContext } from 'react'
@@ -47,6 +48,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    //@ts-ignore
    const { completedState, setCompletedState } = useContext(ChallengeContext)
    const [value, setValue] = useState(problemData?.placeHolder)
+   const toast = useToast()
 
    useEffect(() => {
       if (problemData?.isCompleted && meData?.me) {
@@ -95,12 +97,22 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                         onToggle()
                      } else if (res.data?.submitResult?.success && meData?.me) {
                         setCompletedState(true)
-                        updateUserProgress({
+                        const res = await updateUserProgress({
                            input: {
                               _id: meData?.me?._id,
                               points: 20,
                            },
                         })
+                        if (res.data) {
+                           return toast({
+                              title: 'You just gained 20 points',
+                              description:
+                                 'Go to account page to have more information about your progress!',
+                              status: 'success',
+                              duration: 10000,
+                              isClosable: true,
+                           })
+                        }
                      }
                   }}
                >
