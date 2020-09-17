@@ -86,7 +86,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                   mt={2}
                   bg="green.300"
                   onClick={async () => {
-                     const res = await await submitResult({
+                     const res = await submitResult({
                         input: {
                            problemId: problemData!._id,
                            solution: value || '',
@@ -170,7 +170,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                <ModalCloseButton color={'red.500'} />
                <ModalBody>
                   <Code fontSize={20}>
-                     Thats correct! 😎 Please login if you would like to have your progress saved.
+                     That's correct! 😎 Please login if you would like to have your progress saved.
                   </Code>
                </ModalBody>
                <ModalFooter>
