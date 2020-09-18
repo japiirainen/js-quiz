@@ -1,5 +1,5 @@
 import NextLink from 'next/link'
-import { Button, Text } from '@chakra-ui/core'
+import { Button } from '@chakra-ui/core'
 
 type ButtonVariant = 'Next' | 'Prev'
 
