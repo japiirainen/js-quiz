@@ -37,7 +37,7 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
          variant={'regular'}
          minH={'100vh'}
       >
-         {data && !fetching ? (
+         {data ? (
             <>
                <ChallengeDesc problemData={problem} />
                <Challenge problemData={problem} error={error} loading={fetching} />
@@ -45,14 +45,16 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
          ) : (
             <LoadingSpinner />
          )}
-         <Flex mt={20} direction={'row-reverse'}>
-            {nextProblem && (
-               <NextOrPrevButton url={`/${problemGroup}/${inc(routeIndex)}`} variant={'Next'} />
-            )}
-            {prevProblem && (
-               <NextOrPrevButton url={`/${problemGroup}/${dec(routeIndex)}`} variant={'Prev'} />
-            )}
-         </Flex>
+         {fetching ? null : (
+            <Flex mt={20} direction={'row-reverse'}>
+               {nextProblem && (
+                  <NextOrPrevButton url={`/${problemGroup}/${inc(routeIndex)}`} variant={'Next'} />
+               )}
+               {prevProblem && (
+                  <NextOrPrevButton url={`/${problemGroup}/${dec(routeIndex)}`} variant={'Prev'} />
+               )}
+            </Flex>
+         )}
       </Layout>
    )
 }

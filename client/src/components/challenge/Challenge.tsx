@@ -37,7 +37,7 @@ export interface ChallengeProps {
    error?: CombinedError | undefined
 }
 
-export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, error }) => {
+export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    const [{ data, fetching }, submitResult] = useSubmitResultMutation()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [, updateUserProgress] = useUpdateUserProgressMutation()
@@ -61,17 +61,18 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
    return (
       <Box minH="30vh">
          <Box>
-            {fetching && <LoadingSpinner />}
-            {loading && !value && <LoadingSpinner />}
-            {problemData && !completedState && (
-               <Editor
-                  height={'300px'}
-                  defaultValue={problemData!.placeHolder}
-                  theme={theme[colorMode]}
-                  value={value}
-                  setValue={setValue}
-               />
-            )}
+            <Box>
+               {fetching && <LoadingSpinner />}
+               {problemData && !completedState && (
+                  <Editor
+                     height={'300px'}
+                     defaultValue={problemData?.placeHolder}
+                     theme={theme[colorMode]}
+                     value={value}
+                     setValue={setValue}
+                  />
+               )}
+            </Box>
             {completedState && (
                <ChallengeComplete
                   problem={problemData}
@@ -82,6 +83,8 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
             )}
             {completedState ? null : (
                <Button
+                  fontSize={[15, 15, 25, 25]}
+                  isLoading={fetching}
                   leftIcon="check"
                   mt={2}
                   bg="green.300"
@@ -130,7 +133,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, loading, erro
                      }
                   }}
                >
-                  run
+                  Run your code
                </Button>
             )}
             {completedState || fetching ? null : (

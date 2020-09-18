@@ -4,7 +4,7 @@ import { Flex, Spinner } from '@chakra-ui/core'
 
 export const LoadingSpinner: React.FC = ({ ...props }) => {
    return (
-      <Container minHeight="100vh" {...props}>
+      <Container {...props}>
          <Flex justifyContent="center" alignItems="center">
             <Spinner
                thickness="4px"

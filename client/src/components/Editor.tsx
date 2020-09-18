@@ -13,7 +13,7 @@ import 'ace-builds/src-noconflict/theme-pastel_on_dark'
 import 'ace-builds/src-noconflict/theme-tomorrow'
 interface EditorProps {
    height: string
-   defaultValue: string
+   defaultValue: string | undefined
    theme: string
    value: string | undefined
    setValue: any
