@@ -34,7 +34,9 @@ export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
                   mb={4}
                >
                   <StatLabel>Problem description:</StatLabel>
-                  <StatNumber>{problemData?.description}</StatNumber>
+                  <StatNumber fontSize={['sm', 'md', 'lg', 'xl']}>
+                     {problemData?.description}
+                  </StatNumber>
                </Stat>
                <Flex direction="row-reverse">
                   <Flex direction="column">

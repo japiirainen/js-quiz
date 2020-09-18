@@ -47,18 +47,10 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
          )}
          <Flex mt={20} direction={'row-reverse'}>
             {nextProblem && (
-               <NextOrPrevButton
-                  problemName={nextProblem.name}
-                  url={`/${problemGroup}/${inc(routeIndex)}`}
-                  variant={'Next'}
-               />
+               <NextOrPrevButton url={`/${problemGroup}/${inc(routeIndex)}`} variant={'Next'} />
             )}
             {prevProblem && (
-               <NextOrPrevButton
-                  problemName={prevProblem.name}
-                  url={`/${problemGroup}/${dec(routeIndex)}`}
-                  variant={'Prev'}
-               />
+               <NextOrPrevButton url={`/${problemGroup}/${dec(routeIndex)}`} variant={'Prev'} />
             )}
          </Flex>
       </Layout>

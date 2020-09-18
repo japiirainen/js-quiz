@@ -28,9 +28,10 @@ export const UserLevelDisplay = () => {
          ) : (
             <>
                <Flex>
-                  <Text fontSize={25} mt={25}>
+                  <Text fontSize={[20, 20, 25, 25]} mt={25}>
                      Current level:{' '}
                      <Text
+                        fontSize={[20, 20, 25, 25]}
                         ml={20}
                         as={'span'}
                         color={calcColor(meData?.me?.progress?.points as never) + '.500'}

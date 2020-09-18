@@ -8,12 +8,13 @@ interface MyAppProps {
    pageProps: any
 }
 
-const MyApp: React.FC<MyAppProps> = ({ Component, pageProps }) => {
+const MyApp: React.FC<MyAppProps> = ({ Component, pageProps, children }) => {
    return (
       <ThemeProvider theme={theme}>
          <ChallengeContextProvider>
             <ColorModeProvider>
                <CSSReset />
+               {children}
                <Component {...pageProps} />
             </ColorModeProvider>
          </ChallengeContextProvider>
