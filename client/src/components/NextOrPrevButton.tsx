@@ -10,7 +10,7 @@ interface ButtonProps {
 
 export const NextOrPrevButton: React.FC<ButtonProps> = ({ url, variant }) => {
    return (
-      <NextLink href={url}>
+      <NextLink href={`[index]`} as={url}>
          <Button
             fontSize={['sm', 'md', 'lg', 'xl']}
             size={'md'}
@@ -19,7 +19,7 @@ export const NextOrPrevButton: React.FC<ButtonProps> = ({ url, variant }) => {
             ml={variant === 'Next' ? 'auto' : undefined}
             mr={variant === 'Prev' ? 'auto' : undefined}
          >
-            <Text mr={2}>{variant === 'Next' ? 'Next challenge ->' : '<- Previous challenge'}</Text>
+            <a>{variant === 'Next' ? 'Next challenge ->' : '<- Previous challenge'}</a>
          </Button>
       </NextLink>
    )

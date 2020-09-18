@@ -17,7 +17,9 @@ export const ChallengeList: React.FC<ChallengeListProps> = ({ problemList, group
    const listMapper = (x: RegProblemFragment) => (
       <ListItem key={x._id} fontSize={18}>
          <Link>
-            <NextLink href={`/${groupName}/${x.index}`}>{x.name}</NextLink>
+            <NextLink href={`[index]`} as={`/${groupName}/${x.index}`}>
+               <a>{x.name}</a>
+            </NextLink>
             {isComplete(x._id) && (
                <ListIcon icon={FaCheckCircle} ml={2} color="green.500" size={'13px'} />
             )}
