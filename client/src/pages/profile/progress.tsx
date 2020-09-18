@@ -3,7 +3,7 @@ import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import { UserLevelDisplay } from '../../components/progress/UserLevel'
 import { NextPage } from 'next'
-import { ProgressInAllCategories } from '../../components/progress/ProgressInAllCategories'
+import { ProgressInAllCategories } from '../../components/progress/progressInAllCategories'
 
 const Progress: NextPage = () => {
    return (
