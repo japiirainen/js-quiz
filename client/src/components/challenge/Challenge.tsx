@@ -62,15 +62,19 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
       <Box minH="30vh">
          <Box>
             <Box>
-               {fetching && <LoadingSpinner />}
-               {problemData && !completedState && (
-                  <Editor
-                     height={'300px'}
-                     defaultValue={problemData?.placeHolder}
-                     theme={theme[colorMode]}
-                     value={value}
-                     setValue={setValue}
-                  />
+               {fetching ? (
+                  <LoadingSpinner height={'300px'} />
+               ) : (
+                  problemData &&
+                  !completedState && (
+                     <Editor
+                        height={'300px'}
+                        defaultValue={problemData?.placeHolder}
+                        theme={theme[colorMode]}
+                        value={value}
+                        setValue={setValue}
+                     />
+                  )
                )}
             </Box>
             {completedState && (

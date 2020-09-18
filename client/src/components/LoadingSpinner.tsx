@@ -1,19 +1,14 @@
 import React from 'react'
-import { Container } from './Container'
 import { Flex, Spinner } from '@chakra-ui/core'
 
-export const LoadingSpinner: React.FC = ({ ...props }) => {
+interface MySpinnerProps {
+   height?: string
+}
+
+export const LoadingSpinner: React.FC<MySpinnerProps> = ({ height }) => {
    return (
-      <Container {...props}>
-         <Flex justifyContent="center" alignItems="center">
-            <Spinner
-               thickness="4px"
-               speed="0.65s"
-               emptyColor="gray.200"
-               color="blue.500"
-               size="xl"
-            />
-         </Flex>
-      </Container>
+      <Flex height={height || '500px'} justifyContent="center" alignItems="center">
+         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+      </Flex>
    )
 }
