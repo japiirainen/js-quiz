@@ -58,6 +58,10 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
       }
    }, [problemData?._id, meData?.me?.completedProblems])
 
+   useEffect(() => {
+      setValue(problemData?.placeHolder)
+   }, [problemData])
+
    return (
       <Box minH="30vh">
          <Box>
