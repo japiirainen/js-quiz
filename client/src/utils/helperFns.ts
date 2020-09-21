@@ -1,4 +1,18 @@
-import { add, subtract, __, multiply, compose, divide, length, lte, cond, always, T } from 'ramda'
+import {
+   add,
+   subtract,
+   __,
+   multiply,
+   compose,
+   divide,
+   length,
+   lte,
+   cond,
+   always,
+   T,
+   identity,
+   gte,
+} from 'ramda'
 import { Maybe } from 'graphql/jsutils/Maybe'
 
 export const inc = add(1)
@@ -29,3 +43,11 @@ export const calcColor = cond([
    [lte(__, 70), always('orange')],
    [T, always('green')],
 ])
+
+export const calcValue = (n: number) =>
+   cond([
+      [gte(__, 300), always(subtract(n, 300))],
+      [gte(__, 200), always(subtract(n, 200))],
+      [gte(__, 100), always(subtract(n, 100))],
+      [T, identity],
+   ])(n as never)

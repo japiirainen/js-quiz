@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/core'
 import { useMeQuery } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
-import { calcColor } from '../../utils/helperFns'
+import { calcColor, calcValue } from '../../utils/helperFns'
 import { LoadingSpinner } from '../LoadingSpinner'
 
 export const UserLevelDisplay = () => {
@@ -24,9 +24,9 @@ export const UserLevelDisplay = () => {
             Level status
          </Heading>
          {fetching ? (
-            <LoadingSpinner />
+            <LoadingSpinner height={'300px'} />
          ) : (
-            <>
+            <Box h={'300px'}>
                <Flex>
                   <Text fontSize={[20, 20, 25, 25]} mt={25}>
                      Current level:{' '}
@@ -46,14 +46,17 @@ export const UserLevelDisplay = () => {
                <Box>
                   <Stat mt={8}>
                      <Flex direction="column" alignItems="center">
-                        <StatNumber>{meData?.me?.progress?.points} / 100</StatNumber>
+                        <StatNumber>
+                           {meData?.me?.progress?.points && calcValue(meData?.me?.progress?.points)}{' '}
+                           / 100
+                        </StatNumber>
                      </Flex>
                   </Stat>
                   {meData?.me?.progress?.points ? (
                      <Progress
                         color={calcColor(meData?.me?.progress?.points as never)}
                         hasStripe
-                        value={meData?.me?.progress?.points}
+                        value={calcValue(meData?.me?.progress?.points)}
                         size={'lg'}
                         isAnimated
                         mt={7}
@@ -68,7 +71,7 @@ export const UserLevelDisplay = () => {
                      </Tag>
                   </Flex>
                </Box>
-            </>
+            </Box>
          )}
          <Divider m={20} />
       </>
