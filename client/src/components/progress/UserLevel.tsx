@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/core'
 import { useMeQuery } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
-import { calcColor, calcValue } from '../../utils/helperFns'
+import { calcColor, calcValue, calcUserLevelColor } from '../../utils/helperFns'
 import { LoadingSpinner } from '../LoadingSpinner'
 
 export const UserLevelDisplay = () => {
@@ -34,7 +34,7 @@ export const UserLevelDisplay = () => {
                         fontSize={[20, 20, 25, 25]}
                         ml={20}
                         as={'span'}
-                        color={calcColor(meData?.me?.progress?.points as never) + '.500'}
+                        color={calcUserLevelColor(meData?.me?.progress?.level as any)}
                      >
                         {meData?.me?.progress?.level || 'BEGINNER'}
                      </Text>

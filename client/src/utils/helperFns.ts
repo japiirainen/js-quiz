@@ -43,6 +43,20 @@ export const calcColor = cond([
    [lte(__, 70), always('orange')],
    [T, always('green')],
 ])
+enum LEVEL {
+   BEGINNER = 'BEGINNER',
+   MEDIUM = 'MEDIUM',
+   MASTER = 'MASTER',
+}
+export const calcUserLevelColor = (level: LEVEL) => {
+   if (level === 'BEGINNER') {
+      return 'green.500'
+   } else if (level === 'MEDIUM') {
+      return 'orange.500'
+   } else {
+      return 'red.500'
+   }
+}
 
 export const calcValue = (n: number) =>
    cond([

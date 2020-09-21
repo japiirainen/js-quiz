@@ -69,7 +69,6 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                {fetching ? (
                   <LoadingSpinner height={'300px'} />
                ) : (
-                  problemData &&
                   !completedState && (
                      <Editor
                         height={'300px'}
@@ -114,12 +113,12 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                               problemId: problemData!._id,
                            },
                         })
-                        setCompletedState(true)
                         if (
                            res.data &&
                            res.data?.updateUserProgress.progress?.points !==
                               meData.me.progress?.points
                         ) {
+                           setCompletedState(true)
                            return toast({
                               title: 'You just gained 20 points',
                               description:
@@ -128,7 +127,12 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                               duration: 10000,
                               isClosable: true,
                            })
-                        } else {
+                        } else if (
+                           res.data &&
+                           res.data?.updateUserProgress.progress?.points ===
+                              meData.me.progress?.points
+                        ) {
+                           setCompletedState(true)
                            return toast({
                               title: 'Nice',
                               description:
