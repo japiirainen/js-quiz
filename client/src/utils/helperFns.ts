@@ -51,3 +51,9 @@ export const calcValue = (n: number) =>
       [gte(__, 100), always(subtract(n, 100))],
       [T, identity],
    ])(n as never)
+
+export function sleep(ms: number) {
+   return new Promise(fulfil => {
+      setTimeout(fulfil, ms)
+   })
+}

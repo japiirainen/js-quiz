@@ -51,7 +51,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    const toast = useToast()
 
    useEffect(() => {
-      if (problemData?.isCompleted && meData?.me) {
+      if (meData?.me?.completedProblems?.includes(problemData?._id as string)) {
          setCompletedState(true)
       } else {
          setCompletedState(false)
@@ -81,7 +81,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                   )
                )}
             </Box>
-            {completedState && (
+            {completedState && !fetching && (
                <ChallengeComplete
                   problem={problemData}
                   userId={meData?.me?._id}
