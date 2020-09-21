@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { Box, Button, Link, Flex } from '@chakra-ui/core'
 import { Form, Formik } from 'formik'
 import React from 'react'
@@ -16,6 +17,10 @@ const Login: React.FC<LoginProps> = ({}) => {
    const [, login] = useLoginMutation()
    return (
       <Layout fontSize={'4vh'} height={'8vh'} title={'Login'} variant={'small'} minH={'100vh'}>
+         <Head>
+            <title>Js Quiz Login</title>
+            <meta property="og:title" content="Js Quiz Login" key="title" />
+         </Head>
          <Formik
             initialValues={{ username: '', password: '' }}
             onSubmit={async (values, { setErrors }) => {

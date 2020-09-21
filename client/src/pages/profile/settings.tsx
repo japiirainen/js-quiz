@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { AccountLayout } from '../../components/layouts/AccountLayout'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../../utils/createUrqlClient'
@@ -18,6 +19,40 @@ const Settings: NextPage = () => {
 
    if (submitted) {
       return (
+         <>
+            <Head>
+               <title>Js Quiz Settings</title>
+               <meta property="og:title" content="Js Quiz Settings" key="title" />
+            </Head>
+            <AccountLayout
+               bc2Text={'settings'}
+               bc2Href={'/profile/settings'}
+               bc1Text={'progress'}
+               bc1Href={'/profile/progress'}
+               fontSize={'4vh'}
+               height={'8vh'}
+               title={'Profile'}
+               variant={'small'}
+               minH={'100vh'}
+            >
+               <Text fontSize={30}>
+                  Account information updated successfully!
+                  <Icon name="check" color="blue.500" mx="2px" size={'5'} />
+               </Text>
+               <Button variantColor="blue" onClick={() => router.push('/')}>
+                  Go to homepage
+               </Button>
+            </AccountLayout>
+         </>
+      )
+   }
+
+   return (
+      <>
+         <Head>
+            <title>Js Quiz Settings</title>
+            <meta property="og:title" content="Js Quiz Settings" key="title" />
+         </Head>
          <AccountLayout
             bc2Text={'settings'}
             bc2Href={'/profile/settings'}
@@ -29,71 +64,53 @@ const Settings: NextPage = () => {
             variant={'small'}
             minH={'100vh'}
          >
-            <Text fontSize={30}>
-               Account information updated successfully!
-               <Icon name="check" color="blue.500" mx="2px" size={'5'} />
-            </Text>
-            <Button variantColor="blue" onClick={() => router.push('/')}>
-               Go to homepage
-            </Button>
-         </AccountLayout>
-      )
-   }
-
-   return (
-      <AccountLayout
-         bc2Text={'settings'}
-         bc2Href={'/profile/settings'}
-         bc1Text={'progress'}
-         bc1Href={'/profile/progress'}
-         fontSize={'4vh'}
-         height={'8vh'}
-         title={'Profile'}
-         variant={'small'}
-         minH={'100vh'}
-      >
-         <Formik
-            initialValues={{ username: '', password: '' }}
-            onSubmit={async (values, { setErrors }) => {
-               const res = await update({ input: { _id: meData!.me!._id, ...values } })
-               if (res.error) {
-                  setErrors({
-                     username: res.error.message,
-                     password: res.error.message,
-                  })
-               } else if (res.data) {
-                  setSubmitted(true)
-               }
-            }}
-         >
-            {({ isSubmitting }) => (
-               <Form>
-                  <Heading mb={10}>Update account information</Heading>
-                  <InputField name="username" placeholder="new username" label="Change username" />
-                  <Box mt={4}>
+            <Formik
+               initialValues={{ username: '', password: '' }}
+               onSubmit={async (values, { setErrors }) => {
+                  const res = await update({ input: { _id: meData!.me!._id, ...values } })
+                  if (res.error) {
+                     setErrors({
+                        username: res.error.message,
+                        password: res.error.message,
+                     })
+                  } else if (res.data) {
+                     setSubmitted(true)
+                  }
+               }}
+            >
+               {({ isSubmitting }) => (
+                  <Form>
+                     <Heading mb={10}>Update account information</Heading>
                      <InputField
-                        name="password"
-                        placeholder="new password"
-                        label="Change password"
-                        type="password"
+                        name="username"
+                        placeholder="new username"
+                        label="Change username"
                      />
-                  </Box>
-                  <Flex>
-                     <Button
-                        mr={4}
-                        mt={4}
-                        type="submit"
-                        isLoading={isSubmitting}
-                        variantColor="blue"
-                     >
-                        Confirm
-                     </Button>
-                     <Flex ml="auto" mt={2}></Flex>
-                  </Flex>
-               </Form>
-            )}
-         </Formik>
-      </AccountLayout>
+                     <Box mt={4}>
+                        <InputField
+                           name="password"
+                           placeholder="new password"
+                           label="Change password"
+                           type="password"
+                        />
+                     </Box>
+                     <Flex>
+                        <Button
+                           mr={4}
+                           mt={4}
+                           type="submit"
+                           isLoading={isSubmitting}
+                           variantColor="blue"
+                        >
+                           Confirm
+                        </Button>
+                        <Flex ml="auto" mt={2}></Flex>
+                     </Flex>
+                  </Form>
+               )}
+            </Formik>
+         </AccountLayout>
+      </>
    )
 }
 

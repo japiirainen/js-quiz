@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { Box, Button } from '@chakra-ui/core'
 import { Form, Formik } from 'formik'
 import { withUrqlClient } from 'next-urql'
@@ -15,6 +16,10 @@ const Register: React.FC<registerProps> = ({}) => {
    const [, register] = useRegisterMutation()
    return (
       <Layout fontSize={'4vh'} height={'8vh'} title={'Register'} variant={'small'} minH={'100vh'}>
+         <Head>
+            <title>Js Quiz Register</title>
+            <meta property="og:title" content="Js Quiz Register" key="title" />
+         </Head>
          <Formik
             initialValues={{ username: '', password: '', email: '' }}
             onSubmit={async (values, { setErrors }) => {

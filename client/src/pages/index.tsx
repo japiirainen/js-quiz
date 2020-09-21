@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { Divider, Icon, Text } from '@chakra-ui/core'
 import { Challenge } from '../components/challenge/Challenge'
 import { ChallengeDesc } from '../components/challenge/ChallengeDesc'
@@ -15,6 +16,10 @@ const Index = () => {
    })
    return (
       <Layout fontSize={'8vh'} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
+         <Head>
+            <title>Js Quiz</title>
+            <meta property="og:title" content="Js Quiz" key="title" />
+         </Head>
          <Text fontSize={[20, 20, 25, 30]}>
             Website for learning or to test you're skills in javascript through fun challenges
             <Icon name="check-circle" color="green.500" mx="2px" />
