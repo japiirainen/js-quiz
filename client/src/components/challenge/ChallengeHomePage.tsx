@@ -2,7 +2,7 @@ import { useGetProblemsInGroupQuery } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { Layout } from '../layouts/Layout'
 import { LoadingSpinner } from '../LoadingSpinner'
-import { Icon, Stack, Text } from '@chakra-ui/core'
+import { Icon, Stack, Text, Flex } from '@chakra-ui/core'
 import { ChallengeList } from './ChallengeList'
 import { ProgressBar } from '../ProgressBar'
 
@@ -24,13 +24,15 @@ export const ChallengeHomePage: React.FC<ChallengeHomeProps> = ({ groupName, des
             <LoadingSpinner />
          ) : (
             <>
-               <Text fontSize={22}>
+               <Text fontSize={[18, 18, 22, 26]}>
                   {description}
                   <Icon name="info" color="blue.500" mx="2px" />
                </Text>
                <Stack isInline spacing={8} align="center" mt={50}>
-                  <ChallengeList groupName={groupName} problemList={data?.findProblemsInGroup} />
-                  <ProgressBar ProblemData={data} />
+                  <Flex direction={['column', 'row']} flex={1}>
+                     <ChallengeList groupName={groupName} problemList={data?.findProblemsInGroup} />
+                     <ProgressBar ProblemData={data} />
+                  </Flex>
                </Stack>
             </>
          )}

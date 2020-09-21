@@ -66,6 +66,7 @@ export const ProgressInAllCategories: React.FC = () => {
       userCondProblemsLen && condProblemsLen && calcPercentage(userCondProblemsLen, condProblemsLen)
    const loopsPercentage =
       userLoopsProbLen && loopsProbLen && calcPercentage(userLoopsProbLen, loopsProbLen)
+
    return (
       <>
          {fetching || problemFetching ? (
@@ -112,6 +113,7 @@ export const ProgressInAllCategories: React.FC = () => {
                         </Flex>
                      )}
                   </Stat>
+
                   <Stat mt={8}>
                      <StatLabel fontSize={20}>Conditionals completed:</StatLabel>
                      {fetching ? (
@@ -130,6 +132,7 @@ export const ProgressInAllCategories: React.FC = () => {
                         </Flex>
                      )}
                   </Stat>
+
                   <Stat mt={8}>
                      <StatLabel fontSize={20}>Loops completed:</StatLabel>
                      {fetching ? (

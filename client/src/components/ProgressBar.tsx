@@ -23,7 +23,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ ProblemData }) => {
       userProblemLen && problemsLen && (calcPercentage(userProblemLen, problemsLen) as never)
 
    return (
-      <Box width="60%" ml={'auto'}>
+      <Box width={['100%', '90%', '60%']} ml={'auto'} mt={['30px', 0]}>
          <Text fontSize={22} mb={24}>
             Your progress in this section:
          </Text>
