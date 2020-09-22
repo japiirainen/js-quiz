@@ -33,7 +33,7 @@ import { ChallengeContext } from '../../context/challengeContext'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined | null
-   loading?: true | false
+   loading?: boolean
    error?: CombinedError | undefined
 }
 

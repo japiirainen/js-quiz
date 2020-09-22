@@ -13,7 +13,7 @@ interface ChallengePageProps {
    problemGroup: string
    data: GetProblemByIndexQuery | undefined
    error: CombinedError | undefined
-   fetching: Boolean
+   fetching: boolean | undefined
 }
 
 export const ChallengePage: React.FC<ChallengePageProps> = ({
