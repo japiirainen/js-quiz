@@ -1,7 +1,29 @@
-### js-quiz
+## Js-Quiz
 
-website for learning JavaScript through small fun problems!
+### A website for learning Javascript
 
+[**Demo**](https://js-quiz.me).
 
-- need to make new challenges
-- if all challenges in a given group are completed have some other view
+## I built this app in a monorepo, so both my server and client are in this same repo.
+
+I actually really enjoyed this approach. In my experience it makes it quite a bit more complicated if you are dealing with many repositories.
+
+## Tech stack:
+
+-  Typescript
+
+### server specific
+
+-  Graphql api made with Apollo-Server
+-  MongoDb database
+-  Typogoose helping the integration between mongo, graphql and typescript
+-  Redis for caching handling cookies and password resets
+
+### client specific
+
+-  Next.js
+-  Urql for querying my Graphql api
+-  Graphql codegen for helping with typescript
+-  ace-builds for the code editor I used
+
+In conclusion this tech stack worked well and I have to mention that client-side queries with Urql and the hooks that codegen generates is awesome!
