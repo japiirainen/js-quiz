@@ -14,7 +14,7 @@ interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {
    const router = useRouter()
-   const [, login] = useLoginMutation()
+   const [{ fetching }, login] = useLoginMutation()
    return (
       <Layout fontSize={'4vh'} height={'8vh'} title={'Login'} variant={'small'} minH={'100vh'}>
          <Head>
@@ -27,8 +27,8 @@ const Login: React.FC<LoginProps> = ({}) => {
                const res = await login({ input: values })
                if (res.error) {
                   setErrors({
-                     username: res.error.message,
-                     password: res.error.message,
+                     username: 'Wrong username or password!',
+                     password: 'Wrong username or password!',
                   })
                } else if (res.data) {
                   if (typeof router.query.next === 'string') {
@@ -39,7 +39,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                }
             }}
          >
-            {({ isSubmitting }) => (
+            {() => (
                <Form>
                   <InputField name="username" placeholder="username" label="Username" />
                   <Box mt={4}>
@@ -51,13 +51,7 @@ const Login: React.FC<LoginProps> = ({}) => {
                      />
                   </Box>
                   <Flex>
-                     <Button
-                        mr={4}
-                        mt={4}
-                        type="submit"
-                        isLoading={isSubmitting}
-                        variantColor="blue"
-                     >
+                     <Button mr={4} mt={4} type="submit" isLoading={fetching} variantColor="blue">
                         login
                      </Button>
                      <Flex direction="column-reverse" ml="auto" mt={4}>

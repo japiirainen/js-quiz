@@ -15,7 +15,7 @@ const Settings: NextPage = () => {
    const [submitted, setSubmitted] = useState(false)
    const router = useRouter()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
-   const [, update] = useUpdateUserMutation()
+   const [{ fetching }, update] = useUpdateUserMutation()
 
    if (submitted) {
       return (
@@ -70,15 +70,15 @@ const Settings: NextPage = () => {
                   const res = await update({ input: { _id: meData!.me!._id, ...values } })
                   if (res.error) {
                      setErrors({
-                        username: res.error.message,
-                        password: res.error.message,
+                        username: 'Username must be at least 2 characters long!',
+                        password: 'Password must be at least 2 characters long!',
                      })
                   } else if (res.data) {
                      setSubmitted(true)
                   }
                }}
             >
-               {({ isSubmitting }) => (
+               {() => (
                   <Form>
                      <Heading mb={10}>Update account information</Heading>
                      <InputField
@@ -99,7 +99,7 @@ const Settings: NextPage = () => {
                            mr={4}
                            mt={4}
                            type="submit"
-                           isLoading={isSubmitting}
+                           isLoading={fetching}
                            variantColor="blue"
                         >
                            Confirm

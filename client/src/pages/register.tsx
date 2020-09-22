@@ -13,7 +13,7 @@ interface registerProps {}
 
 const Register: React.FC<registerProps> = ({}) => {
    const router = useRouter()
-   const [, register] = useRegisterMutation()
+   const [{ fetching }, register] = useRegisterMutation()
    return (
       <Layout fontSize={'4vh'} height={'8vh'} title={'Register'} variant={'small'} minH={'100vh'}>
          <Head>
@@ -26,16 +26,16 @@ const Register: React.FC<registerProps> = ({}) => {
                const res = await register({ input: values })
                if (res.error) {
                   setErrors({
-                     email: 'invalid email',
-                     username: res.error.message,
-                     password: res.error.message,
+                     email: 'Must be a valid email',
+                     username: 'username must be at least 2 characters long',
+                     password: 'password must be at least 2 characters long',
                   })
                } else {
                   router.push('/')
                }
             }}
          >
-            {({ isSubmitting }) => (
+            {() => (
                <Form>
                   <InputField name="email" placeholder="email" label="Email" />
                   <Box mt={4}>
@@ -49,7 +49,7 @@ const Register: React.FC<registerProps> = ({}) => {
                         type="password"
                      />
                   </Box>
-                  <Button mt={4} type="submit" isLoading={isSubmitting} variantColor="blue">
+                  <Button mt={4} type="submit" isLoading={fetching} variantColor="blue">
                      register
                   </Button>
                </Form>
