@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer'
 import { EMAIL_PASSWORD, EMAIL_USER } from './constants'
 
-export async function sendEmail(to: string, text: string) {
-   let transporter = nodemailer.createTransport({
+export async function sendEmail(to: string, text: string): Promise<void> {
+   const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       auth: {
          user: EMAIL_USER,
@@ -10,7 +10,7 @@ export async function sendEmail(to: string, text: string) {
       },
    })
 
-   let info = await transporter.sendMail({
+   const info = await transporter.sendMail({
       from: EMAIL_USER,
       to: to,
       subject: 'Reset password',

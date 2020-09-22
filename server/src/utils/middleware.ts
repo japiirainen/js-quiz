@@ -29,6 +29,6 @@ export const myCors = cors({
    credentials: true,
 })
 
-export const isAuth = (ctx: MyContext) => {
+export const isAuth = (ctx: MyContext): void => {
    if (!ctx.req.session?.userId) throw new AuthenticationError('no auth')
 }

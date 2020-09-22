@@ -6,12 +6,12 @@ import { ChallengePage } from '../../components/challenge/ChallengePage'
 import { createUrqlClient } from '../../utils/createUrqlClient'
 import { useGetPostFromUrl } from '../../utils/useGetProblemFromUrl'
 
-const Loops: NextPage = ({}) => {
+const Loops: NextPage = () => {
    const [{ data, fetching, error }] = useGetPostFromUrl()
    return (
       <>
          <Head>
-            <title>{data?.getProblemByIndex?.currProblem.name}</title>
+            <title>Js Quiz</title>
             <meta property="og:title" key="title" />
          </Head>
          <ChallengePage error={error} fetching={fetching} data={data} problemGroup={'loops'} />

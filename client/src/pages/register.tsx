@@ -9,9 +9,7 @@ import { Layout } from '../components/layouts/Layout'
 import { useRegisterMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
 
-interface registerProps {}
-
-const Register: React.FC<registerProps> = ({}) => {
+const Register: React.FC = () => {
    const router = useRouter()
    const [{ fetching }, register] = useRegisterMutation()
    return (

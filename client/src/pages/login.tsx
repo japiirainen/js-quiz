@@ -10,9 +10,7 @@ import { withUrqlClient } from 'next-urql'
 import NextLink from 'next/link'
 import { Layout } from '../components/layouts/Layout'
 
-interface LoginProps {}
-
-const Login: React.FC<LoginProps> = ({}) => {
+const Login: React.FC = () => {
    const router = useRouter()
    const [{ fetching }, login] = useLoginMutation()
    return (

@@ -21,7 +21,7 @@ const Index = () => {
             <meta property="og:title" content="Js Quiz" key="title" />
          </Head>
          <Text fontSize={[20, 20, 25, 30]}>
-            Website for learning or to test you're skills in javascript through fun challenges
+            Website for learning or to test you`re skills in javascript through fun challenges
             <Icon name="check-circle" color="green.500" mx="2px" />
          </Text>
          <Divider m={10} />

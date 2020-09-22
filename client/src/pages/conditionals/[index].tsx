@@ -11,7 +11,7 @@ const Conditionals: NextPage = () => {
    return (
       <>
          <Head>
-            <title>{data?.getProblemByIndex?.currProblem.name}</title>
+            <title>Js Quiz</title>
             <meta property="og:title" key="title" />
          </Head>
          <ChallengePage

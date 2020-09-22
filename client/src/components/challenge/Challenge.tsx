@@ -33,7 +33,7 @@ import { ChallengeContext } from '../../context/challengeContext'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined | null
-   loading?: Boolean
+   loading?: true | false
    error?: CombinedError | undefined
 }
 
@@ -45,6 +45,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    const { colorMode } = useColorMode()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const theme = { light: 'tomorrow', dark: 'merbivore' }
+   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
    //@ts-ignore
    const { completedState, setCompletedState } = useContext(ChallengeContext)
    const [value, setValue] = useState(problemData?.placeHolder)
@@ -185,7 +186,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                <ModalCloseButton color={'red.500'} />
                <ModalBody>
                   <Code fontSize={20}>
-                     That's correct! 😎 Please login if you would like to have your progress saved.
+                     That is correct! 😎 Please login if you would like to have your progress saved.
                   </Code>
                </ModalBody>
                <ModalFooter>

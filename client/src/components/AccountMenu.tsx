@@ -20,15 +20,14 @@ import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { useRouter } from 'next/router'
 
-interface AccountPopoverProps {}
-
-export const AccountPopover: React.FC<AccountPopoverProps> = () => {
+export const AccountPopover: React.FC = () => {
    const router = useRouter()
    const toast = useToast()
    const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
    const [{ data, fetching }] = useMeQuery({ pause: isServer() })
    const { colorMode, toggleColorMode } = useColorMode()
    const isDark = colorMode === 'dark'
+
    let userStatus = null
    if (fetching) {
       userStatus = null

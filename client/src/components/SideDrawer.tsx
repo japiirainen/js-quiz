@@ -19,9 +19,7 @@ import { FaAlignJustify, FaArrowLeft } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import { DrawerLink } from './DrawerLink'
 
-interface SideDrawerProps {}
-
-export const SideDrawer: React.FC<SideDrawerProps> = ({}) => {
+export const SideDrawer: React.FC = () => {
    const router = useRouter()
    const { isOpen, onClose, onOpen } = useDisclosure()
 
