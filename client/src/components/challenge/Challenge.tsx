@@ -1,22 +1,4 @@
-import {
-   Alert,
-   AlertIcon,
-   Box,
-   Button,
-   Code,
-   Modal,
-   ModalBody,
-   ModalCloseButton,
-   ModalContent,
-   ModalFooter,
-   ModalHeader,
-   ModalOverlay,
-   Text,
-   useColorMode,
-   useDisclosure,
-   useToast,
-} from '@chakra-ui/core'
-import { useRouter } from 'next/router'
+import { Alert, AlertIcon, Box, useDisclosure, useToast } from '@chakra-ui/core'
 import React, { useState, useEffect, useContext } from 'react'
 import { CombinedError } from 'urql'
 import {
@@ -25,11 +7,13 @@ import {
    useMeQuery,
    useUpdateUserProgressMutation,
 } from '../../generated/graphql'
-import { ChallengeComplete } from './ChallengeComplete'
-import { Editor } from '../Editor'
+
 import { LoadingSpinner } from '../LoadingSpinner'
 import { isServer } from '../../utils/isServer'
 import { ChallengeContext } from '../../context/challengeContext'
+import { ChallengeTerminal } from './ChallengeTerminal'
+import { LoginModal } from '../LoginModal'
+import { ChallengeEditor } from './ChallengeEditor'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined | null
@@ -38,18 +22,15 @@ export interface ChallengeProps {
 }
 
 export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
-   const [{ data, fetching }, submitResult] = useSubmitResultMutation()
+   const [{ data: SubmitData, fetching }, submitResult] = useSubmitResultMutation()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [, updateUserProgress] = useUpdateUserProgressMutation()
-   const router = useRouter()
-   const { colorMode } = useColorMode()
-   const { isOpen, onClose, onToggle } = useDisclosure()
-   const theme = { light: 'tomorrow', dark: 'merbivore' }
-   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-   //@ts-ignore
-   const { completedState, setCompletedState } = useContext(ChallengeContext)
-   const [value, setValue] = useState(problemData?.placeHolder)
+
    const toast = useToast()
+   const { isOpen, onClose, onToggle } = useDisclosure()
+   const [value, setValue] = useState(problemData?.placeHolder)
+
+   const { setCompletedState } = useContext(ChallengeContext)
 
    useEffect(() => {
       if (meData?.me?.completedProblems?.includes(problemData?._id as string)) {
@@ -57,7 +38,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
       } else {
          setCompletedState(false)
       }
-   }, [problemData?._id, meData?.me?.completedProblems])
+   }, [problemData?._id, meData?.me?.completedProblems, setCompletedState])
 
    useEffect(() => {
       setValue(problemData?.placeHolder)
@@ -66,37 +47,15 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    return (
       <Box minH="30vh">
          <Box>
-            <Box>
-               {fetching ? (
-                  <LoadingSpinner height={'300px'} />
-               ) : (
-                  !completedState && (
-                     <Editor
-                        height={'300px'}
-                        defaultValue={problemData?.placeHolder}
-                        theme={theme[colorMode]}
-                        value={value}
-                        setValue={setValue}
-                     />
-                  )
-               )}
-            </Box>
-            {completedState && !fetching && (
-               <ChallengeComplete
-                  problem={problemData}
-                  userId={meData?.me?._id}
-                  onRedoClick={() => setCompletedState(false)}
-                  tempSolution={data?.submitResult?.solution}
-               />
-            )}
-            {completedState ? null : (
-               <Button
-                  fontSize={[15, 15, 25, 25]}
-                  isLoading={fetching}
-                  leftIcon="check"
-                  mt={2}
-                  bg="green.300"
-                  onClick={async () => {
+            {fetching ? (
+               <LoadingSpinner height={'300px'} />
+            ) : (
+               <ChallengeEditor
+                  fetching={fetching}
+                  setValue={setValue}
+                  value={value}
+                  problemData={problemData}
+                  onSubmit={async () => {
                      const res = await submitResult({
                         input: {
                            problemId: problemData!._id,
@@ -145,32 +104,10 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                         }
                      }
                   }}
-               >
-                  Run your code
-               </Button>
+               />
             )}
-            {completedState || fetching ? null : (
-               <Code bg={'black'} color={'white'} width="100%" height={'auto'} p={10} mt={5}>
-                  {data?.submitResult?.errors ? (
-                     data.submitResult.errors.map(err =>
-                        !err ? null : (
-                           <>
-                              <Text color="red.500" fontSize={15}>
-                                 message: {err.message}
-                              </Text>
-                              <Text color="red.500" fontSize={15}>
-                                 actual: {err.actual}
-                              </Text>
-                              <Text color="red.500" fontSize={15}>
-                                 expected: {err.expected}
-                              </Text>
-                           </>
-                        )
-                     )
-                  ) : (
-                     <Text fontSize={15}>{problemData?.placeHolderExpectation}</Text>
-                  )}
-               </Code>
+            {fetching ? null : (
+               <ChallengeTerminal problemData={problemData} submitData={SubmitData} />
             )}
             {error && (
                <Alert status="error">
@@ -179,21 +116,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                </Alert>
             )}
          </Box>
-         <Modal onClose={onClose} isOpen={isOpen} isCentered>
-            <ModalOverlay />
-            <ModalContent>
-               <ModalHeader>Modal Title</ModalHeader>
-               <ModalCloseButton color={'red.500'} />
-               <ModalBody>
-                  <Code fontSize={20}>
-                     That is correct! 😎 Please login if you would like to have your progress saved.
-                  </Code>
-               </ModalBody>
-               <ModalFooter>
-                  <Button onClick={() => router.push('/login')}>login</Button>
-               </ModalFooter>
-            </ModalContent>
-         </Modal>
+         <LoginModal isOpen={isOpen} onClose={onClose} />
       </Box>
    )
 }

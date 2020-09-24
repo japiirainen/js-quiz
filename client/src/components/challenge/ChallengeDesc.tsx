@@ -16,7 +16,6 @@ const calculateBorderColor = (difficulty: string | undefined) => {
 }
 
 export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
-   //@ts-ignore
    const { completedState } = useContext(ChallengeContext)
 
    return !completedState ? (

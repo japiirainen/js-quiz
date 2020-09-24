@@ -1,7 +1,12 @@
-import { createContext, useState } from 'react'
+import { createContext, Dispatch, SetStateAction, useState } from 'react'
 
-//@ts-ignore
-export const ChallengeContext = createContext()
+export const ChallengeContext = createContext<{
+   completedState: boolean
+   setCompletedState: Dispatch<SetStateAction<boolean>> | any
+}>({
+   completedState: false,
+   setCompletedState: null,
+})
 
 export const ChallengeContextProvider: React.FC = ({ children }) => {
    const [completedState, setCompletedState] = useState(false)
