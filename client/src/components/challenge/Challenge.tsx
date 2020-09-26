@@ -6,6 +6,7 @@ import {
    useSubmitResultMutation,
    useMeQuery,
    useUpdateUserProgressMutation,
+   useGetSolutionQuery,
 } from '../../generated/graphql'
 
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -14,9 +15,10 @@ import { ChallengeContext } from '../../context/challengeContext'
 import { ChallengeTerminal } from './ChallengeTerminal'
 import { LoginModal } from '../LoginModal'
 import { ChallengeEditor } from './ChallengeEditor'
+import { formatDefVal } from '../../utils/helperFns'
 
 export interface ChallengeProps {
-   problemData: RegProblemFragment | undefined | null
+   problemData: RegProblemFragment | undefined
    loading?: boolean
    error?: CombinedError | undefined
 }
@@ -25,12 +27,16 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    const [{ data: SubmitData, fetching }, submitResult] = useSubmitResultMutation()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [, updateUserProgress] = useUpdateUserProgressMutation()
+   const [{ data }] = useGetSolutionQuery({
+      pause: isServer(),
+      variables: { input: { userId: meData?.me?._id, problemId: problemData?._id } },
+   })
+   console.log(problemData?.correctSolution)
 
    const toast = useToast()
    const { isOpen, onClose, onToggle } = useDisclosure()
    const [value, setValue] = useState(problemData?.placeHolder)
-
-   const { setCompletedState } = useContext(ChallengeContext)
+   const { setCompletedState, completedState } = useContext(ChallengeContext)
 
    useEffect(() => {
       if (meData?.me?.completedProblems?.includes(problemData?._id as string)) {
@@ -41,8 +47,15 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    }, [problemData?._id, meData?.me?.completedProblems, setCompletedState])
 
    useEffect(() => {
-      setValue(problemData?.placeHolder)
-   }, [problemData])
+      completedState
+         ? setValue(formatDefVal(data?.getSolution?.solution, problemData?.correctSolution))
+         : setValue(problemData?.placeHolder)
+   }, [
+      completedState,
+      data?.getSolution?.solution,
+      problemData?.placeHolder,
+      problemData?.correctSolution,
+   ])
 
    return (
       <Box minH="30vh">
@@ -54,11 +67,12 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                   fetching={fetching}
                   setValue={setValue}
                   value={value}
+                  defaultValue={problemData?.placeHolder}
                   problemData={problemData}
                   onSubmit={async () => {
                      const res = await submitResult({
                         input: {
-                           problemId: problemData!._id,
+                           problemId: problemData?._id || '',
                            solution: value || '',
                            userId: meData?.me?._id,
                         },
@@ -70,7 +84,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                            input: {
                               _id: meData?.me?._id,
                               points: 20,
-                              problemId: problemData!._id,
+                              problemId: problemData?._id || '',
                            },
                         })
                         if (

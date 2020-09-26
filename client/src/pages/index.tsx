@@ -15,7 +15,7 @@ const Index = () => {
       pause: isServer(),
    })
    return (
-      <Layout fontSize={'8vh'} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
+      <Layout fontSize={['4vh', '6vh', '8vh']} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
          <Head>
             <title>Js Quiz</title>
             <meta property="og:title" content="Js Quiz" key="title" />
@@ -24,7 +24,7 @@ const Index = () => {
             Website for learning or to test you`re skills in javascript through fun challenges
             <Icon name="check-circle" color="green.500" mx="2px" />
          </Text>
-         <Divider m={10} />
+         <Divider m={2} />
          {data && !fetching ? (
             <>
                <ChallengeDesc problemData={data?.getProblemById} />

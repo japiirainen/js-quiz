@@ -10,7 +10,7 @@ import { AccountPopover } from '../AccountMenu'
 
 interface LayoutProps {
    title?: string
-   fontSize: string
+   fontSize: string | string[]
    height: string
    variant?: ContainerVariant
    minH?: string
