@@ -18,7 +18,7 @@ import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { calcPercentage, calcLen } from '../../utils/helperFns'
 import { motion } from 'framer-motion'
-import { fadeInUp, stagger } from '../../animations'
+import { fadeInDown, fadeInUp, stagger } from '../../animations'
 
 export const ProgressInAllCategories: React.FC = () => {
    const [{ data: problemData, fetching: problemFetching }] = useGetAllProblemsQuery({
@@ -75,11 +75,7 @@ export const ProgressInAllCategories: React.FC = () => {
             <LoadingSpinner />
          ) : (
             <motion.div variants={stagger}>
-               <motion.div
-                  initial={{ x: 100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-               >
+               <motion.div variants={fadeInDown}>
                   <Heading textAlign="center" fontSize={30}>
                      Progress in challenges
                   </Heading>

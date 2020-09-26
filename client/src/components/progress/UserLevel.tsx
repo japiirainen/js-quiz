@@ -16,6 +16,7 @@ import { isServer } from '../../utils/isServer'
 import { calcColor, calcValue, calcUserLevelColor } from '../../utils/helperFns'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { motion } from 'framer-motion'
+import { fadeInDown } from '../../animations'
 
 export const UserLevelDisplay: React.FC = () => {
    const [{ data: meData, fetching }] = useMeQuery({ pause: isServer() })
@@ -28,11 +29,7 @@ export const UserLevelDisplay: React.FC = () => {
             <LoadingSpinner height={'300px'} />
          ) : (
             <Box h={'300px'}>
-               <motion.div
-                  initial={{ x: 100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-               >
+               <motion.div variants={fadeInDown}>
                   <Flex>
                      <Text fontSize={[20, 20, 25, 25]} mt={25}>
                         Current level:{' '}
