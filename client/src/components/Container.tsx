@@ -5,10 +5,15 @@ export type ContainerVariant = 'small' | 'regular'
 
 type WrapperProps = any
 
-export const Container: React.FC<WrapperProps> = ({ children, variant = 'regular', ...rest }) => {
+export const Container: React.FC<WrapperProps> = ({
+   children,
+   variant = 'regular',
+   mt = 8,
+   ...rest
+}) => {
    return (
       <Flex direction="column" alignItems="center" justifyContent="flex-start" {...rest}>
-         <Box mt={8} mx="auto" maxW={variant === 'regular' ? '800px' : '400px'} w="100%">
+         <Box mt={mt} mx="auto" maxW={variant === 'regular' ? '800px' : '400px'} w="100%">
             {children}
          </Box>
       </Flex>

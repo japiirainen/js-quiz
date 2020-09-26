@@ -6,6 +6,7 @@ import { Icon, Stack, Text, Flex } from '@chakra-ui/core'
 import { ChallengeList } from './ChallengeList'
 import { ProgressBar } from '../ProgressBar'
 import { motion } from 'framer-motion'
+import { fadeInDown } from '../../animations'
 
 interface ChallengeHomeProps {
    groupName: string
@@ -24,12 +25,8 @@ export const ChallengeHomePage: React.FC<ChallengeHomeProps> = ({ groupName, des
          {fetching ? (
             <LoadingSpinner />
          ) : (
-            <>
-               <motion.div
-                  initial={{ x: 100, opacity: 0 }}
-                  transition={{ delay: 0.2 }}
-                  animate={{ x: 0, opacity: 1 }}
-               >
+            <motion.div initial="initial" animate="animate">
+               <motion.div variants={fadeInDown}>
                   <Text fontSize={[18, 18, 22, 26]}>
                      {description}
                      <Icon name="info" color="blue.500" mx="2px" />
@@ -41,7 +38,7 @@ export const ChallengeHomePage: React.FC<ChallengeHomeProps> = ({ groupName, des
                      <ProgressBar ProblemData={data} />
                   </Flex>
                </Stack>
-            </>
+            </motion.div>
          )}
       </Layout>
    )

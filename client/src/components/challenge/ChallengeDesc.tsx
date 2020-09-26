@@ -15,7 +15,7 @@ const calculateBorderColor = (difficulty: string | undefined) => {
 
 export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
    return (
-      <Container>
+      <Container mt={0}>
          <List spacing={3} my={0}>
             <Flex p={4} width="100%" direction="column">
                <Stat
@@ -29,7 +29,7 @@ export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
                   mb={4}
                >
                   <StatLabel>Problem description:</StatLabel>
-                  <StatNumber fontSize={['sm', 'md', 'lg', 'xl']}>
+                  <StatNumber fontSize={['md', 'md', 'lg', 'xl']}>
                      {problemData?.description}
                   </StatNumber>
                </Stat>

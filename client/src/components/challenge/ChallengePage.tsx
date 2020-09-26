@@ -9,7 +9,7 @@ import { NextOrPrevButton } from '../NextOrPrevButton'
 import { CombinedError } from 'urql'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { motion } from 'framer-motion'
-import { fadeInUp } from '../../animations'
+import { fadeInDown } from '../../animations'
 
 interface ChallengePageProps {
    problemGroup: string
@@ -35,14 +35,14 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
       <motion.div initial="initial" animate="animate">
          <Layout
             fontSize={['2.5vh', '3vh', '4vh']}
-            height={'1vh'}
+            height={'0vh'}
             title={problem?.name}
             variant={'regular'}
             minH={'100vh'}
          >
             {data ? (
                <>
-                  <motion.div variants={fadeInUp}>
+                  <motion.div variants={fadeInDown}>
                      <ChallengeDesc problemData={problem} />
                      <Challenge problemData={problem} error={error} loading={fetching} />
                   </motion.div>

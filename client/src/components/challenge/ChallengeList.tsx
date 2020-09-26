@@ -33,11 +33,7 @@ export const ChallengeList: React.FC<ChallengeListProps> = ({ problemList, group
    return (
       <motion.div initial="initial" animate="animate">
          <List as="ol" styleType="decimal" spacing={3}>
-            <motion.div
-               initial={{ x: 100, opacity: 0 }}
-               transition={{ delay: 0.2 }}
-               animate={{ x: 0, opacity: 1 }}
-            >
+            <motion.div variants={fadeInUp}>
                <Text fontSize={[25, 22, 20, 20]} textDecoration="underline" mb={4}>
                   Challenges in this section:
                </Text>

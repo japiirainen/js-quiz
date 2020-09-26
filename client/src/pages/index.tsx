@@ -9,7 +9,7 @@ import { useGetProblemByIdQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { LoadingSpinner } from '../components/LoadingSpinner'
 import { motion } from 'framer-motion'
-import { fadeInUp } from '../animations'
+import { fadeInDown, fadeInUp } from '../animations'
 
 const Index = () => {
    const [{ data, fetching, error }] = useGetProblemByIdQuery({
@@ -23,11 +23,7 @@ const Index = () => {
                <title>Js Quiz</title>
                <meta property="og:title" content="Js Quiz" key="title" />
             </Head>
-            <motion.div
-               initial={{ x: 100, opacity: 0 }}
-               transition={{ delay: 0.4 }}
-               animate={{ x: 0, opacity: 1 }}
-            >
+            <motion.div variants={fadeInDown}>
                <Text fontSize={[20, 20, 25, 30]}>
                   Website for learning or to test you`re skills in javascript through fun challenges
                   <Icon name="check-circle" color="green.500" mx="2px" />
