@@ -16,7 +16,7 @@ import { isServer } from '../../utils/isServer'
 import { calcColor, calcValue, calcUserLevelColor } from '../../utils/helperFns'
 import { LoadingSpinner } from '../LoadingSpinner'
 
-export const UserLevelDisplay = () => {
+export const UserLevelDisplay: React.FC = () => {
    const [{ data: meData, fetching }] = useMeQuery({ pause: isServer() })
    return (
       <>

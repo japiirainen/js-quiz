@@ -27,3 +27,8 @@ I actually really enjoyed this approach. In my experience it makes it quite a bi
 -  ace-builds for the code editor I used
 
 In conclusion this tech stack worked well and I have to mention that client-side queries with Urql and the hooks that codegen generates is awesome!
+
+### todo
+
+-  when user submits false answer the server should return that and not display the placeholder
+-  problem **_loops_** has some problems

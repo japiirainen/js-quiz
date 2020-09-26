@@ -4,7 +4,7 @@ import React from 'react'
 
 interface HeroProps {
    title: string
-   fontSize: string
+   fontSize: string | string[]
    height: string
 }
 

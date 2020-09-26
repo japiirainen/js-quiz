@@ -31,7 +31,7 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
 
    return (
       <Layout
-         fontSize={'4vh'}
+         fontSize={['2.5vh', '3vh', '4vh']}
          height={'1vh'}
          title={problem?.name}
          variant={'regular'}
