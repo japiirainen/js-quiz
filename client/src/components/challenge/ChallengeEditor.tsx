@@ -1,4 +1,5 @@
 import { Button, Flex, Tag, TagIcon, TagLabel, useColorMode } from '@chakra-ui/core'
+import { FaPlay } from 'react-icons/fa'
 import React, { Dispatch, SetStateAction, useContext } from 'react'
 import { ChallengeContext } from '../../context/challengeContext'
 import { RegProblemFragment } from '../../generated/graphql'
@@ -35,13 +36,13 @@ export const ChallengeEditor: React.FC<ChallengeEditorProps> = ({
          />
          <Flex>
             <Button
-               fontSize={[15, 15, 25, 25]}
+               fontSize={[20, 20, 25, 25]}
                isLoading={fetching}
                mt={2}
                bg="green.300"
                onClick={onSubmit}
             >
-               Run your code
+               <FaPlay color="white" />
             </Button>
             {completedState && (
                <Tag ml={'auto'} mt={2} size={'md'} variantColor="green">
