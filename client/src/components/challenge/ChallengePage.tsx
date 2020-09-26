@@ -8,6 +8,8 @@ import { Flex } from '@chakra-ui/core'
 import { NextOrPrevButton } from '../NextOrPrevButton'
 import { CombinedError } from 'urql'
 import { LoadingSpinner } from '../LoadingSpinner'
+import { motion } from 'framer-motion'
+import { fadeInUp } from '../../animations'
 
 interface ChallengePageProps {
    problemGroup: string
@@ -30,31 +32,41 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
    const prevProblem = data?.getProblemByIndex?.prevProblem
 
    return (
-      <Layout
-         fontSize={['2.5vh', '3vh', '4vh']}
-         height={'1vh'}
-         title={problem?.name}
-         variant={'regular'}
-         minH={'100vh'}
-      >
-         {data ? (
-            <>
-               <ChallengeDesc problemData={problem} />
-               <Challenge problemData={problem} error={error} loading={fetching} />
-            </>
-         ) : (
-            <LoadingSpinner />
-         )}
-         {fetching ? null : (
-            <Flex mt={20} direction={'row-reverse'}>
-               {nextProblem && (
-                  <NextOrPrevButton url={`/${problemGroup}/${inc(routeIndex)}`} variant={'Next'} />
-               )}
-               {prevProblem && (
-                  <NextOrPrevButton url={`/${problemGroup}/${dec(routeIndex)}`} variant={'Prev'} />
-               )}
-            </Flex>
-         )}
-      </Layout>
+      <motion.div initial="initial" animate="animate">
+         <Layout
+            fontSize={['2.5vh', '3vh', '4vh']}
+            height={'1vh'}
+            title={problem?.name}
+            variant={'regular'}
+            minH={'100vh'}
+         >
+            {data ? (
+               <>
+                  <motion.div variants={fadeInUp}>
+                     <ChallengeDesc problemData={problem} />
+                     <Challenge problemData={problem} error={error} loading={fetching} />
+                  </motion.div>
+               </>
+            ) : (
+               <LoadingSpinner />
+            )}
+            {fetching ? null : (
+               <Flex mt={20} direction={'row-reverse'}>
+                  {nextProblem && (
+                     <NextOrPrevButton
+                        url={`/${problemGroup}/${inc(routeIndex)}`}
+                        variant={'Next'}
+                     />
+                  )}
+                  {prevProblem && (
+                     <NextOrPrevButton
+                        url={`/${problemGroup}/${dec(routeIndex)}`}
+                        variant={'Prev'}
+                     />
+                  )}
+               </Flex>
+            )}
+         </Layout>
+      </motion.div>
    )
 }

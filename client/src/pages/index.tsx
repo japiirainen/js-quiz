@@ -8,6 +8,8 @@ import { Layout } from '../components/layouts/Layout'
 import { useGetProblemByIdQuery } from '../generated/graphql'
 import { isServer } from '../utils/isServer'
 import { LoadingSpinner } from '../components/LoadingSpinner'
+import { motion } from 'framer-motion'
+import { fadeInUp } from '../animations'
 
 const Index = () => {
    const [{ data, fetching, error }] = useGetProblemByIdQuery({
@@ -15,25 +17,33 @@ const Index = () => {
       pause: isServer(),
    })
    return (
-      <Layout fontSize={['4vh', '6vh', '8vh']} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
-         <Head>
-            <title>Js Quiz</title>
-            <meta property="og:title" content="Js Quiz" key="title" />
-         </Head>
-         <Text fontSize={[20, 20, 25, 30]}>
-            Website for learning or to test you`re skills in javascript through fun challenges
-            <Icon name="check-circle" color="green.500" mx="2px" />
-         </Text>
-         <Divider m={2} />
-         {data && !fetching ? (
-            <>
-               <ChallengeDesc problemData={data?.getProblemById} />
-               <Challenge problemData={data?.getProblemById} error={error} loading={fetching} />
-            </>
-         ) : (
-            <LoadingSpinner />
-         )}
-      </Layout>
+      <motion.div initial="initial" animate="animate">
+         <Layout fontSize={['4vh', '6vh', '8vh']} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
+            <Head>
+               <title>Js Quiz</title>
+               <meta property="og:title" content="Js Quiz" key="title" />
+            </Head>
+            <motion.div
+               initial={{ x: 100, opacity: 0 }}
+               transition={{ delay: 0.4 }}
+               animate={{ x: 0, opacity: 1 }}
+            >
+               <Text fontSize={[20, 20, 25, 30]}>
+                  Website for learning or to test you`re skills in javascript through fun challenges
+                  <Icon name="check-circle" color="green.500" mx="2px" />
+               </Text>
+            </motion.div>
+            <Divider m={2} />
+            {data && !fetching ? (
+               <motion.div variants={fadeInUp} transition={{ delay: 0.4 }}>
+                  <ChallengeDesc problemData={data?.getProblemById} />
+                  <Challenge problemData={data?.getProblemById} error={error} loading={fetching} />
+               </motion.div>
+            ) : (
+               <LoadingSpinner />
+            )}
+         </Layout>
+      </motion.div>
    )
 }
 
