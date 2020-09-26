@@ -4,6 +4,7 @@ import React, { Dispatch, SetStateAction, useContext } from 'react'
 import { ChallengeContext } from '../../context/challengeContext'
 import { RegProblemFragment } from '../../generated/graphql'
 import { Editor } from '../Editor'
+import { motion } from 'framer-motion'
 
 interface ChallengeEditorProps {
    problemData: RegProblemFragment | undefined | null
@@ -35,15 +36,18 @@ export const ChallengeEditor: React.FC<ChallengeEditorProps> = ({
             setValue={setValue}
          />
          <Flex>
-            <Button
-               fontSize={[20, 20, 25, 25]}
-               isLoading={fetching}
-               mt={2}
-               bg="green.300"
-               onClick={onSubmit}
-            >
-               <FaPlay color="white" />
-            </Button>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+               <Button
+                  fontSize={[20, 20, 25, 25]}
+                  isLoading={fetching}
+                  mt={2}
+                  bg="green.500"
+                  onClick={onSubmit}
+                  _hover={{ color: 'white', backgroundColor: 'green.300' }}
+               >
+                  <FaPlay color="white" />
+               </Button>
+            </motion.div>
             {completedState && (
                <Tag ml={'auto'} mt={2} size={'md'} variantColor="green">
                   <TagLabel>Challenge complete!</TagLabel>
