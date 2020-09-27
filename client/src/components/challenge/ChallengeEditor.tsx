@@ -23,7 +23,7 @@ export const ChallengeEditor: React.FC<ChallengeEditorProps> = ({
    defaultValue,
 }) => {
    const { colorMode } = useColorMode()
-   const theme = { light: 'tomorrow', dark: 'merbivore' }
+   const theme = { light: 'tomorrow', dark: 'monokai' }
    const { completedState } = useContext(ChallengeContext)
 
    return (

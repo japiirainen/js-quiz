@@ -47,13 +47,19 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
 
    useEffect(() => {
       completedState
-         ? setValue(formatDefVal(data?.getSolution?.solution, problemData?.correctSolution))
+         ? setValue(
+              formatDefVal(
+                 SubmitData?.submitResult?.solution || data?.getSolution?.solution,
+                 problemData?.correctSolution
+              )
+           )
          : setValue(problemData?.placeHolder)
    }, [
       completedState,
       data?.getSolution?.solution,
       problemData?.placeHolder,
       problemData?.correctSolution,
+      SubmitData?.submitResult?.solution,
    ])
 
    return (

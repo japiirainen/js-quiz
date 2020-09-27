@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Box, Button } from '@chakra-ui/core'
+import { Box, Button, useToast } from '@chakra-ui/core'
 import { Form, Formik } from 'formik'
 import { withUrqlClient } from 'next-urql'
 import { useRouter } from 'next/router'
@@ -10,6 +10,7 @@ import { useRegisterMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
 
 const Register: React.FC = () => {
+   const toast = useToast()
    const router = useRouter()
    const [{ fetching }, register] = useRegisterMutation()
    return (
@@ -30,6 +31,13 @@ const Register: React.FC = () => {
                   })
                } else {
                   router.push('/')
+                  return toast({
+                     title: 'Account successfully created!',
+                     description: 'You can now go through all the challenges.',
+                     status: 'success',
+                     duration: 5000,
+                     isClosable: true,
+                  })
                }
             }}
          >

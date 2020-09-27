@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Box, Button, Link, Flex } from '@chakra-ui/core'
+import { Box, Button, Link, Flex, useToast } from '@chakra-ui/core'
 import { Form, Formik } from 'formik'
 import React from 'react'
 import { InputField } from '../components/InputField'
@@ -11,6 +11,7 @@ import NextLink from 'next/link'
 import { Layout } from '../components/layouts/Layout'
 
 const Login: React.FC = () => {
+   const toast = useToast()
    const router = useRouter()
    const [{ fetching }, login] = useLoginMutation()
    return (
@@ -33,6 +34,12 @@ const Login: React.FC = () => {
                      router.push(router.query.next)
                   } else {
                      router.push('/')
+                     return toast({
+                        title: `Logged in as ${res.data.login.username}!`,
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                     })
                   }
                }
             }}

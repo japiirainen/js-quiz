@@ -78,8 +78,8 @@ export const formatDefVal = (
    str: string | undefined,
    creatorSolution: string | undefined
 ): string =>
-   `/*\nYou have already completed this challenge.\nHere the creators solution to this challenge.\n${repeat35(
+   `/*\nChallenge complete!.\nHere is the creators solution to this challenge.\n${repeat35(
       '-'
    )}\n${creatorSolution}\n${repeat35(
       '-'
-   )}\nHere is youre previous solution!\nFeel free to play awound with other solutions:-)\n*/\n${str}`
+   )}\nHere is youre previous solution!\nFeel free to play around with other solutions:-)\n*/\n${str}`

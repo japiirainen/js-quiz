@@ -30,7 +30,9 @@ export const ChallengeTerminal: React.FC<ChallengeTerminalProps> = ({
                )
             )
          ) : (
-            <Text fontSize={15}>{problemData?.placeHolderExpectation}</Text>
+            <Text fontSize={15} color="green.200">
+               {problemData?.placeHolderExpectation}
+            </Text>
          )}
       </Code>
    )
