@@ -59,7 +59,6 @@ export const logout = async (_: any, __: any, { req, res }: MyContext) => {
       req.session?.destroy(err => {
          res.clearCookie(cookieName)
          if (err) {
-            console.log(err)
             resolve(false)
             return
          }

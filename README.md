@@ -30,6 +30,4 @@ In conclusion this tech stack worked well and I have to mention that client-side
 
 ### todo
 
--  when user submits false answer the server should return that and not display the placeholder
 -  problem **_loops_** has some problems
--  testRunner should remove the comment while in completeState

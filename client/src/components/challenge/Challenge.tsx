@@ -31,7 +31,6 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
       pause: isServer(),
       variables: { input: { userId: meData?.me?._id, problemId: problemData?._id } },
    })
-   console.log(problemData?.correctSolution)
 
    const toast = useToast()
    const { isOpen, onClose, onToggle } = useDisclosure()
@@ -67,7 +66,10 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                   fetching={fetching}
                   setValue={setValue}
                   value={value}
-                  defaultValue={problemData?.placeHolder}
+                  defaultValue={
+                     (SubmitData?.submitResult?.errors && SubmitData.submitResult.solution) ||
+                     problemData?.placeHolder
+                  }
                   problemData={problemData}
                   onSubmit={async () => {
                      const res = await submitResult({
@@ -94,7 +96,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                         ) {
                            setCompletedState(true)
                            return toast({
-                              title: 'You just gained 20 points',
+                              title: 'Correct! You just gained 20 points',
                               description:
                                  'Go to account page to have more information about your progress!',
                               status: 'success',
@@ -108,7 +110,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                         ) {
                            setCompletedState(true)
                            return toast({
-                              title: 'Nice',
+                              title: "That's correct!",
                               description:
                                  'You have already won the points from this challenge! Complete other challenges to level up!',
                               status: 'info',

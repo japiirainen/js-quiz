@@ -43,7 +43,6 @@ const ChangePassword: NextPage = () => {
                const res = await changePassword({
                   input: { newPassword: values.newPassword, token },
                })
-               console.log(res)
                if (res.error) {
                   setErrors({
                      newPassword: res.error.message,

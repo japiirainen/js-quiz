@@ -2,7 +2,7 @@ import { testRunner, testsToFnCalls, formatError } from '../../utils/testRunner'
 import { ProblemModel } from '../problem/problem.model'
 import { ApolloError } from 'apollo-server-express'
 import { UserModel } from '../user/user.model'
-import { ProblemResultInputIf } from './problem.result.model'
+import { ProblemResultInputIf, Solution } from './problem.result.model'
 import { SolutionModel } from './problem.result.model'
 import { isAuth } from '../../utils/middleware'
 import { MyContext } from '../../utils/types'
@@ -12,6 +12,7 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
       ProblemModel.findById(input.problemId),
       UserModel.findById(input.userId),
    ])
+
    if (!problem?.testCases) throw new ApolloError('No testcases found')
    const testFunctions = testsToFnCalls(problem.testCases)
    const testResults = testRunner(input.solution, testFunctions)
@@ -53,7 +54,12 @@ export const getSolution = async (
    _: any,
    { input }: { input: { userId: string; problemId: string } },
    ctx: MyContext
-) => {
+): Promise<Solution | undefined> => {
    isAuth(ctx)
-   return await SolutionModel.findOne({ userId: input.userId, problemId: input.problemId })
+   const solution = await SolutionModel.findOne({
+      userId: input.userId,
+      problemId: input.problemId,
+   })
+   if (!solution) throw new ApolloError('couldnt find a solution')
+   return solution
 }
