@@ -27,7 +27,7 @@ export const DrawerLink: React.FC<DrawerLinkProps> = ({ href, text }) => {
       }
    }
    return (
-      <Button as={Link} variant="ghost" onClick={authCheck} fontSize={20} m={1}>
+      <Button as={Link} variant="unstyled" onClick={authCheck} fontSize={20} p={1}>
          <ListItem>
             <Text fontSize={20}>
                {text}

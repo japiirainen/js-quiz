@@ -26,9 +26,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ ProblemData }) => {
 
    return (
       <motion.div initial="initial" animate="animate">
-         <Box width={['100%', '50%', '55%']} ml={'auto'} mt={['30px', 0]}>
+         <Box width={['100%', '100%', '100%']} ml={'auto'} mt={['30px', 0]}>
             <motion.div variants={fadeInUp}>
-               <Text fontSize={[22, 22, 20, 22]} mb={24}>
+               <Text fontSize={[22, 22, 20, 22]} mb={18}>
                   Your progress in this section:
                </Text>
 

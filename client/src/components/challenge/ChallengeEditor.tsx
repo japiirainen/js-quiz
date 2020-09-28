@@ -29,7 +29,7 @@ export const ChallengeEditor: React.FC<ChallengeEditorProps> = ({
    return (
       <>
          <Editor
-            height={'300px'}
+            height={'400px'}
             defaultValue={defaultValue}
             theme={theme[colorMode]}
             value={value}

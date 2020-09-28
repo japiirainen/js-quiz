@@ -31,18 +31,20 @@ export const ChallengeList: React.FC<ChallengeListProps> = ({ problemList, group
       </motion.div>
    )
    return (
-      <motion.div initial="initial" animate="animate">
+      <>
          <List as="ol" styleType="decimal" spacing={3}>
-            <motion.div variants={fadeInUp}>
-               <Text fontSize={[25, 22, 20, 20]} textDecoration="underline" mb={4}>
-                  Challenges in this section:
-               </Text>
-            </motion.div>
-            <motion.div variants={stagger}>
-               {problemList && map(listMapper, problemList)}
+            <motion.div initial="initial" animate="animate">
+               <motion.div variants={fadeInUp}>
+                  <Text fontSize={[25, 22, 20, 20]} textDecoration="underline" mb={4}>
+                     Challenges in this section:
+                  </Text>
+               </motion.div>
+               <motion.div variants={stagger}>
+                  {problemList && map(listMapper, problemList)}
+               </motion.div>
             </motion.div>
          </List>
          <Divider m={10} />
-      </motion.div>
+      </>
    )
 }
