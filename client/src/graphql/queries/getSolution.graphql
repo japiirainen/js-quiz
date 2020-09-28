@@ -1,5 +1,5 @@
 query GetSolution($input: getSolutionInput) {
-  getSolution(input: $input) {
-    solution
-  }
+   getSolution(input: $input) {
+      solution
+   }
 }

@@ -9,7 +9,7 @@ import { NextOrPrevButton } from '../NextOrPrevButton'
 import { CombinedError } from 'urql'
 import { LoadingSpinner } from '../LoadingSpinner'
 import { motion } from 'framer-motion'
-import { fadeInDown } from '../../animations'
+import { fadeInDown, fadeInUp } from '../../animations'
 
 interface ChallengePageProps {
    problemGroup: string
@@ -41,30 +41,32 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
             minH={'100vh'}
          >
             {data ? (
-               <>
+               <motion.div initial="initial" animate="animate">
                   <motion.div variants={fadeInDown}>
                      <ChallengeDesc problemData={problem} />
                      <Challenge problemData={problem} error={error} loading={fetching} />
                   </motion.div>
-               </>
+               </motion.div>
             ) : (
                <LoadingSpinner />
             )}
             {fetching ? null : (
-               <Flex mt={20} direction={'row-reverse'}>
-                  {nextProblem && (
-                     <NextOrPrevButton
-                        url={`/${problemGroup}/${inc(routeIndex)}`}
-                        variant={'Next'}
-                     />
-                  )}
-                  {prevProblem && (
-                     <NextOrPrevButton
-                        url={`/${problemGroup}/${dec(routeIndex)}`}
-                        variant={'Prev'}
-                     />
-                  )}
-               </Flex>
+               <motion.div variants={fadeInUp}>
+                  <Flex mt={20} direction={'row-reverse'}>
+                     {nextProblem && (
+                        <NextOrPrevButton
+                           url={`/${problemGroup}/${inc(routeIndex)}`}
+                           variant={'Next'}
+                        />
+                     )}
+                     {prevProblem && (
+                        <NextOrPrevButton
+                           url={`/${problemGroup}/${dec(routeIndex)}`}
+                           variant={'Prev'}
+                        />
+                     )}
+                  </Flex>
+               </motion.div>
             )}
          </Layout>
       </motion.div>
