@@ -6,6 +6,7 @@ import {
    logoutUpdate,
    registerUpdate,
    submitResultUpdate,
+   updateSolution,
    updateUser,
 } from './cacheUpdates'
 
@@ -35,6 +36,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   register: registerUpdate,
                   submitResult: submitResultUpdate,
                   updateUser: updateUser,
+                  updateSolution: updateSolution,
                },
             },
          }),

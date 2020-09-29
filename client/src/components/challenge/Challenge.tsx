@@ -47,7 +47,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
       completedState
          ? setValue(
               formatDefVal(
-                 SubmitData?.submitResult?.solution || data?.getSolution?.solution,
+                 SubmitData?.submitResult?.solution?.solution || data?.getSolution?.solution,
                  problemData?.correctSolution
               )
            )
@@ -67,7 +67,8 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                setValue={setValue}
                value={value}
                defaultValue={
-                  (SubmitData?.submitResult?.errors && SubmitData.submitResult.solution) ||
+                  (SubmitData?.submitResult?.errors &&
+                     SubmitData.submitResult.solution?.solution) ||
                   problemData?.placeHolder
                }
                problemData={problemData}

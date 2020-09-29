@@ -44,7 +44,11 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
       return {
          success: true,
          errors: [],
-         solution: input.solution,
+         solution: await SolutionModel.findOne({
+            userId: input.userId,
+            problemId: input.problemId,
+            solution: input.solution,
+         }),
          user: await UserModel.findById(input.userId),
       }
    }

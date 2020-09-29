@@ -1,4 +1,6 @@
 import {
+   GetSolutionQuery,
+   GetSolutionDocument,
    LoginMutation,
    LogoutMutation,
    MeDocument,
@@ -87,6 +89,28 @@ export const updateUser = (_result: Data, _: Variables, cache: any, __: ResolveI
                   _id: result.updateUser._id,
                   username: result.updateUser.username,
                   completedProblems: result.updateUser.completedProblems,
+               },
+            }
+         }
+      }
+   )
+}
+
+export const updateSolution = (_result: Data, _: Variables, cache: any, __: ResolveInfo) => {
+   updateQuery<SubmitResultMutation, GetSolutionQuery>(
+      cache,
+      { query: GetSolutionDocument },
+      _result,
+      (result, query) => {
+         if (!result.submitResult?.solution?._id) {
+            console.log('here')
+            return query
+         } else {
+            console.log('lol')
+            return {
+               getSolution: {
+                  _id: result.submitResult.solution._id,
+                  solution: result.submitResult.solution.solution,
                },
             }
          }

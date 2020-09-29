@@ -198,7 +198,7 @@ export type Error = {
 
 export type Result = {
   __typename?: 'Result';
-  solution: Scalars['String'];
+  solution?: Maybe<Solution>;
   success?: Maybe<Scalars['Boolean']>;
   errors?: Maybe<Array<Maybe<Error>>>;
   user?: Maybe<User>;
@@ -206,6 +206,7 @@ export type Result = {
 
 export type Solution = {
   __typename?: 'Solution';
+  _id: Scalars['ID'];
   userId: Scalars['ID'];
   problemId: Scalars['ID'];
   solution: Scalars['String'];
@@ -396,8 +397,11 @@ export type SubmitResultMutation = (
   { __typename?: 'Mutation' }
   & { submitResult?: Maybe<(
     { __typename?: 'Result' }
-    & Pick<Result, 'solution' | 'success'>
-    & { errors?: Maybe<Array<Maybe<(
+    & Pick<Result, 'success'>
+    & { solution?: Maybe<(
+      { __typename?: 'Solution' }
+      & Pick<Solution, '_id' | 'solution'>
+    )>, errors?: Maybe<Array<Maybe<(
       { __typename?: 'Error' }
       & Pick<Error, 'message' | 'actual' | 'expected'>
     )>>>, user?: Maybe<(
@@ -529,7 +533,7 @@ export type GetSolutionQuery = (
   { __typename?: 'Query' }
   & { getSolution?: Maybe<(
     { __typename?: 'Solution' }
-    & Pick<Solution, 'solution'>
+    & Pick<Solution, '_id' | 'solution'>
   )> }
 );
 
@@ -626,7 +630,10 @@ export function useRegisterMutation() {
 export const SubmitResultDocument = gql`
     mutation SubmitResult($input: ProblemResultInput!) {
   submitResult(input: $input) {
-    solution
+    solution {
+      _id
+      solution
+    }
     success
     errors {
       message
@@ -751,6 +758,7 @@ export function useGetProblemsInGroupQuery(options: Omit<Urql.UseQueryArgs<GetPr
 export const GetSolutionDocument = gql`
     query GetSolution($input: getSolutionInput) {
   getSolution(input: $input) {
+    _id
     solution
   }
 }

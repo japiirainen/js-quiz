@@ -14,13 +14,14 @@ export default gql`
    }
 
    type Result {
-      solution: String!
+      solution: Solution
       success: Boolean
       errors: [Error]
       user: User
    }
 
    type Solution {
+      _id: ID!
       userId: ID!
       problemId: ID!
       solution: String!
