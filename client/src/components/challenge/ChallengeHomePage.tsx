@@ -2,7 +2,7 @@ import { useGetProblemsInGroupQuery } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { Layout } from '../layouts/Layout'
 import { LoadingSpinner } from '../LoadingSpinner'
-import { Icon, Stack, Text, Flex } from '@chakra-ui/core'
+import { Icon, Stack, Text, Flex, Divider } from '@chakra-ui/core'
 import { ChallengeList } from './ChallengeList'
 import { ProgressBar } from '../ProgressBar'
 import { motion } from 'framer-motion'
@@ -31,6 +31,7 @@ export const ChallengeHomePage: React.FC<ChallengeHomeProps> = ({ groupName, des
                      {description}
                      <Icon name="info" color="blue.500" mx="2px" />
                   </Text>
+                  <Divider mt={15} />
                </motion.div>
                <Stack isInline spacing={8} align="center" mt={50}>
                   <Flex direction={['column', 'row']} flex={1}>
