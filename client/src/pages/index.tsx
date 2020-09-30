@@ -19,45 +19,35 @@ const Index = () => {
       pause: isServer(),
    })
    const [{ data: meData, fetching: meFetching }] = useMeQuery({ pause: isServer() })
-   if (!fetching && !meFetching && meData?.me?._id) {
-      return (
-         <motion.div initial="initial" animate="animate">
-            <Layout
-               fontSize={['4vh', '6vh', '8vh']}
-               title={'Js-quiz'}
-               height={'8vh'}
-               minH={'100vh'}
-            >
-               <Head>
-                  <title>Js Quiz</title>
-                  <meta property="og:title" content="Js Quiz" key="title" />
-               </Head>
-               <motion.div variants={fadeInDown}>
-                  <Text fontSize={[20, 20, 25, 30]}>
-                     Website for learning or to test you're skills in javascript through fun
-                     challenges
-                     <Icon name="check-circle" color="green.500" mx="2px" />
-                  </Text>
-               </motion.div>
-               <Divider m={2} />
-               {data && !fetching ? (
-                  <motion.div variants={fadeInUp} transition={{ delay: 0.4 }}>
-                     <ChallengeDesc problemData={data?.getProblemById} />
-                     <Challenge
-                        problemData={data?.getProblemById}
-                        error={error}
-                        loading={fetching}
-                     />
-                  </motion.div>
-               ) : (
-                  <LoadingSpinner />
-               )}
-            </Layout>
-         </motion.div>
-      )
-   } else {
+
+   if (fetching || meFetching) {
+      return <LoadingSpinner />
+   }
+
+   if (!meData?.me?._id) {
       return <LandingPage />
    }
+
+   return (
+      <motion.div initial="initial" animate="animate">
+         <Layout fontSize={['4vh', '6vh', '8vh']} title={'Js-quiz'} height={'8vh'} minH={'100vh'}>
+            <Head>
+               <title>Js Quiz</title>
+               <meta property="og:title" content="Js Quiz" key="title" />
+            </Head>
+            <motion.div variants={fadeInDown}></motion.div>
+            <Divider m={2} />
+            {data && !fetching ? (
+               <motion.div variants={fadeInUp} transition={{ delay: 0.4 }}>
+                  <ChallengeDesc problemData={data?.getProblemById} />
+                  <Challenge problemData={data?.getProblemById} error={error} loading={fetching} />
+               </motion.div>
+            ) : (
+               <LoadingSpinner />
+            )}
+         </Layout>
+      </motion.div>
+   )
 }
 
 export default withUrqlClient(createUrqlClient, { ssr: true })(Index)

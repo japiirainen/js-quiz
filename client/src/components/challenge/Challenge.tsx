@@ -26,6 +26,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [, updateUserProgress] = useUpdateUserProgressMutation()
    const [{ data }] = useGetSolutionQuery({
+      requestPolicy: 'network-only',
       pause: isServer(),
       variables: { input: { userId: meData?.me?._id, problemId: problemData?._id } },
    })

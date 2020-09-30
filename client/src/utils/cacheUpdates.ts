@@ -54,24 +54,6 @@ export const registerUpdate = (_result: Data, _: Variables, cache: any, __: Reso
 }
 
 export const submitResultUpdate = (_result: Data, _: Variables, cache: any, __: ResolveInfo) => {
-   /* updateQuery<SubmitResultMutation, GetSolutionQuery>(
-      cache,
-      { query: GetSolutionDocument },
-      _result,
-      (result, query) => {
-         if (!result.submitResult?.solution?._id) {
-            return query
-         } else {
-            return {
-               getSolution: {
-                  _id: result.submitResult.solution._id,
-                  solution: result.submitResult.solution,
-               },
-            }
-         }
-      }
-   ) */
-
    updateQuery<SubmitResultMutation, MeQuery>(
       cache,
       { query: MeDocument },
