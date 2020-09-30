@@ -1,7 +1,7 @@
 import { Flex, Box } from '@chakra-ui/core'
 import React from 'react'
 
-export type ContainerVariant = 'small' | 'regular'
+export type ContainerVariant = 'small' | 'regular' | 'huge'
 
 type WrapperProps = any
 
@@ -13,7 +13,12 @@ export const Container: React.FC<WrapperProps> = ({
 }) => {
    return (
       <Flex direction="column" alignItems="center" justifyContent="flex-start" {...rest}>
-         <Box mt={mt} mx="auto" maxW={variant === 'regular' ? '800px' : '400px'} w="100%">
+         <Box
+            mt={mt}
+            mx="auto"
+            maxW={variant === 'regular' ? '800px' : variant === 'huge' ? '1500px' : '400px'}
+            w="100%"
+         >
             {children}
          </Box>
       </Flex>
