@@ -17,6 +17,7 @@
       "@types/jest": "^26.0.10",
       "@types/ramda": "^0.27.14",
       "@urql/exchange-graphcache": "^3.0.2",
+      "@xstate/react": "^1.0.1",
       "ace-builds": "^1.4.12",
       "cross-env": "5.0.5",
       "emotion-theming": "^10.0.27",
@@ -33,7 +34,8 @@
       "react-icons": "^3.11.0",
       "server": "1.0.0",
       "urql": "^1.10.0",
-      "uuidv4": "^6.2.3"
+      "uuidv4": "^6.2.3",
+      "xstate": "^4.13.0"
    },
    "devDependencies": {
       "@graphql-codegen/cli": "1.17.8",

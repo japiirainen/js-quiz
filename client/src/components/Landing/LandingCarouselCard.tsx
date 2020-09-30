@@ -1,21 +1,20 @@
 import { Box, Code, Flex, Heading, IconButton, Text } from '@chakra-ui/core'
-import { LandingCarousel } from '../../assets/staticData/landingPageData'
+import { LandingCarousel } from '../../../assets/staticData/landingPageData'
 import { Feature } from './Feature'
 
-export const LandingCarouselCard: React.FC<LandingCarousel> = ({
-   id,
-   title,
-   exampleCode,
-   exampleSolution,
-   exampleSolutionTitle,
-   exampleTitle,
-}) => {
+export const LandingCarouselCard: React.FC<{ data: LandingCarousel }> = ({ data }) => {
+   const { id, title, exampleCode, exampleTitle } = data
    return (
       <Box maxWidth={800} minWidth={['100%', 700]} marginTop={150}>
          <Feature>
             <Flex height={'100%'} width={'100%'} direction="column" alignItems="center">
                <Flex maxWidth={500} justifyContent="center" direction="column">
-                  <Heading fontSize={['lg']} fontWeight="medium" textAlign="left">
+                  <Heading
+                     fontSize={['lg']}
+                     fontWeight="medium"
+                     textAlign="left"
+                     fontFamily="monospace"
+                  >
                      {title}
                   </Heading>
                   {exampleTitle && (
@@ -23,7 +22,7 @@ export const LandingCarouselCard: React.FC<LandingCarousel> = ({
                         {exampleTitle}:
                      </Text>
                   )}
-                  <Code>
+                  <Code m={2}>
                      <pre>{exampleCode}</pre>
                   </Code>
                </Flex>
