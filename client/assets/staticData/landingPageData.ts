@@ -12,7 +12,7 @@ export const infoCardsData = [
    {
       id: 3,
       main: 'Various programming topics',
-      secondary: 'Topics used in various different programming languages',
+      secondary: 'Topics used in many different programming languages',
    },
 ]
 
