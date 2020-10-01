@@ -3,6 +3,7 @@ import { Footer } from '../Footer'
 import { Text } from '@chakra-ui/core'
 import Head from 'next/head'
 import { AccountPopover } from '../AccountMenu'
+import { SideDrawer } from '../SideDrawer'
 
 interface LandingPageLayoutProps {
    title?: string
@@ -23,6 +24,7 @@ export const LandingPageLayout: React.FC<LandingPageLayoutProps> = ({
          </Head>
          <AccountPopover />
          {children}
+         <SideDrawer />
          <Footer>
             <Text>© js-quiz</Text>
          </Footer>
