@@ -17,7 +17,7 @@ export const IntroChallenge: NextPage = () => {
    })
    return (
       <motion.div initial="initial" animate="animate">
-         <Layout fontSize={['4vh', '5vh', '6vh']} height={'0vh'} minH={'100vh'}>
+         <Layout fontSize={['4vh', '5vh', '6vh']} height={'0vh'} minH={'100vh'} hideFooter={true}>
             <Head>
                <title>Js Quiz</title>
                <meta property="og:title" content="Js Quiz" key="title" />

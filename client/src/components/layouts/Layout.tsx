@@ -14,6 +14,7 @@ interface LayoutProps {
    height: string
    variant?: ContainerVariant
    minH?: string
+   hideFooter?: boolean
 }
 
 export const Layout: React.FC<LayoutProps> = ({
@@ -23,6 +24,7 @@ export const Layout: React.FC<LayoutProps> = ({
    title = '',
    variant,
    minH,
+   hideFooter,
 }) => {
    return (
       <Container height={'100%'} variant={variant} minH={minH}>
@@ -30,9 +32,11 @@ export const Layout: React.FC<LayoutProps> = ({
          <Hero title={title} fontSize={fontSize} height={height} />
          <Main marginTop={'0'}>{children}</Main>
          <SideDrawer />
-         <Footer>
-            <Text>© js-quiz</Text>
-         </Footer>
+         {hideFooter ? null : (
+            <Footer>
+               <Text>© js-quiz</Text>
+            </Footer>
+         )}
       </Container>
    )
 }
