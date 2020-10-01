@@ -1,5 +1,5 @@
 import { Alert, AlertIcon, Box, useDisclosure, useToast } from '@chakra-ui/core'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { CombinedError } from 'urql'
 import {
    RegProblemFragment,
@@ -14,6 +14,7 @@ import { ChallengeTerminal } from './ChallengeTerminal'
 import { LoginModal } from '../LoginModal'
 import { ChallengeEditor } from './ChallengeEditor'
 import { formatDefVal } from '../../utils/helperFns'
+import { EditorValueContext } from '../../context/editorValueContext'
 
 export interface ChallengeProps {
    problemData: RegProblemFragment | undefined
@@ -26,13 +27,14 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
    const [, updateUserProgress] = useUpdateUserProgressMutation()
    const [{ data }] = useGetSolutionQuery({
+      requestPolicy: 'network-only',
       pause: isServer(),
       variables: { input: { userId: meData?.me?._id, problemId: problemData?._id } },
    })
 
    const toast = useToast()
    const { isOpen, onClose, onToggle } = useDisclosure()
-   const [value, setValue] = useState(problemData?.placeHolder)
+   const { value, setValue } = useContext(EditorValueContext)
    const { setCompletedState, completedState } = useContext(ChallengeContext)
 
    useEffect(() => {

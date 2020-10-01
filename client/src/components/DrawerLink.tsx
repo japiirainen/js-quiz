@@ -16,7 +16,7 @@ export const DrawerLink: React.FC<DrawerLinkProps> = ({ href, text }) => {
    const authCheck = () => {
       if (!meData?.me?.username) {
          toast({
-            title: 'need to be logged in to view that route',
+            title: 'Must be logged in',
             status: 'error',
             duration: 4000,
             isClosable: true,

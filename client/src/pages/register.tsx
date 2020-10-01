@@ -3,16 +3,20 @@ import { Box, Button, useToast } from '@chakra-ui/core'
 import { Form, Formik } from 'formik'
 import { withUrqlClient } from 'next-urql'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useContext } from 'react'
 import { InputField } from '../components/InputField'
 import { Layout } from '../components/layouts/Layout'
-import { useRegisterMutation } from '../generated/graphql'
+import { useRegisterMutation, useSubmitResultMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
+import { EditorValueContext } from '../context/editorValueContext'
 
 const Register: React.FC = () => {
+   const [, submitResult] = useSubmitResultMutation()
    const toast = useToast()
    const router = useRouter()
    const [{ fetching }, register] = useRegisterMutation()
+   const { value } = useContext(EditorValueContext)
+
    return (
       <Layout fontSize={'4vh'} height={'8vh'} title={'Register'} variant={'small'} minH={'100vh'}>
          <Head>
@@ -30,6 +34,14 @@ const Register: React.FC = () => {
                      password: 'password must be at least 2 characters long',
                   })
                } else {
+                  console.log(value, res.data?.register._id)
+                  await submitResult({
+                     input: {
+                        problemId: '5f478058f712257781ecf239',
+                        solution: value,
+                        userId: res.data?.register._id,
+                     },
+                  })
                   router.push('/')
                   return toast({
                      title: 'Account successfully created!',

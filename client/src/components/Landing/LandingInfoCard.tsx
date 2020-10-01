@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/core'
 import { motion } from 'framer-motion'
-import { fadeInDown } from '../animations'
+import { fadeInDown } from '../../animations'
 
 interface LandingInfoCardProps {
    mainText: string
@@ -19,7 +19,7 @@ export const LandingInfoCard: React.FC<LandingInfoCardProps> = ({ mainText, seco
          <motion.div variants={fadeInDown}>
             <Text
                marginBottom={2}
-               fontSize={['lg', 'lg', 'xl', 'xl']}
+               fontSize={['3xl', 'xl']}
                fontFamily="monospace"
                textAlign="center"
                fontWeight="bold"
@@ -27,7 +27,7 @@ export const LandingInfoCard: React.FC<LandingInfoCardProps> = ({ mainText, seco
                {mainText}
             </Text>
             <Text
-               fontSize={['lg', 'lg', 'xl', 'xl']}
+               fontSize={['2xl', 'xl']}
                fontFamily="monospace"
                textAlign="center"
                fontWeight="light"

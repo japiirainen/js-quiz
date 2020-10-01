@@ -19,7 +19,7 @@ export interface ErrorIf {
 
 export interface ResultIf {
    solution: string
-   success: Boolean
+   success: boolean
    errors: ErrorIf[]
    user: User | null
 }
@@ -31,7 +31,7 @@ export class Result extends TimeStamps {
    public solution!: string
 
    @prop({ required: true })
-   public success?: Boolean
+   public success?: boolean
 
    @prop({ required: true })
    public errorMessages: Array<string>
