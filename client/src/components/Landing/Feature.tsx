@@ -10,7 +10,7 @@ export const Feature: React.FC<anyProps> = ({ children, ...rest }) => {
             width={['100%', 700]}
             maxWidth="100%"
             p={5}
-            height={300}
+            height={['auto', 300]}
             shadow="md"
             borderWidth="1px"
             flex="1"

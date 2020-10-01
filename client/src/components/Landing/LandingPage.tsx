@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex } from '@chakra-ui/core'
+import { Divider, Flex } from '@chakra-ui/core'
 import { NextPage } from 'next'
 import { LandingPageLayout } from '../layouts/LandingPage'
 import { LandingHeader } from './LandingHeader'
@@ -18,7 +18,10 @@ export const LandingPage: NextPage = () => {
             </motion.div>
             <Flex direction={['column', 'row']}>
                {infoCardsData.map(x => (
-                  <LandingInfoCard key={x.id} mainText={x.main} secondaryText={x.secondary} />
+                  <>
+                     <LandingInfoCard key={x.id} mainText={x.main} secondaryText={x.secondary} />
+                     <Divider mt={5} />
+                  </>
                ))}
             </Flex>
             <Flex justifyContent="center" my={60}>

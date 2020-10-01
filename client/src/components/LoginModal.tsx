@@ -26,11 +26,11 @@ export const LoginModal: React.FC<LoginModalInterface> = ({ onClose, isOpen }) =
             <ModalCloseButton color={'red.500'} />
             <ModalBody>
                <Code fontSize={20}>
-                  That is correct! 😎 Please login if you would like to have your progress saved.
+                  That is correct! 😎 Please register to save your progress!.
                </Code>
             </ModalBody>
             <ModalFooter>
-               <Button onClick={() => router.push('/login')}>login</Button>
+               <Button onClick={() => router.push('/register')}>register</Button>
             </ModalFooter>
          </ModalContent>
       </Modal>

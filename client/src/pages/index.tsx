@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Head from 'next/head'
-import { Divider, Icon, Text } from '@chakra-ui/core'
+import { Divider } from '@chakra-ui/core'
 import { Challenge } from '../components/challenge/Challenge'
 import { ChallengeDesc } from '../components/challenge/ChallengeDesc'
 import { createUrqlClient } from '../utils/createUrqlClient'

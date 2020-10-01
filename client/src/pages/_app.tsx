@@ -3,6 +3,7 @@ import { NextComponentType } from 'next'
 import { AnimatePresence } from 'framer-motion'
 import theme from '../theme'
 import { ChallengeContextProvider } from '../context/challengeContext'
+import { EditorValueProvider } from '../context/editorValueContext'
 
 interface MyAppProps {
    Component: NextComponentType
@@ -14,11 +15,13 @@ const MyApp: React.FC<MyAppProps> = ({ Component, pageProps, children }) => {
       <AnimatePresence exitBeforeEnter>
          <ThemeProvider theme={theme}>
             <ChallengeContextProvider>
-               <ColorModeProvider>
-                  <CSSReset />
-                  {children}
-                  <Component {...pageProps} />
-               </ColorModeProvider>
+               <EditorValueProvider>
+                  <ColorModeProvider>
+                     <CSSReset />
+                     {children}
+                     <Component {...pageProps} />
+                  </ColorModeProvider>
+               </EditorValueProvider>
             </ChallengeContextProvider>
          </ThemeProvider>
       </AnimatePresence>

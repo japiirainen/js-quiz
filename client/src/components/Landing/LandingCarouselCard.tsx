@@ -1,33 +1,37 @@
 import { Box, Button, Code, Flex, Heading, IconButton, Text } from '@chakra-ui/core'
 import { useMachine } from '@xstate/react'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
 import { LandingCarousel } from '../../../assets/staticData/landingPageData'
 import { fadeInUp } from '../../animations'
 import { LPCarouselMachine } from '../../machines/LPCarouselMachine'
 import { Feature } from './Feature'
+import { IntroChallenge } from './IntroChallenge'
 
 export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ data }) => {
-   const router = useRouter()
    const [current, send] = useMachine(LPCarouselMachine)
+
    const currData = data.find(x => x.id === current.context.page)
 
    if (current.matches('not_active')) {
       return (
          <motion.div variants={fadeInUp}>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-               <Button
-                  variant="solid"
-                  variantColor="blue"
-                  size="lg"
-                  marginTop={150}
-                  onClick={() => send({ type: 'CLICK_START' })}
-               >
-                  Start intro
-               </Button>
-            </motion.div>
+            <Box mt={150}>
+               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                     variant="solid"
+                     variantColor="blue"
+                     size="lg"
+                     onClick={() => send({ type: 'CLICK_START' })}
+                  >
+                     Click to start an introduction
+                  </Button>
+               </motion.div>
+            </Box>
          </motion.div>
       )
+   }
+   if (current.matches('active.intro.solving')) {
+      return <IntroChallenge />
    }
    if (current.matches('active')) {
       return (
@@ -59,7 +63,7 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                      ml={'auto'}
                      mr={'auto'}
                   >
-                     {current.matches('active.p_4') ? (
+                     {current.matches('active.p_5') ? (
                         <Button
                            fontSize={[25, 30, 40]}
                            ml={12}
@@ -67,10 +71,7 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                            variantColor="blue"
                            size="lg"
                            alignSelf="center"
-                           onClick={() => {
-                              send({ type: 'CLICK_INTRO' })
-                              router.push('/intro')
-                           }}
+                           onClick={() => send({ type: 'CLICK_INTRO' })}
                         >
                            First challenge! {'=>'}
                         </Button>
@@ -83,15 +84,43 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                               fontFamily="monospace"
                            >
                               {currData?.title}
+                              <br />
+                              {currData?.github && <a href={currData.github}>{currData.github}</a>}
                            </Heading>
-                           {currData?.exampleTitle && (
-                              <Text fontSize={['lg']} fontWeight="bold" textAlign="left" mt={5}>
-                                 {currData?.exampleTitle}:
-                              </Text>
-                           )}
-                           <Code m={2}>
-                              <pre>{currData?.exampleCode}</pre>
-                           </Code>
+                           <Flex direction={['column', 'row']}>
+                              {currData?.exampleTitle && (
+                                 <Flex direction={'column'}>
+                                    <Text
+                                       fontSize={['lg']}
+                                       fontWeight="bold"
+                                       textAlign="left"
+                                       mt={5}
+                                    >
+                                       {currData?.exampleTitle}
+                                    </Text>
+                                    {currData.exampleCode && (
+                                       <Code m={2} h={'100px'}>
+                                          <pre>{currData?.exampleCode}</pre>
+                                       </Code>
+                                    )}
+                                 </Flex>
+                              )}
+                              {currData?.exampleSolutionTitle && (
+                                 <Flex direction={'column'}>
+                                    <Text
+                                       fontSize={['lg']}
+                                       fontWeight="bold"
+                                       textAlign="left"
+                                       mt={5}
+                                    >
+                                       {currData?.exampleSolutionTitle}:
+                                    </Text>
+                                    <Code m={2} h={'100px'}>
+                                       <pre>{currData?.exampleSolution}</pre>
+                                    </Code>
+                                 </Flex>
+                              )}
+                           </Flex>
                         </>
                      )}
                   </Flex>
@@ -104,7 +133,7 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                         aria-label="next"
                         size="lg"
                         icon="arrow-forward"
-                        display={current.matches('active.p_4') ? 'none' : 'inline'}
+                        display={current.matches('active.p_5') ? 'none' : 'inline'}
                      />
                   </motion.div>
                </Flex>
@@ -112,6 +141,6 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
          </Box>
       )
    } else {
-      return <Text>Hepefully impossible state</Text>
+      return <Text>Hopefully impossible state</Text>
    }
 }
