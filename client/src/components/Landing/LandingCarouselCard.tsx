@@ -1,17 +1,22 @@
 import { Box, Button, Code, Flex, Heading, IconButton, Text } from '@chakra-ui/core'
 import { useMachine } from '@xstate/react'
 import { motion } from 'framer-motion'
+import { useContext, useEffect } from 'react'
 import { LandingCarousel } from '../../../assets/staticData/landingPageData'
 import { fadeInUp } from '../../animations'
+import { LPMachineContext } from '../../context/LPMachineContext'
 import { LPCarouselMachine } from '../../machines/LPCarouselMachine'
 import { Feature } from './Feature'
 import { IntroChallenge } from './IntroChallenge'
 
 export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ data }) => {
-   const [current, send] = useMachine(LPCarouselMachine)
-
+   const [current, send, service] = useMachine(LPCarouselMachine)
+   const { setService } = useContext(LPMachineContext)
    const currData = data.find(x => x.id === current.context.page)
 
+   useEffect(() => {
+      setService(service)
+   }, [service, current, send, setService])
    if (current.matches('not_active')) {
       return (
          <motion.div variants={fadeInUp}>
@@ -30,7 +35,10 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
          </motion.div>
       )
    }
-   if (current.matches('active.intro.solving')) {
+   if (
+      current.matches('active.intro.solving') ||
+      current.matches('active.intro.registering.in_progress')
+   ) {
       return <IntroChallenge />
    }
    if (current.matches('active')) {

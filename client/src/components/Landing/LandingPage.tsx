@@ -17,10 +17,10 @@ export const LandingPage: NextPage = () => {
                <LandingHeader />
             </motion.div>
             <Flex direction={['column', 'row']}>
-               {infoCardsData.map(x => (
+               {infoCardsData.map((x, i) => (
                   <>
                      <LandingInfoCard key={x.id} mainText={x.main} secondaryText={x.secondary} />
-                     <Divider mt={5} />
+                     <Divider key={i} mt={5} />
                   </>
                ))}
             </Flex>

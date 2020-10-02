@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Machine, assign } from 'xstate'
 
-interface CarouselSchema {
+export interface CarouselSchema {
    states: {
       not_active: {}
       active: {
@@ -28,7 +28,7 @@ interface CarouselSchema {
    }
 }
 
-type CarouselEvent =
+export type CarouselEvent =
    | { type: 'CLICK_START' }
    | { type: 'CLICK_NEXT' }
    | { type: 'CLICK_PREVIOUS' }
@@ -37,7 +37,7 @@ type CarouselEvent =
    | { type: 'LOGIN_SUCCESS' }
    | { type: 'LOGIN_FAILED' }
 
-interface CarouselContext {
+export interface CarouselContext {
    page: number
    solution: string | null
 }
@@ -46,8 +46,8 @@ type setSolutionEvent = { solution: string }
 const setPageToOne = (ctx: CarouselContext) => assign({ page: ctx.page = 1 })
 const incPage = (ctx: CarouselContext) => assign({ page: ctx.page += 1 })
 const decPage = (ctx: CarouselContext) => assign({ page: ctx.page -= 1 })
-const setSolution = (_: CarouselContext, e: setSolutionEvent) =>
-   assign({ page: 0, solution: e.solution })
+const setSolution = (ctx: CarouselContext, e: setSolutionEvent) =>
+   assign({ page: ctx.page = 0, solution: ctx.solution = e.solution })
 
 export const LPCarouselMachine = Machine<CarouselContext, CarouselSchema, CarouselEvent>({
    initial: 'not_active',

@@ -49,7 +49,9 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
       completedState
          ? setValue(
               formatDefVal(
-                 SubmitData?.submitResult?.solution?.solution || data?.getSolution?.solution,
+                 SubmitData?.submitResult?.solution?.solution ||
+                    data?.getSolution?.solution ||
+                    value,
                  problemData?.correctSolution
               )
            )
@@ -83,6 +85,7 @@ export const Challenge: React.FC<ChallengeProps> = ({ problemData, error }) => {
                      },
                   })
                   if (res.data?.submitResult?.success && !meData?.me?._id) {
+                     setCompletedState(true)
                      onToggle()
                   } else if (res.data?.submitResult?.success && meData?.me) {
                      const res = await updateUserProgress({

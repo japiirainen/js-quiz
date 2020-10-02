@@ -7,17 +7,20 @@ import { SolutionModel } from './problem.result.model'
 import { isAuth } from '../../utils/middleware'
 import { MyContext } from '../../utils/types'
 
+const isFail = (testResults: string[]) => {
+   return testResults.find(x => typeof x === 'object')
+}
+
 export const submitResult = async (_: any, { input }: { input: ProblemResultInputIf }) => {
    const [problem, user] = await Promise.all([
       ProblemModel.findById(input.problemId),
       UserModel.findById(input.userId),
    ])
-
    if (!problem?.testCases) throw new ApolloError('No testcases found')
    const testFunctions = testsToFnCalls(problem.testCases)
    const testResults = testRunner(input.solution, testFunctions)
 
-   if (!testResults.includes('pass')) {
+   if (isFail(testResults)) {
       return {
          success: false,
          errors: formatError(testResults),

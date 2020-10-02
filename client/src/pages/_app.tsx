@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import theme from '../theme'
 import { ChallengeContextProvider } from '../context/challengeContext'
 import { EditorValueProvider } from '../context/editorValueContext'
+import { LPMachineContextProvider } from '../context/LPMachineContext'
 
 interface MyAppProps {
    Component: NextComponentType
@@ -16,11 +17,13 @@ const MyApp: React.FC<MyAppProps> = ({ Component, pageProps, children }) => {
          <ThemeProvider theme={theme}>
             <ChallengeContextProvider>
                <EditorValueProvider>
-                  <ColorModeProvider>
-                     <CSSReset />
-                     {children}
-                     <Component {...pageProps} />
-                  </ColorModeProvider>
+                  <LPMachineContextProvider>
+                     <ColorModeProvider>
+                        <CSSReset />
+                        {children}
+                        <Component {...pageProps} />
+                     </ColorModeProvider>
+                  </LPMachineContextProvider>
                </EditorValueProvider>
             </ChallengeContextProvider>
          </ThemeProvider>

@@ -8,14 +8,17 @@ import { InputField } from '../components/InputField'
 import { Layout } from '../components/layouts/Layout'
 import { useRegisterMutation, useSubmitResultMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
-import { EditorValueContext } from '../context/editorValueContext'
+import { LPMachineContext, serviceType } from '../context/LPMachineContext'
+import { useService } from '@xstate/react'
 
 const Register: React.FC = () => {
    const [, submitResult] = useSubmitResultMutation()
    const toast = useToast()
    const router = useRouter()
    const [{ fetching }, register] = useRegisterMutation()
-   const { value } = useContext(EditorValueContext)
+   const { service } = useContext(LPMachineContext)
+   const [current, send] = useService(service as serviceType)
+   console.log(service)
 
    return (
       <Layout fontSize={'4vh'} height={'8vh'} title={'Register'} variant={'small'} minH={'100vh'}>
@@ -28,20 +31,26 @@ const Register: React.FC = () => {
             onSubmit={async (values, { setErrors }) => {
                const res = await register({ input: values })
                if (res.error) {
+                  if (current.matches('active.intro.registering.in_progress')) {
+                     send({ type: 'LOGIN_FAILED' })
+                  }
                   setErrors({
                      email: 'Must be a valid email',
                      username: 'username must be at least 2 characters long',
                      password: 'password must be at least 2 characters long',
                   })
                } else {
-                  console.log(value, res.data?.register._id)
-                  await submitResult({
-                     input: {
-                        problemId: '5f478058f712257781ecf239',
-                        solution: value,
-                        userId: res.data?.register._id,
-                     },
-                  })
+                  if (current.matches('active.intro.registering.in_progress')) {
+                     send({ type: 'LOGIN_SUCCESS' })
+                     await submitResult({
+                        input: {
+                           problemId: '5f478058f712257781ecf239',
+                           solution: current.context.solution as string,
+                           userId: res.data?.register._id,
+                        },
+                     })
+                  }
+
                   router.push('/')
                   return toast({
                      title: 'Account successfully created!',
