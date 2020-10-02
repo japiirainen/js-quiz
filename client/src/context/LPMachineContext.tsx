@@ -23,7 +23,7 @@ export const LPMachineContext = createContext<{
 })
 
 export const LPMachineContextProvider: React.FC = ({ children }) => {
-   const [_, __, _service] = useMachine(LPCarouselMachine)
+   const [, , _service] = useMachine(LPCarouselMachine)
    const [service, setService] = useState(_service)
    return (
       <LPMachineContext.Provider value={{ service, setService }}>
