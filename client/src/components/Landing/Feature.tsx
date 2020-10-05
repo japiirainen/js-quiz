@@ -6,17 +6,7 @@ type anyProps = any
 export const Feature: React.FC<anyProps> = ({ children, ...rest }) => {
    return (
       <AnimatePresence>
-         <Box
-            width={['100%', 700]}
-            maxWidth="100%"
-            p={5}
-            height={['auto', 300]}
-            shadow="md"
-            borderWidth="1px"
-            flex="1"
-            rounded="md"
-            {...rest}
-         >
+         <Box shadow="md" flex="1" rounded="md" border={'1px dashed gray'} {...rest}>
             {children}
          </Box>
       </AnimatePresence>

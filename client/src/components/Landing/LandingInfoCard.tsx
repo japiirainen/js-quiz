@@ -13,13 +13,13 @@ export const LandingInfoCard: React.FC<LandingInfoCardProps> = ({ mainText, seco
          maxWidth={'100%'}
          width={'100%'}
          alignItems="top"
-         marginTop={[150, 150, 150, 150]}
+         marginTop={[30, 30, 30, 150]}
          direction="column"
       >
          <motion.div variants={fadeInDown}>
             <Text
                marginBottom={2}
-               fontSize={['3xl', 'xl']}
+               fontSize={['xl', 'xl']}
                fontFamily="monospace"
                textAlign="center"
                fontWeight="bold"
@@ -27,7 +27,7 @@ export const LandingInfoCard: React.FC<LandingInfoCardProps> = ({ mainText, seco
                {mainText}
             </Text>
             <Text
-               fontSize={['2xl', 'xl']}
+               fontSize={['2xl', '2xl', '2xl', 'xl']}
                fontFamily="monospace"
                textAlign="center"
                fontWeight="light"

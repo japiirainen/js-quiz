@@ -10,6 +10,8 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ title, fontSize, height }) => (
    <Flex justifyContent="center" alignContent="center" height={height}>
-      <Heading fontSize={fontSize}>{title}</Heading>
+      <Heading color="red.500" fontSize={fontSize}>
+         {title}
+      </Heading>
    </Flex>
 )

@@ -7,28 +7,29 @@ import { LandingInfoCard } from './LandingInfoCard'
 import { infoCardsData } from '../../../assets/staticData/landingPageData'
 import { motion } from 'framer-motion'
 import { fadeInDown } from '../../animations'
-import { LandingCarousel } from './LandingCarousel'
+import { MostFailedChallenges } from './MostFailedChallenges'
+import { MostPopularChallenges } from './MostPopularChallenges'
 
-export const LandingPage: NextPage = () => {
+export const LandingLoggedIn: NextPage = () => {
    return (
       <motion.div initial="initial" animate="animate">
          <LandingPageLayout minH={'100vh'} variant={'huge'}>
             <motion.div variants={fadeInDown}>
-               <LandingHeader
-                  fontSize={['3rem', '5rem', '5rem', '7rem']}
-                  text={'Welcome to Js-Quiz'}
-               />
+               <LandingHeader fontSize={['3rem', '3rem', '3rem', '4rem']} text={'Js-Quiz'} />
             </motion.div>
             <Flex direction={['column', 'column', 'column', 'row']}>
                {infoCardsData.map((x, i) => (
                   <>
                      <LandingInfoCard key={x.id} mainText={x.main} secondaryText={x.secondary} />
-                     <Divider key={i} mt={5} />
+                     <motion.div variants={fadeInDown} key={Number(new Date())}>
+                        <Divider key={i} mt={5} />
+                     </motion.div>
                   </>
                ))}
             </Flex>
-            <Flex justifyContent="center" my={60}>
-               <LandingCarousel />
+            <Flex justifyContent="center" direction="column" alignItems="center" my={60}>
+               <MostPopularChallenges />
+               <MostFailedChallenges />
             </Flex>
          </LandingPageLayout>
       </motion.div>

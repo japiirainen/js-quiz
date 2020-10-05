@@ -20,7 +20,7 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
    if (current.matches('not_active')) {
       return (
          <motion.div variants={fadeInUp}>
-            <Box mt={150}>
+            <Box mt={50}>
                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                      variant="solid"
@@ -43,8 +43,13 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
    }
    if (current.matches('active')) {
       return (
-         <Box marginTop={150}>
-            <Feature>
+         <Box marginTop={50}>
+            <Feature
+               width={['90vw', '90vw', 700, 700]}
+               maxWidth="100%"
+               p={5}
+               height={['auto', 300]}
+            >
                <Flex
                   height={'100%'}
                   width={'100%'}

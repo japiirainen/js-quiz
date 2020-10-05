@@ -1,14 +1,15 @@
 import { Box, Heading } from '@chakra-ui/core'
 
-export const LandingHeader: React.FC = () => {
+interface LandingHeader {
+   text: string
+   fontSize: string | string[]
+}
+
+export const LandingHeader: React.FC<LandingHeader> = ({ text, fontSize }) => {
    return (
-      <Box maxWidth={'100%'} justifyContent="center" marginTop={[150, 150, 150, 150]}>
-         <Heading
-            fontSize={['3rem', '5rem', '5rem', '7rem']}
-            fontFamily="monospace"
-            textAlign="center"
-         >
-            Welcome to Js-Quiz
+      <Box maxWidth={'100%'} justifyContent="center" marginTop={[150, 150, 150, 150]} mb={10}>
+         <Heading fontSize={fontSize} fontFamily="monospace" textAlign="center" color="red.400">
+            {text}
          </Heading>
       </Box>
    )

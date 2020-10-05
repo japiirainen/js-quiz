@@ -17,7 +17,7 @@ export const LandingPageLayout: React.FC<LandingPageLayoutProps> = ({
    minH,
 }) => {
    return (
-      <Container height={'100%'} variant={variant} minH={minH}>
+      <Container height={'100%'} variant={variant} minH={minH} mt={0}>
          <Head>
             <title>Js Quiz</title>
             <meta property="og:title" content="Js Quiz" key="title" />
