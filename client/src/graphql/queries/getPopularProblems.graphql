@@ -1,0 +1,9 @@
+query GetPopularProblems {
+   getPopularProblems {
+      name
+      _id
+      attempts
+      problemGroup
+      index
+   }
+}

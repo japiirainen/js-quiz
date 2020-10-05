@@ -1,0 +1,7 @@
+fragment PopularProblem on PopProblem {
+   name
+   _id
+   attempts
+   problemGroup
+   index
+}

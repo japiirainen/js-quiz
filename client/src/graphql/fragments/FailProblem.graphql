@@ -1,0 +1,7 @@
+fragment FailProblem on FailProblem {
+   name
+   _id
+   attempts
+   problemGroup
+   index
+}

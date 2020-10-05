@@ -76,6 +76,8 @@ export type Query = {
    getProblemById: Problem
    getProblemByIndex?: Maybe<ByIndexRes>
    getAllProblems: Array<Maybe<Problem>>
+   getPopularProblems: Array<Maybe<PopProblem>>
+   getMostFailedProblems: Array<Maybe<FailProblem>>
    problemGroup: ProblemGroup
    findProblemsInGroup?: Maybe<Array<Maybe<Problem>>>
    getManyGroupsOfProblems: ManyGroupRes
@@ -223,6 +225,27 @@ export type PlaceHolderInputOutput = {
    output?: Maybe<Scalars['String']>
 }
 
+export type PopProblem = {
+   __typename?: 'PopProblem'
+   _id: Scalars['ID']
+   name: Scalars['String']
+   uri: Scalars['String']
+   index: Scalars['Int']
+   problemGroup: Scalars['String']
+   attempts: Scalars['String']
+}
+
+export type FailProblem = {
+   __typename?: 'FailProblem'
+   _id: Scalars['ID']
+   name: Scalars['String']
+   uri: Scalars['String']
+   index: Scalars['Int']
+   problemGroup: Scalars['String']
+   attempts: Scalars['String']
+   successPrc: Scalars['String']
+}
+
 export type PlaceHolderInputOutputInput = {
    input?: Maybe<Scalars['String']>
    output?: Maybe<Scalars['String']>
@@ -243,6 +266,7 @@ export type Problem = {
    category: Scalars['String']
    placeHolderInputOutput: PlaceHolderInputOutput
    isCompleted?: Maybe<Scalars['Boolean']>
+   attempts?: Maybe<Scalars['Int']>
 }
 
 export type ProblemInput = {
@@ -295,6 +319,16 @@ export type ManyGroupRes = {
    g4?: Maybe<Array<Maybe<Problem>>>
    g5?: Maybe<Array<Maybe<Problem>>>
 }
+
+export type FailProblemFragment = { __typename?: 'FailProblem' } & Pick<
+   FailProblem,
+   'name' | '_id' | 'attempts' | 'problemGroup' | 'index'
+>
+
+export type PopularProblemFragment = { __typename?: 'PopProblem' } & Pick<
+   PopProblem,
+   'name' | '_id' | 'attempts' | 'problemGroup' | 'index'
+>
 
 export type RegProblemFragment = { __typename?: 'Problem' } & Pick<
    Problem,
@@ -420,6 +454,32 @@ export type GetManyGroupsOfProblemsQuery = { __typename?: 'Query' } & {
    }
 }
 
+export type GetMostFailedProblemsQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetMostFailedProblemsQuery = { __typename?: 'Query' } & {
+   getMostFailedProblems: Array<
+      Maybe<
+         { __typename?: 'FailProblem' } & Pick<
+            FailProblem,
+            'name' | '_id' | 'attempts' | 'problemGroup' | 'successPrc' | 'index'
+         >
+      >
+   >
+}
+
+export type GetPopularProblemsQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetPopularProblemsQuery = { __typename?: 'Query' } & {
+   getPopularProblems: Array<
+      Maybe<
+         { __typename?: 'PopProblem' } & Pick<
+            PopProblem,
+            'name' | '_id' | 'attempts' | 'problemGroup' | 'index'
+         >
+      >
+   >
+}
+
 export type GetProblemByIdQueryVariables = Exact<{
    _id: Scalars['ID']
 }>
@@ -464,6 +524,24 @@ export type MeQuery = { __typename?: 'Query' } & {
    me?: Maybe<{ __typename?: 'User' } & RegUserFragment>
 }
 
+export const FailProblemFragmentDoc = gql`
+   fragment FailProblem on FailProblem {
+      name
+      _id
+      attempts
+      problemGroup
+      index
+   }
+`
+export const PopularProblemFragmentDoc = gql`
+   fragment PopularProblem on PopProblem {
+      name
+      _id
+      attempts
+      problemGroup
+      index
+   }
+`
 export const RegProblemFragmentDoc = gql`
    fragment RegProblem on Problem {
       _id
@@ -651,6 +729,44 @@ export function useGetManyGroupsOfProblemsQuery(
       query: GetManyGroupsOfProblemsDocument,
       ...options,
    })
+}
+export const GetMostFailedProblemsDocument = gql`
+   query GetMostFailedProblems {
+      getMostFailedProblems {
+         name
+         _id
+         attempts
+         problemGroup
+         successPrc
+         index
+      }
+   }
+`
+
+export function useGetMostFailedProblemsQuery(
+   options: Omit<Urql.UseQueryArgs<GetMostFailedProblemsQueryVariables>, 'query'> = {}
+) {
+   return Urql.useQuery<GetMostFailedProblemsQuery>({
+      query: GetMostFailedProblemsDocument,
+      ...options,
+   })
+}
+export const GetPopularProblemsDocument = gql`
+   query GetPopularProblems {
+      getPopularProblems {
+         name
+         _id
+         attempts
+         problemGroup
+         index
+      }
+   }
+`
+
+export function useGetPopularProblemsQuery(
+   options: Omit<Urql.UseQueryArgs<GetPopularProblemsQueryVariables>, 'query'> = {}
+) {
+   return Urql.useQuery<GetPopularProblemsQuery>({ query: GetPopularProblemsDocument, ...options })
 }
 export const GetProblemByIdDocument = gql`
    query GetProblemById($_id: ID!) {

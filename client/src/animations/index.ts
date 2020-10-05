@@ -35,3 +35,14 @@ export const stagger = {
       },
    },
 }
+
+export const fadeInOpacity = {
+   initial: { opacity: 0 },
+   animate: {
+      transition: {
+         duration: 0.6,
+         ease: easing,
+      },
+      opacity: 1,
+   },
+}

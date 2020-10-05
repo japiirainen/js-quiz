@@ -13,6 +13,7 @@ export const DrawerLink: React.FC<DrawerLinkProps> = ({ href, text }) => {
    const router = useRouter()
    const toast = useToast()
    const [{ data: meData }] = useMeQuery({ pause: isServer() })
+
    const authCheck = () => {
       if (!meData?.me?.username) {
          toast({
