@@ -13,7 +13,7 @@ const isFail = (testResults: string[]) => {
 
 export const submitResult = async (_: any, { input }: { input: ProblemResultInputIf }) => {
    const [problem, user] = await Promise.all([
-      ProblemModel.findById(input.problemId),
+      ProblemModel.findOneAndUpdate({ _id: input.problemId }, { $inc: { attempts: 1 } }),
       UserModel.findById(input.userId),
    ])
    if (!problem?.testCases) throw new ApolloError('No testcases found')

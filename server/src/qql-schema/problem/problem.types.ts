@@ -16,6 +16,14 @@ export default gql`
       output: String
    }
 
+   type MinProblem {
+      _id: ID!
+      name: String!
+      uri: String!
+      problemGroup: String!
+      attempts: String!
+   }
+
    input PlaceHolderInputOutputInput {
       input: String
       output: String
@@ -35,6 +43,7 @@ export default gql`
       category: String!
       placeHolderInputOutput: PlaceHolderInputOutput!
       isCompleted: Boolean
+      attempts: Int
    }
 
    input problemInput {
@@ -66,6 +75,8 @@ export default gql`
       getProblemById(_id: ID!): Problem!
       getProblemByIndex(index: Int!): byIndexRes
       getAllProblems: [Problem]!
+      getPopularProblems: [MinProblem]!
+      getMostFailedProblems: [MinProblem]!
    }
 
    extend type Mutation {

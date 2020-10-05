@@ -15,6 +15,8 @@ import {
    getProblemById,
    getAllProblems,
    getProblemByIndex,
+   getPopularProblems,
+   getMostFailedProblems,
 } from './problem/problem.services'
 import { submitResult, getSolution } from './problem-results/problem-result.services'
 import {
@@ -36,6 +38,8 @@ export const resolvers = {
       findProblemsInGroup: findProblemsInGroup,
       getAllProblems: getAllProblems,
       getSolution: getSolution,
+      getPopularProblems: getPopularProblems,
+      getMostFailedProblems: getMostFailedProblems,
    },
    Mutation: {
       register: register,

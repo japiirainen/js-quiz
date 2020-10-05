@@ -54,6 +54,9 @@ export class Problem extends TimeStamps {
 
    @prop({})
    public isCompleted?: boolean
+
+   @prop({ default: 0 })
+   attempts: number
 }
 
 export const ProblemModel = getModelForClass(Problem)

@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Problem, ProblemModel } from './problem.model'
 import { ApolloError } from 'apollo-server-express'
 import { MyContext } from 'src/utils/types'
 import { isAuth } from '../../utils/middleware'
-import { ProblemGroupModel } from '../problem-group/problem-group.model'
+import { ProblemGroup, ProblemGroupModel } from '../problem-group/problem-group.model'
 import { dec, inc } from 'ramda'
 import { isCompleted } from '../../utils/helperFns'
 import { UserModel } from '../user/user.model'
+import { DocumentType } from '@typegoose/typegoose'
 
 export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyContext) => {
    isAuth(ctx)
@@ -88,4 +91,43 @@ export const getProblemByIndex = async (
    } else {
       throw new ApolloError('no problem found with that index')
    }
+}
+
+const formatPopular = (popProbls: any[], probGrps: (DocumentType<ProblemGroup> | null)[]) => {
+   const groupNames = probGrps.map(x => x?.name)
+   const formattedProblems = popProbls.map(x => ({
+      _id: x._id,
+      name: x.name,
+      attempts: x.attempts,
+   }))
+   return formattedProblems.map((v, i) => ({
+      ...v,
+      problemGroup: groupNames[i],
+   }))
+}
+
+export const getPopularProblems = async () => {
+   const popularProblems = await ProblemModel.find().sort({ attempts: -1 }).limit(5)
+   const groupIds = popularProblems.map(x => x.problemGroup)
+   const problemGroups = await Promise.all(groupIds.map(id => ProblemGroupModel.findById(id)))
+   if (!popularProblems || !problemGroups) throw new ApolloError('could not find problems')
+   return formatPopular(popularProblems, problemGroups)
+}
+
+// TODO
+export const getMostFailedProblems = async () => {
+   const popularProblems = await ProblemModel.find().sort({ attempts: -1 }).limit(5)
+   const groupIds = popularProblems.map(x => x.problemGroup)
+   const problemGroups = await Promise.all(groupIds.map(id => ProblemGroupModel.findById(id)))
+   const groupNames = problemGroups.map(x => x?.name)
+   const formattedProblems = popularProblems.map(x => ({
+      _id: x._id,
+      name: x.name,
+      attempts: x.attempts,
+   }))
+   const res = formattedProblems.map((v, i) => ({
+      ...v,
+      problemGroup: groupNames[i],
+   }))
+   return res
 }
