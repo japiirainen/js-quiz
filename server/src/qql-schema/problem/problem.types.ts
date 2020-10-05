@@ -16,12 +16,22 @@ export default gql`
       output: String
    }
 
-   type MinProblem {
+   type PopProblem {
       _id: ID!
       name: String!
       uri: String!
+      index: Int!
       problemGroup: String!
       attempts: String!
+   }
+   type FailProblem {
+      _id: ID!
+      name: String!
+      uri: String!
+      index: Int!
+      problemGroup: String!
+      attempts: String!
+      successPrc: String!
    }
 
    input PlaceHolderInputOutputInput {
@@ -75,8 +85,8 @@ export default gql`
       getProblemById(_id: ID!): Problem!
       getProblemByIndex(index: Int!): byIndexRes
       getAllProblems: [Problem]!
-      getPopularProblems: [MinProblem]!
-      getMostFailedProblems: [MinProblem]!
+      getPopularProblems: [PopProblem]!
+      getMostFailedProblems: [FailProblem]!
    }
 
    extend type Mutation {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Problem, ProblemModel } from './problem.model'
@@ -5,10 +6,11 @@ import { ApolloError } from 'apollo-server-express'
 import { MyContext } from 'src/utils/types'
 import { isAuth } from '../../utils/middleware'
 import { ProblemGroup, ProblemGroupModel } from '../problem-group/problem-group.model'
-import { dec, inc } from 'ramda'
+import { compose, dec, divide, inc, length, multiply, prop, sortBy, take } from 'ramda'
 import { isCompleted } from '../../utils/helperFns'
 import { UserModel } from '../user/user.model'
 import { DocumentType } from '@typegoose/typegoose'
+import { SolutionModel } from '../problem-results/problem.result.model'
 
 export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyContext) => {
    isAuth(ctx)
@@ -98,6 +100,7 @@ const formatPopular = (popProbls: any[], probGrps: (DocumentType<ProblemGroup> |
    const formattedProblems = popProbls.map(x => ({
       _id: x._id,
       name: x.name,
+      index: x.index,
       attempts: x.attempts,
    }))
    return formattedProblems.map((v, i) => ({
@@ -114,20 +117,35 @@ export const getPopularProblems = async () => {
    return formatPopular(popularProblems, problemGroups)
 }
 
-// TODO
 export const getMostFailedProblems = async () => {
-   const popularProblems = await ProblemModel.find().sort({ attempts: -1 }).limit(5)
-   const groupIds = popularProblems.map(x => x.problemGroup)
-   const problemGroups = await Promise.all(groupIds.map(id => ProblemGroupModel.findById(id)))
-   const groupNames = problemGroups.map(x => x?.name)
-   const formattedProblems = popularProblems.map(x => ({
-      _id: x._id,
-      name: x.name,
-      attempts: x.attempts,
-   }))
-   const res = formattedProblems.map((v, i) => ({
-      ...v,
-      problemGroup: groupNames[i],
-   }))
-   return res
+   const [allProblems, solutions] = await Promise.all([ProblemModel.find(), SolutionModel.find()])
+
+   const successPercentage = allProblems
+      .map(v => ({
+         _id: v._id,
+         index: v.index,
+         name: v.name,
+         group: v.problemGroup,
+         attempts: v.attempts,
+         solutionsCount: length(solutions.filter(s => s.problemId.toString() === v._id.toString())),
+      }))
+      .map(x => ({
+         ...x,
+         //@ts-ignore
+         successPrc: divide(x.solutionsCount === 0 ? 1 : x.solutionsCount, x.attempts),
+      }))
+   //@ts-ignore
+   const fiveMostFailed = compose(take(5), sortBy(prop('successPrc')))(successPercentage)
+
+   return fiveMostFailed.map(async (x: any) => {
+      const pGroup = await ProblemGroupModel.findById(x.group)
+      return {
+         _id: x._id,
+         name: x.name,
+         index: x.index,
+         problemGroup: pGroup?.name,
+         attempts: x.attempts,
+         successPrc: multiply(100, x.successPrc.toFixed(2)),
+      }
+   })
 }
