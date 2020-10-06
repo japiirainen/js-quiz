@@ -1,4 +1,5 @@
-import { testRunner, testsToFnCalls, formatError } from '../../utils/testRunner'
+import { testRunner } from '../../utils/testRunner'
+import { testsToFnCalls, formatError } from '../../utils/helperFns'
 import { ProblemModel } from '../problem/problem.model'
 import { ApolloError } from 'apollo-server-express'
 import { UserModel } from '../user/user.model'

@@ -5,7 +5,7 @@ import NextLink from 'next/link'
 import { FaCheckCircle } from 'react-icons/fa'
 import { FailProblemFragment, MeQuery, PopularProblemFragment } from '../../generated/graphql'
 import { motion } from 'framer-motion'
-import { fadeInUp } from '../../animations'
+import { fadeInOpacity } from '../../animations'
 
 interface ChallengeListItemProps {
    data: FailProblemFragment | PopularProblemFragment | null
@@ -15,7 +15,7 @@ interface ChallengeListItemProps {
 export const ChallengeListItem: React.FC<ChallengeListItemProps> = ({ data, me }) => {
    const isComplete = (id: string | undefined) => includes(id, me?.me?.completedProblems as any)
    return (
-      <motion.div variants={fadeInUp}>
+      <motion.div variants={fadeInOpacity}>
          <ListItem fontSize={[15]} m={1} fontWeight="medium">
             <Link>
                <NextLink
