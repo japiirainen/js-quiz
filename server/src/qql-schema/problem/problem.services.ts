@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -148,4 +149,15 @@ export const getMostFailedProblems = async () => {
          successPrc: multiply(100, x.successPrc.toFixed(2)),
       }
    })
+}
+
+export const getRandomProblem = async (_: any, __: any, ctx: MyContext) => {
+   const [problems, user] = await Promise.all([
+      ProblemModel.find(),
+      UserModel.findById(ctx.req.session?.userId),
+   ])
+   const notCopletedProblems = problems.filter(
+      problem => !user?.completedProblems?.map(id => id && id.toString()).includes(problem._id)
+   )
+   return notCopletedProblems[Math.floor(Math.random() * notCopletedProblems.length)]
 }

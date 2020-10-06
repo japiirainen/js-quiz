@@ -87,6 +87,7 @@ export default gql`
       getAllProblems: [Problem]!
       getPopularProblems: [PopProblem]!
       getMostFailedProblems: [FailProblem]!
+      getRandomProblem: PopProblem!
    }
 
    extend type Mutation {

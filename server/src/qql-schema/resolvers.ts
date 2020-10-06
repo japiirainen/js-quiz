@@ -17,6 +17,7 @@ import {
    getProblemByIndex,
    getPopularProblems,
    getMostFailedProblems,
+   getRandomProblem,
 } from './problem/problem.services'
 import { submitResult, getSolution } from './problem-results/problem-result.services'
 import {
@@ -40,6 +41,7 @@ export const resolvers = {
       getSolution: getSolution,
       getPopularProblems: getPopularProblems,
       getMostFailedProblems: getMostFailedProblems,
+      getRandomProblem: getRandomProblem,
    },
    Mutation: {
       register: register,
