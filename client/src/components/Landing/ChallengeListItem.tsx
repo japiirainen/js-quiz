@@ -1,5 +1,4 @@
 import { Link, ListIcon, ListItem } from '@chakra-ui/core'
-import { includes } from 'ramda'
 import React from 'react'
 import NextLink from 'next/link'
 import { FaCheckCircle } from 'react-icons/fa'
@@ -13,7 +12,6 @@ interface ChallengeListItemProps {
 }
 
 export const ChallengeListItem: React.FC<ChallengeListItemProps> = ({ data, me }) => {
-   const isComplete = (id: string | undefined) => includes(id, me?.me?.completedProblems as any)
    return (
       <motion.div variants={fadeInOpacity}>
          <ListItem fontSize={[15]} m={1} fontWeight="medium">
@@ -24,7 +22,7 @@ export const ChallengeListItem: React.FC<ChallengeListItemProps> = ({ data, me }
                >
                   <a>{data?.name}</a>
                </NextLink>
-               {isComplete(data?._id) && (
+               {data && me?.me?.completedProblems?.includes(data._id) && (
                   <ListIcon icon={FaCheckCircle} ml={2} color="green.500" size={'13px'} />
                )}
             </Link>

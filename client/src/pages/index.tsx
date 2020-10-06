@@ -13,12 +13,14 @@ const Index = () => {
    if (meFetching) {
       return <LoadingSpinner />
    }
-
    if (!meData?.me?._id) {
       return <LandingPage />
    }
-
-   return <LandingLoggedIn />
+   if (meData.me._id) {
+      return <LandingLoggedIn />
+   } else {
+      return <LoadingSpinner />
+   }
 }
 
 export default withUrqlClient(createUrqlClient, { ssr: true })(Index)
