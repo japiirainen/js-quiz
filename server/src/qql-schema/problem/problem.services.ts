@@ -159,5 +159,14 @@ export const getRandomProblem = async (_: any, __: any, ctx: MyContext) => {
    const notCopletedProblems = problems.filter(
       problem => !user?.completedProblems?.map(id => id && id.toString()).includes(problem._id)
    )
-   return notCopletedProblems[Math.floor(Math.random() * notCopletedProblems.length)]
+   const randomProblem = notCopletedProblems[Math.floor(Math.random() * notCopletedProblems.length)]
+   const problemGroup = await ProblemGroupModel.findById(randomProblem.problemGroup)
+   //mergeDeepRight(randomProblem, { problemGroup: problemGroup && problemGroup.name })
+   return {
+      _id: randomProblem._id,
+      name: randomProblem.name,
+      attempts: randomProblem.attempts,
+      index: randomProblem.index,
+      problemGroup: problemGroup?.name,
+   }
 }
