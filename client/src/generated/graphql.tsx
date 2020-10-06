@@ -78,6 +78,7 @@ export type Query = {
    getAllProblems: Array<Maybe<Problem>>
    getPopularProblems: Array<Maybe<PopProblem>>
    getMostFailedProblems: Array<Maybe<FailProblem>>
+   getRandomProblem: PopProblem
    problemGroup: ProblemGroup
    findProblemsInGroup?: Maybe<Array<Maybe<Problem>>>
    getManyGroupsOfProblems: ManyGroupRes
@@ -322,7 +323,7 @@ export type ManyGroupRes = {
 
 export type FailProblemFragment = { __typename?: 'FailProblem' } & Pick<
    FailProblem,
-   'name' | '_id' | 'attempts' | 'problemGroup' | 'index'
+   'name' | '_id' | 'attempts' | 'problemGroup' | 'successPrc' | 'index'
 >
 
 export type PopularProblemFragment = { __typename?: 'PopProblem' } & Pick<
@@ -457,27 +458,13 @@ export type GetManyGroupsOfProblemsQuery = { __typename?: 'Query' } & {
 export type GetMostFailedProblemsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetMostFailedProblemsQuery = { __typename?: 'Query' } & {
-   getMostFailedProblems: Array<
-      Maybe<
-         { __typename?: 'FailProblem' } & Pick<
-            FailProblem,
-            'name' | '_id' | 'attempts' | 'problemGroup' | 'successPrc' | 'index'
-         >
-      >
-   >
+   getMostFailedProblems: Array<Maybe<{ __typename?: 'FailProblem' } & FailProblemFragment>>
 }
 
 export type GetPopularProblemsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetPopularProblemsQuery = { __typename?: 'Query' } & {
-   getPopularProblems: Array<
-      Maybe<
-         { __typename?: 'PopProblem' } & Pick<
-            PopProblem,
-            'name' | '_id' | 'attempts' | 'problemGroup' | 'index'
-         >
-      >
-   >
+   getPopularProblems: Array<Maybe<{ __typename?: 'PopProblem' } & PopularProblemFragment>>
 }
 
 export type GetProblemByIdQueryVariables = Exact<{
@@ -510,6 +497,12 @@ export type GetProblemsInGroupQuery = { __typename?: 'Query' } & {
    findProblemsInGroup?: Maybe<Array<Maybe<{ __typename?: 'Problem' } & RegProblemFragment>>>
 }
 
+export type GetRandomProblemQueryVariables = Exact<{ [key: string]: never }>
+
+export type GetRandomProblemQuery = { __typename?: 'Query' } & {
+   getRandomProblem: { __typename?: 'PopProblem' } & PopularProblemFragment
+}
+
 export type GetSolutionQueryVariables = Exact<{
    input?: Maybe<GetSolutionInput>
 }>
@@ -530,6 +523,7 @@ export const FailProblemFragmentDoc = gql`
       _id
       attempts
       problemGroup
+      successPrc
       index
    }
 `
@@ -733,14 +727,10 @@ export function useGetManyGroupsOfProblemsQuery(
 export const GetMostFailedProblemsDocument = gql`
    query GetMostFailedProblems {
       getMostFailedProblems {
-         name
-         _id
-         attempts
-         problemGroup
-         successPrc
-         index
+         ...FailProblem
       }
    }
+   ${FailProblemFragmentDoc}
 `
 
 export function useGetMostFailedProblemsQuery(
@@ -754,13 +744,10 @@ export function useGetMostFailedProblemsQuery(
 export const GetPopularProblemsDocument = gql`
    query GetPopularProblems {
       getPopularProblems {
-         name
-         _id
-         attempts
-         problemGroup
-         index
+         ...PopularProblem
       }
    }
+   ${PopularProblemFragmentDoc}
 `
 
 export function useGetPopularProblemsQuery(
@@ -817,6 +804,20 @@ export function useGetProblemsInGroupQuery(
    options: Omit<Urql.UseQueryArgs<GetProblemsInGroupQueryVariables>, 'query'> = {}
 ) {
    return Urql.useQuery<GetProblemsInGroupQuery>({ query: GetProblemsInGroupDocument, ...options })
+}
+export const GetRandomProblemDocument = gql`
+   query GetRandomProblem {
+      getRandomProblem {
+         ...PopularProblem
+      }
+   }
+   ${PopularProblemFragmentDoc}
+`
+
+export function useGetRandomProblemQuery(
+   options: Omit<Urql.UseQueryArgs<GetRandomProblemQueryVariables>, 'query'> = {}
+) {
+   return Urql.useQuery<GetRandomProblemQuery>({ query: GetRandomProblemDocument, ...options })
 }
 export const GetSolutionDocument = gql`
    query GetSolution($input: getSolutionInput) {

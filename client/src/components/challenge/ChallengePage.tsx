@@ -34,7 +34,7 @@ export const ChallengePage: React.FC<ChallengePageProps> = ({
    return (
       <motion.div initial="initial" animate="animate">
          <Layout
-            fontSize={['2vh', '3vh', '3vh', '3vh']}
+            fontSize={['3vh', '4vh', '4vh', '4vh']}
             height={'0vh'}
             title={problem?.name}
             variant={'regular'}

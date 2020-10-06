@@ -1,10 +1,5 @@
 query GetMostFailedProblems {
    getMostFailedProblems {
-      name
-      _id
-      attempts
-      problemGroup
-      successPrc
-      index
+      ...FailProblem
    }
 }

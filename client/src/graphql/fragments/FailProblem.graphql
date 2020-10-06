@@ -3,5 +3,6 @@ fragment FailProblem on FailProblem {
    _id
    attempts
    problemGroup
+   successPrc
    index
 }

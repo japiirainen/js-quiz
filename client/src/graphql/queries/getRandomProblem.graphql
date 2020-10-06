@@ -1,0 +1,5 @@
+query GetRandomProblem {
+   getRandomProblem {
+      ...PopularProblem
+   }
+}

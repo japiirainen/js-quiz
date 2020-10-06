@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Flex } from '@chakra-ui/core'
+import { Button, Divider, Flex } from '@chakra-ui/core'
 import { NextPage } from 'next'
 import { LandingPageLayout } from '../layouts/LandingPage'
 import { LandingHeader } from './LandingHeader'
@@ -9,8 +9,11 @@ import { motion } from 'framer-motion'
 import { fadeInDown } from '../../animations'
 import { MostFailedChallenges } from './MostFailedChallenges'
 import { MostPopularChallenges } from './MostPopularChallenges'
+import { useRouter } from 'next/router'
+import { RandPrbBtn } from './RandProbBtn'
 
 export const LandingLoggedIn: NextPage = () => {
+   const router = useRouter()
    return (
       <motion.div initial="initial" animate="animate">
          <LandingPageLayout minH={'100vh'} variant={'huge'}>
@@ -30,6 +33,9 @@ export const LandingLoggedIn: NextPage = () => {
             <Flex justifyContent="center" direction="column" alignItems="center" my={60}>
                <MostPopularChallenges />
                <MostFailedChallenges />
+               <motion.div variants={fadeInDown}>
+                  <RandPrbBtn />
+               </motion.div>
             </Flex>
          </LandingPageLayout>
       </motion.div>
