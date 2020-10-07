@@ -2,7 +2,10 @@ import { expect } from 'chai'
 import { trimAndRemoveComments } from './helperFns'
 import * as R from 'ramda'
 
-export function testRunner(maybeSolution: string, tests: Function[]) {
+export function testRunner(
+   maybeSolution: string,
+   tests: Array<(solution: string, expect: any, R: any) => void>
+): any[] {
    let solution: any
    maybeSolution = trimAndRemoveComments(maybeSolution)
    console.log(maybeSolution)
