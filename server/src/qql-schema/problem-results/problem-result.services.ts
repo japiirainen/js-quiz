@@ -19,7 +19,7 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
    ])
    if (!problem?.testCases) throw new ApolloError('No testcases found')
    const testFunctions = testsToFnCalls(problem.testCases)
-   const testResults = testRunner(input.solution, testFunctions)
+   const testResults = testRunner(input.solution, testFunctions as any)
 
    if (isFail(testResults)) {
       return {
