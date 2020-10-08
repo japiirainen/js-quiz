@@ -12,6 +12,7 @@ export default gql`
    }
 
    type PlaceHolderInputOutput {
+      typeSignature: String
       input: String
       output: String
    }
@@ -35,6 +36,7 @@ export default gql`
    }
 
    input PlaceHolderInputOutputInput {
+      typeSignature: String
       input: String
       output: String
    }

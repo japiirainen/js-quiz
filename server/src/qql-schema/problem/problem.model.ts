@@ -10,6 +10,8 @@ export enum DIFFICULTY {
 }
 class PlaceHolderInputOutput {
    @prop({})
+   public typeSignature: string
+   @prop({})
    public input: string
    @prop({})
    public output: string

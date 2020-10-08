@@ -13,8 +13,7 @@ import { UserModel } from '../user/user.model'
 import { DocumentType } from '@typegoose/typegoose'
 import { SolutionModel } from '../problem-results/problem.result.model'
 
-export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyContext) => {
-   isAuth(ctx)
+export const newProblem = async (_: any, { input }: { input: Problem }) => {
    const doc = await ProblemModel.create(input)
    if (!doc) throw new ApolloError('something went wrong!')
    await ProblemGroupModel.findOneAndUpdate(
@@ -31,10 +30,8 @@ export const newProblem = async (_: any, { input }: { input: Problem }, ctx: MyC
 
 export const addTestCase = async (
    _: any,
-   { input }: { input: { _id: string; testCase: string } },
-   ctx: MyContext
+   { input }: { input: { _id: string; testCase: string } }
 ) => {
-   isAuth(ctx)
    await ProblemModel.updateOne(
       { _id: input._id },
       {

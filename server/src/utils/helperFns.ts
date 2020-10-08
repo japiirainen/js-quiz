@@ -33,7 +33,7 @@ const removeNormalComment = (str: string) => (startsWith('/', str) ? replace(/[/
 
 const resolveArrowFn = (str: string) =>
    startsWith('const', str) || startsWith('let', str) || startsWith('var', str)
-      ? replace(/[^(]*/, '', str)
+      ? replace(/[^R.]*/, '', str) || replace(/[^(]*/, '', str)
       : str
 
 export const trimAndRemoveComments = pipe(removeComment, removeNormalComment, trim, resolveArrowFn)

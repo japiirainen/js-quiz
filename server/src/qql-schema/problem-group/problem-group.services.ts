@@ -4,12 +4,8 @@ import { MyContext } from 'src/utils/types'
 import { ProblemModel, Problem } from '../problem/problem.model'
 import { isAuth } from '../../utils/middleware'
 
-export const newProblemGroup = async (
-   _: any,
-   { input }: { input: ProblemGroup },
-   ctx: MyContext
-) => {
-   isAuth(ctx)
+export const newProblemGroup = async (_: any, { input }: { input: ProblemGroup }) => {
+   //isAuth(ctx)
    const maybeDoc = await ProblemGroupModel.findOne({ name: input.name })
    if (maybeDoc) throw new ApolloError('group with that name already exists')
    const doc = await ProblemGroupModel.create(input)
