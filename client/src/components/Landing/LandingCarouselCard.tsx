@@ -23,8 +23,9 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
             <Box mt={50}>
                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
-                     variant="solid"
-                     variantColor="blue"
+                     variant="outline"
+                     variantColor="red"
+                     color="red.300"
                      size="lg"
                      onClick={() => send({ type: 'CLICK_START' })}
                   >
@@ -60,7 +61,8 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                   <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                      <IconButton
                         onClick={() => send({ type: 'CLICK_PREVIOUS' })}
-                        variantColor="blue"
+                        variantColor="red"
+                        color="red.300"
                         variant="outline"
                         aria-label="previous"
                         size="lg"
@@ -81,7 +83,8 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                            fontSize={[25, 30, 40]}
                            ml={12}
                            variant="link"
-                           variantColor="blue"
+                           variantColor="red"
+                           color="red.300"
                            size="lg"
                            alignSelf="center"
                            onClick={() => send({ type: 'CLICK_INTRO' })}
@@ -142,7 +145,8 @@ export const LandingCarouselCard: React.FC<{ data: LandingCarousel[] }> = ({ dat
                         onClick={() => send({ type: 'CLICK_NEXT' })}
                         ml={'auto'}
                         variant="outline"
-                        variantColor="blue"
+                        variantColor="red"
+                        color="red.300"
                         aria-label="next"
                         size="lg"
                         icon="arrow-forward"

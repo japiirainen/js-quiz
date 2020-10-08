@@ -35,6 +35,16 @@ export const ChallengeDesc: React.FC<ChallengeProps> = ({ problemData }) => {
                </Stat>
                <Flex direction="row-reverse">
                   <Flex direction="column">
+                     {problemData?.placeHolderInputOutput.typeSignature ? (
+                        <Stat>
+                           <StatLabel borderBottom="1px" borderBottomColor="red.200">
+                              Type signature:
+                           </StatLabel>
+                           <StatNumber fontSize={18}>
+                              <Text>{problemData.placeHolderInputOutput.typeSignature}</Text>
+                           </StatNumber>
+                        </Stat>
+                     ) : null}
                      <Stat>
                         <StatLabel borderBottom="1px" borderBottomColor="red.200">
                            example input:

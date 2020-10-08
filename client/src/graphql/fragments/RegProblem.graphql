@@ -8,6 +8,7 @@ fragment RegProblem on Problem {
    placeHolderExpectation
    index
    placeHolderInputOutput {
+      typeSignature
       input
       output
    }

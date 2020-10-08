@@ -60,6 +60,7 @@ export const SideDrawer: React.FC = () => {
                      <DrawerLink href={'/basics/home'} text={'Javascript Basics'} />
                      <DrawerLink href={'/conditionals/home'} text={'Javascript Conditionals'} />
                      <DrawerLink href={'/loops/home'} text={'Javascript Loops'} />
+                     <DrawerLink href={'/ramda/home'} text={'Ramda Utilities'} />
                   </List>
                </DrawerBody>
                <DrawerFooter>
