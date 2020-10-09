@@ -4,7 +4,7 @@
 
 [**Demo**](https://js-quiz.me).
 
-## I built this app in a monorepo, so both my server and client are in this same repo.
+## I built this app in a monorepo.
 
 I actually really enjoyed this approach. In my experience it makes it quite a bit more complicated if you are dealing with many repositories.
 
