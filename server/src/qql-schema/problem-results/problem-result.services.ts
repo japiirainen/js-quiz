@@ -5,11 +5,16 @@ import { ApolloError } from 'apollo-server-express'
 import { UserModel } from '../user/user.model'
 import { ProblemResultInputIf, Solution } from './problem.result.model'
 import { SolutionModel } from './problem.result.model'
-import { isAuth } from '../../utils/middleware'
-import { MyContext } from '../../utils/types'
 
 const isFail = (testResults: string[]) => {
    return testResults.find(x => typeof x === 'object')
+}
+
+const createSolution = async (userId: string, problemId: string, solution: string) => {
+   const maybeSolution = await SolutionModel.findOne({ userId, problemId })
+   if (!maybeSolution) await SolutionModel.create({ userId, problemId, solution })
+   const result = await maybeSolution?.updateOne({ userId, problemId, solution }, { new: true })
+   return result
 }
 
 export const submitResult = async (_: any, { input }: { input: ProblemResultInputIf }) => {
@@ -29,6 +34,7 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
          user: null,
       }
    } else {
+      input.userId && (await createSolution(input.userId, input.problemId, input.solution))
       input.userId &&
          !user?.completedProblems?.includes(problem.id) &&
          (await UserModel.updateOne(
@@ -39,12 +45,6 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
                },
             }
          ))
-      input.userId &&
-         (await SolutionModel.create({
-            userId: input.userId,
-            problemId: input.problemId,
-            solution: input.solution,
-         }))
       return {
          success: true,
          errors: [],
@@ -60,10 +60,8 @@ export const submitResult = async (_: any, { input }: { input: ProblemResultInpu
 
 export const getSolution = async (
    _: any,
-   { input }: { input: { userId: string; problemId: string } },
-   ctx: MyContext
+   { input }: { input: { userId: string; problemId: string } }
 ): Promise<Solution | undefined> => {
-   isAuth(ctx)
    const solution = await SolutionModel.findOne({
       userId: input.userId,
       problemId: input.problemId,
