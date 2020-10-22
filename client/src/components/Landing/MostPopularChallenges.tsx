@@ -1,6 +1,6 @@
 import { Box, List, Text, useColorMode } from '@chakra-ui/core'
 import { motion } from 'framer-motion'
-import { fadeInOpacity, stagger } from '../../animations'
+import { fadeInOpacity } from '../../animations'
 import { useGetPopularProblemsQuery, useMeQuery } from '../../generated/graphql'
 import { isServer } from '../../utils/isServer'
 import { LoadingSpinner } from '../LoadingSpinner'
@@ -27,11 +27,9 @@ export const MostPopularChallenges: React.FC = () => {
                      </Text>
                   </motion.div>
                   <List as="ol" styleType="decimal">
-                     <motion.div variants={stagger}>
-                        {data?.getPopularProblems.map(x => (
-                           <ChallengeListItem key={x?._id} data={x} me={meData} />
-                        ))}
-                     </motion.div>
+                     {data?.getPopularProblems.map(x => (
+                        <ChallengeListItem key={x?._id} data={x} me={meData} />
+                     ))}
                   </List>
                </Feature>
             </motion.div>
