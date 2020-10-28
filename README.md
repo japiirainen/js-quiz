@@ -31,3 +31,4 @@ In conclusion this tech stack worked well and I have to mention that client-side
 ### todo
 
 -  problem **_loops_** has some problems
+-  new challenges
