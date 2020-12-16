@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       PORT: 5001
-      DB_URL: mongodb+srv://japiirainen:Joonapoonamakaroona1@js-quiz.ptjwj.mongodb.net/main?retryWrites=true&w=majority
+      DB_URL: CHANGE_THIS
       SESSION_SECRET: keyboard-cat
       EMAIL_USER: jsquiz.help@gmail.com
       EMAIL_PASSWORD: Joonapoonamakaroona1
