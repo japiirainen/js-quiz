@@ -25,7 +25,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          file: ./client/Dockerfile
+          context: ./server
+          file: ./server/Dockerfile
           push: true
           tags: japiirainen/js-quiz:latest
       -

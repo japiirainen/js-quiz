@@ -1,8 +1,8 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { Redis } from 'ioredis'
 
 export type MyContext = {
-   req: Request
+   req: any
    res: Response
    redis: Redis
 }

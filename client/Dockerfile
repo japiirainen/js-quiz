@@ -14,4 +14,4 @@ RUN yarn
 RUN yarn build
 
 EXPOSE 3003
-CMD [ "yarn", "start:client" ]
+CMD [ "yarn", "start" ]

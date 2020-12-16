@@ -4,16 +4,16 @@ services:
   
   server: 
     build:
-      context: '/server'
+      context: './server'
     restart: always
     environment:
       PORT: 5001
-      DB_URL: foo 
+      DB_URL: mongodb+srv://japiirainen:Joonapoonamakaroona1@js-quiz.ptjwj.mongodb.net/main?retryWrites=true&w=majority
       SESSION_SECRET: keyboard-cat
       EMAIL_USER: jsquiz.help@gmail.com
       EMAIL_PASSWORD: Joonapoonamakaroona1
-      REDIS_URL: foo
-      CORS_ORIGIN: client:3003
+      REDIS_URL: redis://cache
+      CORS_ORIGIN: http://localhost:3003
     depends_on:
       - redis
     ports:
@@ -21,7 +21,7 @@ services:
 
   client:
     build:
-      context: '/client'
+      context: './client'
     restart: always
     environment:
       NODE_ENV: dev
@@ -30,9 +30,23 @@ services:
     ports:
       - 3003:3003
   
-  maria:
+  redis:
+    container_name: cache
     image: redis:6.2-rc1-alpine
     restart: always
     ports:
       - 6379:6379
 
+#   mongo:
+#     image: mongo:latest
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: mongo
+#       MONGO_INITDB_ROOT_PASSWORD: mongo
+#       MONGO_INITDB_DATABASE: dev_db
+#     ports:
+#       - 27017:27017
+#     volumes:
+#       - mongodb_data_container:/data/db
+
+# volumes:
+#   mongodb_data_container:
