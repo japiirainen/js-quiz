@@ -17,12 +17,13 @@ services:
     ports:
       - 5001:5001
 
-  searchkit-backend:
+  client:
     build:
       context: '/client'
     restart: always
     environment:
       NODE_ENV: development
+      PORT: 5001
       MARIA_HOST: maria
       MARIA_USER: maria
       MARIA_PASSWORD: maria
