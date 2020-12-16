@@ -11,6 +11,6 @@ COPY . /usr/src
 RUN yarn
 
 # start app
-RUN yarn build
-EXPOSE 3000
-CMD [ "yarn", "start" ]
+RUN yarn build:client
+EXPOSE 3003
+CMD [ "yarn", "start:client" ]
