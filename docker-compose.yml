@@ -2,9 +2,9 @@ version: '3.9'
 
 services:
   
-  email-api: 
+  server: 
     build:
-      context: '../email-api'
+      context: '/server'
     restart: always
     environment:
       NODE_ENV: development
@@ -13,14 +13,13 @@ services:
       MARIA_PASSWORD: maria
       MARIA_DATABASE: test_templates
     depends_on:
-      - maria
-      - adminer
+      - redis
     ports:
-      - 3002:3002
+      - 5001:5001
 
   searchkit-backend:
     build:
-      context: '../puheet-searchkit-backend'
+      context: '/client'
     restart: always
     environment:
       NODE_ENV: development
@@ -29,13 +28,12 @@ services:
       MARIA_PASSWORD: maria
       MARIA_DATABASE: test_templates
     depends_on:
-      - maria
-      - adminer
+      - redis
     ports:
-      - 3500:3500
+      - 3003:3003
   
   maria:
-    image: mariadb:latest
+    image: redis:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: maria
@@ -45,8 +43,3 @@ services:
     ports:
       - "3306:3306"
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
