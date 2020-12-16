@@ -1,4 +1,4 @@
-name: push-server-to-dh
+name: push-client-to-dh
 
 on:
   push:
