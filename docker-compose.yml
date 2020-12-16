@@ -33,11 +33,6 @@ services:
   maria:
     image: redis:6.2-rc1-alpine
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: maria
-      MYSQL_USER: maria
-      MYSQL_PASSWORD: maria
-      MYSQL_DATABASE: test_templates
     ports:
-      - "3306:3306"
+      - 6379:6379
 
