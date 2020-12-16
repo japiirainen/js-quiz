@@ -31,7 +31,7 @@ services:
       - 3003:3003
   
   maria:
-    image: redis:latest
+    image: redis:6.2-rc1-alpine
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: maria
