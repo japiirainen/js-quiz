@@ -7,11 +7,13 @@ services:
       context: '/server'
     restart: always
     environment:
-      NODE_ENV: development
-      MARIA_HOST: maria
-      MARIA_USER: maria
-      MARIA_PASSWORD: maria
-      MARIA_DATABASE: test_templates
+      PORT: 5001
+      DB_URL: foo
+      SESSION_SECRET: keyboard-cat
+      EMAIL_USER: jsquiz.help@gmail.com
+      EMAIL_PASSWORD: Joonapoonamakaroona1
+      REDIS_URL: foo
+      CORS_ORIGIN: client:3003
     depends_on:
       - redis
     ports:
@@ -22,12 +24,7 @@ services:
       context: '/client'
     restart: always
     environment:
-      NODE_ENV: development
-      PORT: 5001
-      MARIA_HOST: maria
-      MARIA_USER: maria
-      MARIA_PASSWORD: maria
-      MARIA_DATABASE: test_templates
+      NODE_ENV: dev
     depends_on:
       - redis
     ports:
