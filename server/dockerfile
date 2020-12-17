@@ -9,7 +9,7 @@ RUN yarn
 
 COPY . .
 
-RUN yarn build:server
+RUN yarn build
 
 ENV NODE_ENV production
 
