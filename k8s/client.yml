@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-quiz-client
+  namespace: js-quiz
+  labels:
+    app: js-quiz
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: js-quiz-client
+  template:
+    metadata:
+      labels:
+        app: js-quiz-client
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: jpcom-client
+        image: japiirainen/js-quiz-client:latest
+        env:
+        - name: NEXT_PUBLIC_API_URL
+          value: https://api.js-quiz.me/graphql
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3003
+          protocol: TCP
+        resources: {} 
+
+---            
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: js-quiz
+  name: js-quiz-client
+  namespace: js-quiz
+spec:
+  selector:
+    app: js-quiz-client
+  sessionAffinity: None
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 3003
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 3003

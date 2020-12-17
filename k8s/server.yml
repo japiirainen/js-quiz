@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-quiz
+  namespace: default
+  labels:
+    app: js-quiz
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: js-quiz
+  template:
+    metadata:
+      labels:
+        app: js-quiz
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: js-quiz
+        image: japiirainen/js-quiz:latest
+        env:
+        - name: port
+          value: "5000"
+        - name: EMAIL_USER
+          valueFrom:
+              secretKeyRef:
+                name: js-quiz-env
+                key: EMAIL_USER
+        - name: EMAIL_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                name: js-quiz-env
+                key: EMAIL_PASSWORD
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources: {} 
+
+---            
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: js-quiz
+  name: js-quiz
+  namespace: default
+spec:
+  selector:
+    app: js-quiz
+  sessionAffinity: None
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 3000
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 3000
