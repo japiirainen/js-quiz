@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import { AccountLayout } from '../../components/layouts/AccountLayout'
 import { withUrqlClient } from 'next-urql'
