@@ -27,7 +27,7 @@ on:
   push:
     branches: [ master ]
 
-name: Deploy client to Amazon ECS
+name: Deploy server to Amazon ECS
 
 jobs:
   deploy:
