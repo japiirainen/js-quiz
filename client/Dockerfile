@@ -10,7 +10,7 @@ COPY . /usr/src
 # install dependencies
 RUN yarn
 
-ENV NEXT_PUBLIC_API_URL=api.js-quiz.me/graphql
+ENV NEXT_PUBLIC_API_URL=https://api.js-quiz.me/graphql
 # start app
 RUN yarn build
 
