@@ -10,6 +10,7 @@
       "build:server": "yarn workspace server build",
       "build:client": "yarn workspace client build",
       "start:client": "yarn workspace client start",
-      "start:server": "yarn workspace server start"
+      "start:server": "yarn workspace server start",
+      "deploy:dokku": "yarn workspace server deploy:dokku && yarn workspace client deploy:dokku"
    }
 }
