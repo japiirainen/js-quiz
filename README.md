@@ -4,16 +4,10 @@
 
 [**Demo**](https://js-quiz.me).
 
-## I built this app in a monorepo.
 
-I actually really enjoyed this approach. In my experience it makes it quite a bit more complicated if you are dealing with many repositories.
+### server tech stack
 
-## Tech stack:
-
--  Typescript
-
-### server specific
-
+-  TypeScript
 -  Graphql api made with Apollo-Server
 -  MongoDb database
 -  Typogoose helping the integration between mongo, graphql and typescript
@@ -21,14 +15,14 @@ I actually really enjoyed this approach. In my experience it makes it quite a bi
 
 ### client specific
 
+-  TypeScript
 -  Next.js
+-  Chakra-ui components
 -  Urql for querying my Graphql api
--  Graphql codegen for helping with typescript
+-  Graphql codegen for helping with typescript and generating react hooks
 -  ace-builds for the code editor I used
 
 In conclusion this tech stack worked well and I have to mention that client-side queries with Urql and the hooks that codegen generates is awesome!
 
-### todo
-
--  problem **_loops_** has some problems
--  new challenges
+### TODO
+- Automated tests for atleast the server side.
